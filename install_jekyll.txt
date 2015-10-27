@@ -1,7 +1,0 @@
-
-
-ruby 2.2
-bundler
-ruby-dev
-bundler install
-apt-get install nodejs
