@@ -1,5 +1,0 @@
-Почему так названы?
-
-jekyll --
-scalatra --
-django --

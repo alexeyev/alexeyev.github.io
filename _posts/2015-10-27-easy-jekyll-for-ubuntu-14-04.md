@@ -1,26 +1,26 @@
 ---
-title: Jekyll, the easy way installation for Ubuntu 14.04
+title: Jekyll, the easy way installation, Ubuntu 14.04
 ---
 Installing ```jekyll``` on Ubuntu is not much pain, but I feel I should publish a recipe for Ubuntu 14.04 users (at least because I have one more Ubuntu machine),
 which is based on [Github instructions](https://help.github.com/articles/using-jekyll-with-pages/).
 
 
-First one needs to install Ruby **2** -- [cпасибо тебе, святой человек!](http://stackoverflow.com/a/33064386)
+Firstly, one needs to install Ruby **2** -- [ спасибо тебе, святой человек!](http://stackoverflow.com/a/33064386)
 
-    $ sudo apt-add-repository ppa:brightbox/ruby-ng
-    $ sudo apt-get update
-    $ sudo apt-get install ruby2.2
+    sudo apt-add-repository ppa:brightbox/ruby-ng
+    sudo apt-get update
+    sudo apt-get install ruby2.2
     
 
-Then bundler
+Then ```bundler```
 
     
-    $ sudo gem install bundler
+    sudo gem install bundler
     
 
-Then devtools -- [cпасибо тебе, святой человек!](https://github.com/jekyll/jekyll/issues/3737) @chr-br
+Then devtools -- [ спасибо тебе, святой человек!](https://github.com/jekyll/jekyll/issues/3737) @chr-br
     
-    $ sudo apt-get install ruby-dev ruby2.2-dev
+    sudo apt-get install ruby-dev ruby2.2-dev
     
 Then create a Gemfile in the project directory
     
@@ -29,18 +29,18 @@ Then create a Gemfile in the project directory
     
 Then ```cd``` into the project directory if you are not already there and execute
     
-    $ bundler install
+    bundler install
     
 
-Then install some js runner
+Then install some ```js``` runner
     
-    $ apt-get install nodejs
+    apt-get install nodejs
     
 
 Then you should be able to run
     
     
-    $ bundle exec jekyll serve
+    bundle exec jekyll serve
     
 
 This means everything is fine.
