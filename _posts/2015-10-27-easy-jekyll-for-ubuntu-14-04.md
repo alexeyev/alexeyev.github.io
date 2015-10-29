@@ -6,9 +6,7 @@ which is based on [Github instructions](https://help.github.com/articles/using-j
 
 
 
-First one needs to install Ruby 2 (important!).
-
-[Спасибо тебе, святой человек!](http://stackoverflow.com/a/33064386)
+First one needs to install Ruby 2 ([Спасибо тебе, святой человек!](http://stackoverflow.com/a/33064386)).
 
 
     $ sudo apt-add-repository ppa:brightbox/ruby-ng
@@ -22,13 +20,11 @@ Then bundler
     $ sudo gem install bundler
     
 
-Then devtools:
+Then devtools ([Спасибо тебе, святой человек!](https://github.com/jekyll/jekyll/issues/3737)):
     
     $ sudo apt-get install ruby-dev ruby2.2-dev
 
     
-[Спасибо тебе, святой человек!](https://github.com/jekyll/jekyll/issues/3737)
-
 Then create a Gemfile in the project directory
     
     source 'https://rubygems.org'
