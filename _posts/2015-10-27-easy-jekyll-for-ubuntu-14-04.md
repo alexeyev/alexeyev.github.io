@@ -1,13 +1,11 @@
 ---
-title: Jekyll, the easy way for Ubuntu 14.04
+title: Jekyll, the easy way installation for Ubuntu 14.04
 ---
 Installing ```jekyll``` on Ubuntu is not much pain, but I feel I should publish a recipe for Ubuntu 14.04 users (at least because I have one more Ubuntu machine),
 which is based on [Github instructions](https://help.github.com/articles/using-jekyll-with-pages/).
 
 
-
-First one needs to install Ruby 2 ([Спасибо тебе, святой человек!](http://stackoverflow.com/a/33064386)).
-
+First one needs to install Ruby **2** -- [cпасибо тебе, святой человек!](http://stackoverflow.com/a/33064386)
 
     $ sudo apt-add-repository ppa:brightbox/ruby-ng
     $ sudo apt-get update
@@ -20,10 +18,9 @@ Then bundler
     $ sudo gem install bundler
     
 
-Then devtools ([Спасибо тебе, святой человек!](https://github.com/jekyll/jekyll/issues/3737)):
+Then devtools -- [cпасибо тебе, святой человек!](https://github.com/jekyll/jekyll/issues/3737) @chr-br
     
     $ sudo apt-get install ruby-dev ruby2.2-dev
-
     
 Then create a Gemfile in the project directory
     
