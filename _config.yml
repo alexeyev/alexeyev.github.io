@@ -21,3 +21,7 @@ defaults:
       layout:       "post"
 gems:
 - jekyll-mentions
+
+highlighter: pygments
+markdown: redcarpet
+extensions: [fenced_code_blocks]
