@@ -42,7 +42,7 @@ def features(sequence, i):
 
 
 X_train, y_train, lengths_train = load_conll(codecs.open("train.txt", "r", "utf-8"), features)
-clf = StructuredPerceptron()
+clf = StructuredPerceptron() # or MultinomialHMM()
 clf.fit(X_train, y_train, lengths_train)
 X_test, y_test, lengths_test = load_conll(codecs.open("validation.txt", "r", "utf-8"), features)
 y_pred = clf.predict(X_test, lengths_test)
