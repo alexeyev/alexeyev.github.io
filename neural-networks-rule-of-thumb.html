@@ -1,0 +1,21 @@
+---
+layout: default
+---
+<header class="masthead">        
+  <h1 class="masthead-title">
+    <a href="{{ site.baseurl }}/neural-networks-rule-of-thumb">Чёрная магия без обоснования</a>
+  </h1>
+  <nav class="masthead-nav">
+    {% for nav in site.nav %}
+      <a href="{{ nav.href }}">{{ nav.name }}</a>
+    {% endfor %}
+  </nav>
+</header>
+
+<div class="content list">
+  <ol>
+    <li> Не стоит обучать архитектуры с RNN стохастическим градиентным спуском; adam, adadelta, adagrad
+    <li> Если используется ReLU, не стоит забывать о дропауте, так как они склонны к переобучению
+    <li> <b>Нужно</b> запариваться с правильной инициализацией весов
+  </ol>
+</div>
