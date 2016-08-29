@@ -2,9 +2,9 @@
 layout: default
 ---
 <header class="masthead">        
-  <h1 class="masthead-title">
-    <a href="{{ site.baseurl }}/">{{ site.person }}<span>&#39;s homepage and blog</span></a>
-  </h1>
+  <!--<h1 class="masthead-title">-->
+    <!--<a href="{{ site.baseurl }}/">{{ site.person }}<span>&#39;s homepage and blog</span></a>-->
+  <!--</h1>-->
   <nav class="masthead-nav">
     {% for nav in site.nav %}
     <a href="{{ nav.href }}">{{ nav.name }}</a>
@@ -14,27 +14,32 @@ layout: default
 
 
 <div class="content list">
-
-<h2>Contacts</h2>
-Anton Alekseev, St. Petersburg<br>
-@alexeyev<br>
-anton.m.alexeyev at google mail<br>
-<a href="http://www.stachek66.ru">Homepage</a>
-<br><br>
-<h2>Blog</h2>
-
-{% if site.posts.size == 0 %}
-  <h4>No posts detected</h4>
-{% else %}
-{% for post in site.posts %}
-  <div class="list-item">
-    <h4 class="list-post-title">
-      <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-    </h4>
-    <div class="list-post-date">
-      <time>{{ post.date | date_to_string }}</time>
+    <div class="self-photo">
+        <img src="https://avatars1.githubusercontent.com/u/1089594" height="230px">
     </div>
-  </div>
-{% endfor %}
-{% endif %}
+    <div class="self-description">
+        Anton Alekseev, St. Petersburg<br>
+        anton.m.alexeyev@gmail.com<br>
+        <h3><a href="http://vk.cc/5y8KdJ">CV</a> </h3>
+        <br>
+        <h4><a href="/blog">minimal working examples blog</a></h4>
+        <h4><a href="http://twitter.com/stachek66">twitter feed</a></h4>
+        <!--<h4><a href="/py-ml-nlp-tools">tools for ML-powered NLP</a></h4>-->
+    </div>
 </div>
+
+
+<!--<section id="about">-->
+<!--<div class="container">-->
+<!--<div class="avatar">-->
+<!--<img class="img-circle"-->
+<!--src="https://avatars1.githubusercontent.com/u/1089594"-->
+<!--alt="Round face">-->
+<!--</div>-->
+<!--<h3><strong>{{ site.person }}</strong></h3>-->
+<!--<h3>intelligent systems developer</h3>-->
+<!--&lt;!&ndash;<h3>Have a look at some of my working <a href="{{ site.baseurl }}/projects.html"> projects</a>.</h3>&ndash;&gt;-->
+<!--<h3>For more check out my academic &amp; professional <a href="{{ site.baseurl }}/vitae">Resume</a>.</h3>-->
+<!--<h3>Contact me on <a href="http://twitter.com/{{ site.twitter }}">@{{ site.twitter }}</a> or by <a href="mailto:{{ site.email }}">email</a>.</h3>-->
+<!--</div>-->
+<!--</section>-->

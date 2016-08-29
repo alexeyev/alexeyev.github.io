@@ -1,7 +1,8 @@
-
-person:               anton
-
-name:               "hipster science minimal working examples digest by @alexeyev"
+person:               Anton Alekseev
+name:               "Anton A., homepage"
+blog_name:          "@alexeyev"
+email:              anton.m.alexeyev@gmail.com
+twitter:            stachek66
 
 sass:
   style:            :compressed
@@ -19,9 +20,13 @@ defaults:
       type:         "posts"
     values:
       layout:       "post"
+
 gems:
 - jekyll-mentions
 
-highlighter: pygments
-markdown: redcarpet
+markdown: kramdown
+kramdown:
+#        input: GFM
+        syntax_highlighter: rouge
+
 extensions: [fenced_code_blocks]

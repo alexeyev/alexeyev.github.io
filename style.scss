@@ -257,6 +257,10 @@ tbody tr:nth-child(odd) th {
   font-size: 1.25rem;
 }
 
+.list-post-title {
+  color: #555555;
+}
+
 .container {
   max-width: 38rem;
   padding: 2rem 1.5rem;
@@ -285,7 +289,6 @@ tbody tr:nth-child(odd) th {
     span {
       color: #ddd;
     }
-    
   }
   
   &-title--small {
@@ -301,6 +304,24 @@ tbody tr:nth-child(odd) th {
       &:focus {
         text-decoration: none;
       }
+    }
+  }
+
+
+  &-subtitle {
+    font-weight: 100;
+
+    a {
+      color: #aaaaaa;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+
+    span {
+      color: #ddd;
     }
   }
   
@@ -327,6 +348,15 @@ tbody tr:nth-child(odd) th {
     }
   }
 
+}
+
+.self-photo {
+    float: left;
+}
+
+.self-description {
+    float: left;
+    margin-left: 40px;
 }
 
 .page {
