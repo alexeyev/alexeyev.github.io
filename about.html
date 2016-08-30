@@ -1,0 +1,28 @@
+---
+layout: default
+title: Anton Alekseev
+---
+<header class="masthead">
+    <h1 class="masthead-title">
+        <a href="{{ site.baseurl }}/about">About</a>
+    </h1>
+    <nav class="masthead-nav">
+        {% for nav in site.nav %}
+        <a href="{{ nav.href }}">{{ nav.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+
+<div class="content list">
+    Hi, welcome. <br/><br/>
+    I live in Saint Petersburg, Russia.<br/><br/>
+
+    What I've been doing for a living for quite a while is software engineering and data science;
+    also I'm a PhD student at PDMI RAS. My main interests are ML-powered NLP and IR.<br/><br/>
+
+    I write <a href="https://github.com/alexeyev">code</a>
+    (<a href="https://github.com/SammyVimes/gopstopbot">weird stuff sometimes</a>);
+    please see my <a href="http://vk.cc/5y8KdJ">CV</a> for better enterprise experience and skills description.<br/><br/>
+
+    <a href="mailto:anton.m.alexeyev@gmail.com">Email</a> is the preferred means of communication.
+</div>

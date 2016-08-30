@@ -1,30 +1,31 @@
 ---
 layout: default
 ---
-<header class="masthead">        
-  <!--<h1 class="masthead-title">-->
+<header class="masthead">
+    <!--<h1 class="masthead-title">-->
     <!--<a href="{{ site.baseurl }}/">{{ site.person }}<span>&#39;s homepage and blog</span></a>-->
-  <!--</h1>-->
-  <nav class="masthead-nav">
-    {% for nav in site.nav %}
-    <a href="{{ nav.href }}">{{ nav.name }}</a>
-    {% endfor %}
-  </nav>
+    <!--</h1>-->
+    <nav class="masthead-nav">
+        {% for nav in site.nav %}
+        <a href="{{ nav.href }}">{{ nav.name }}</a>
+        {% endfor %}
+    </nav>
 </header>
 
 
 <div class="content list">
     <div class="self-photo">
-        <img src="https://avatars1.githubusercontent.com/u/1089594" height="230px">
+        <a href="/about" target="_blank"><img src="https://avatars1.githubusercontent.com/u/1089594"/></a>
     </div>
     <div class="self-description">
-        Anton Alekseev, St. Petersburg<br>
-        anton.m.alexeyev@gmail.com<br>
-        <h3><a href="http://vk.cc/5y8KdJ">CV</a> </h3>
-        <br>
-        <h4><a href="/blog">minimal working examples blog</a></h4>
-        <h4><a href="http://twitter.com/stachek66">twitter feed</a></h4>
-        <!--<h4><a href="/py-ml-nlp-tools">tools for ML-powered NLP</a></h4>-->
+        <h3>Anton Alekseev, St. Petersburg</h3>
+        anton.m.alexeyev@gmail.com<br/>
+        <a href="/blog" target="_blank">minimal working examples blog</a><br/>
+        <a href="/py-ml-nlp-tools" target="_blank">python ml for nlp tools list</a><br/>
+        <a href="http://vk.cc/5y8KdJ" target="_blank">cv</a> |
+        <a href="https://github.com/alexeyev" target="_blank">github</a> |
+        <a href="http://twitter.com/stachek66" target="_blank">twitter</a> |
+        <a href="https://www.facebook.com/anton.m.alexeyev" target="_blank">facebook </a>
     </div>
 </div>
 
