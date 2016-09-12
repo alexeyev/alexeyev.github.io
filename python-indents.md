@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: Нежное введение в синтаксис питона: отступы 
 ---
 
