@@ -2,7 +2,7 @@
 title: Java+MLLib mwe, Naive Bayes for text classification
 ---
 
-```Java
+```java
 package ru.stachek66.mwe.ml.spark;
 
 import org.apache.spark.SparkConf;
