@@ -1,5 +1,5 @@
 ---
-title: Naive Bayes for text classification: Java+MLLib
+title: Java+MLLib mwe, Naive Bayes for text classification
 ---
 
 ```Java
