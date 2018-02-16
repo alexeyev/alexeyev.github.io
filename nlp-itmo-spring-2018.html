@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<header class="masthead">
+    <h1 class="masthead-title">
+        <a href="{{ site.baseurl }}/nlp-itmo-spring-2018">NLP, NRU ITMO, Spring 2018</a>
+    </h1>
+    <nav class="masthead-nav">
+        {% for nav in site.nav %}
+        <a href="{{ nav.href }}">{{ nav.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+<div class="content list">
+    <h4>Slides</h4>
+    <ul>
+        <li><a href="/2018-nlp-itmo/ITMO_NLP_01_INLP_IIR.pdf">Introduction + NLP for information retrival</a>
+        <li><a href="/2018-nlp-itmo/ITMO_NLP_02_STRINGS_DISTANCES.pdf">String metrics, text representations, regular expressions</a>
+    </ul>
+</div> 
