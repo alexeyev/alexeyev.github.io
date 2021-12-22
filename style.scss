@@ -16,7 +16,7 @@ body {
 html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  font-weight: 450;
+  font-weight: 350;
   line-height: 1.6;
   
   @media (min-width: 38em) {
@@ -33,7 +33,9 @@ body {
 
 a {
   color: #000000;
-  text-decoration: none;
+  font-weight: 450;
+  border-bottom:1px dotted;
+  //text-decoration: none;
 
   &:hover,
   &:focus {
