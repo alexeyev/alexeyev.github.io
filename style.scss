@@ -15,7 +15,7 @@ body {
 
 html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 450;
   line-height: 1.6;
   
@@ -32,14 +32,14 @@ body {
 }
 
 a {
-  color: #999999;
+  color: #000000;
   text-decoration: none;
 
   &:hover,
   &:focus {
     // border-bottom-color: green;
-    // border-bottom:1px dotted;
-    color: #0000ff;
+    border-bottom:1px dotted;
+    color: #000000;
   }
 }
 
@@ -344,7 +344,7 @@ tbody tr:nth-child(odd) th {
 }
 
 .self-photo {
-     width: 220px;
+     width: 180px;
      margin-right: 50px;
      margin-bottom: 20px;
      float:left;
