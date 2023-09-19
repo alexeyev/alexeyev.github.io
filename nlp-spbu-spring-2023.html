@@ -1,0 +1,70 @@
+---
+layout: default
+---
+<header class="masthead">
+    <h1 class="masthead-title">
+        <a href="{{ site.baseurl }}">NLP, SPbU, Spring 2023</a>
+    </h1>
+    <nav class="masthead-nav">
+        {% for nav in site.nav %}
+        <a href="{{ nav.href }}">{{ nav.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+
+<div class="content list">
+	<h4>Exam questions</h4>
+	<ol>
+<li> Zipf's Law, its importance for NLP. Language processing in information retrieval: lemmatization, 
+	stemming, Boolean search, inverted indices, execution of Boolean queries on them, skip-lists.
+<li> Language processing in information retrieval: vector space model, cosine distance, TF-IDF.
+	Common ways of representing texts for machine learning tasks.
+<li> Neural Networks: core principles, backpropagation, common optimizers, regularization techniques.
+<li>  String distances and the algorithms for their computation: the Hamming distance, the Jaro-Winkler distance, 
+	the Levenshtein distance, the longest common subsequence, the Jaccard distance for character N-grams. 
+	Indices for typos detection/correction in words.
+<li>  Markov chains. Ergodic theorem. PageRank and Markov chains. Direct applications in the text analysis.
+<li>  Elements of information theory: self-information, bit, pointwise mutual information, Kullback-Leibler divergence,
+	Shannon entropy, its interpretations. Cross-entropy. Example of an application: collocations extraction.
+<li> Language modeling. N-gram models. Perplexity. The reasons for doing smoothing. Additive (Laplace) smoothing. 
+	Interpolation and backoff. The ideas on which the Kneser-Ney smoothing is based.
+<li> Language modeling. Probabilistic Neural Language Model (2003). AWD-LSTM (2014). Perplexity.
+<li> Vector semantics: term-document matrices, term-context matrices, HAL. SVD, LSA, NMF. Methods for quality evaluation 
+	of vector semantics models.
+<li> Vector semantics: what is word2vec (the core principles of the SGNS algorithm and its relationship with 
+	matrix factorization), 
+		word2vec as a neural network. Methods for quality evaluation of vector semantics models.
+<li> Clustering: types of clustering algorithms. KMeans, agglomerative and divisive clustering 
+		(+ ways of estimating the distances between clusters), DBSCAN. 
+		Limitations and areas of applicability of all algorithms. 
+		Methods clustering quality evaluation, the shortcomings of each.
+<li>  Duplicates search: statement of the problem, description of the MinHash algorithm. Probability of hashes matching 
+	is equal to Jaccard similarity (with proof). <!--"Permutations generation" in practice.-->
+<li>  Topic modeling. LSA, pLSA, LDA, ARTM. Advantages and disadvantages of each method. 
+		Topic modeling quality evaluation (perplexity, coherence and methods with experts involved).
+<li>  Topic modeling + neural TM. pLSA, NTM, ABAE. Advantages and disadvantages of each method. 
+		Topic modeling quality evaluation (perplexity, coherence and methods with experts involved).
+<li>  Sequence tagging. PoS tagging. Named entity recognition. Hidden Markov models. 
+		Estimation of the probability of a sequence of states. 
+		Estimation of the probability of a sequence of observations. 
+		Quality evaluation.
+<li>  Sequence tagging. PoS tagging. Named entity recognition. Hidden Markov models. 
+		Decoding of the most probable sequence of states (Veterbi algorithm without proof). 
+    Quality evaluation.
+<li>  Sequence tagging. PoS tagging. Named entity recognition. Structured perceptron. 
+		Structured perceptron training. Sequente tagging quality evaluation.
+<li>  Neural sequence tagging. Simple RNN aproach, bidirectional RNNs, biLSTM-CRF.
+<li>  Syntax parsing. Syntax description approaches. 
+		Phrase structure grammar: the principles. Formal grammar. 
+		Chomsky Normal Form. Cocke-Kasami-Younger algorithm, its complexity. Parsing quality evaluation.
+<li>  Syntax parsing. Syntax description approaches. Phrase structure grammar: the principles. 
+		Probabilistic context-free grammar. Cocke-Kasami-Younger algorithm for PCFG (without proof), its complexity. 
+		Parsing quality evaluation.
+<li>  <strike>Syntax parsing. Syntax description approaches. Dependency grammar, core principles. 
+		Parsing quality evaluation. Transition-based dependency parsing: how it works. 
+		The algorithm (everything but the 'oracle').</strike> Didn't make the slides available at the time.
+<li>Encoding-decoding approach in NLP. OOV tokens processing. 'Transformer' architecture.
+<li>Transfer learning. ELMo. BERT.
+<!--<li>  ... 
+	</ol>
+</div>
