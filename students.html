@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+<header class="masthead">
+    <h1 class="masthead-title">
+        <a href="{{ site.baseurl }}">Students</a>
+    </h1>
+    <nav class="masthead-nav">
+        {% for nav in site.nav %}
+        <a href="{{ nav.href }}">{{ nav.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+<div class="content list">
+	<li>
+    <b>Georgii Angeni</b> B.Sc. in Mathematics and Computer Science at St. Petersburg University (Bachelor’s Thesis). 
+    <br/> Finding heuristic rules for solving the Boolean satisfiability problem using machine learning methods (2022-2023)
+  <li>
+    <b>Anastasia Predelina</b> B.Sc. in Mathematics and Computer Science at St. Petersburg University (Bachelor’s Thesis). 
+    <br/> Neural networks for coordination analysis (2022-2023)
+		
