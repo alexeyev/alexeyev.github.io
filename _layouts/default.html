@@ -20,8 +20,9 @@
   <noscript><div><img src="https://mc.yandex.ru/watch/98543476" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
   <meta name="yandex-verification" content="97b66c1d8451a207" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ page.title }}{% endif %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- description {% if page.description %}{{ page.description }}{% else %}{{ page.title }}{% endif %} -->
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ page.title }}{% endif %}"/>
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
   <link rel="stylesheet" href="{{ site.baseurl }}/style.css">
@@ -36,6 +37,7 @@
   </script>
 </head>
 <body>
+  debug: {% if page.description %}{{ page.description }}{% else %}{{ page.title }}{% endif %}
   <div class="container">
     {{ content }}
   </div>
