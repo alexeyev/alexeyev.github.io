@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="yandex-verification" content="97b66c1d8451a207" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ page.title }}{% endif %}">
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.name }}{% endif %}</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,600">
   <link rel="stylesheet" href="{{ site.baseurl }}/style.css">
