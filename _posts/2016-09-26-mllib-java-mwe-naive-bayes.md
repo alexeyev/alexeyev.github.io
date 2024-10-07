@@ -1,5 +1,6 @@
 ---
 title: Java+MLLib mwe, Naive Bayes for text classification
+description: Probably a VERY outdated piece of code; the implementation of Naive Bayes using the old Spark version.
 ---
 
 ```java

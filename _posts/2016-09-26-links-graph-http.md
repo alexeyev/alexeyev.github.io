@@ -1,5 +1,6 @@
 ---
 title: urllib2, matplotlib,Hyperlinks graph drawing code
+description: Code preparing a graph of links found on a provided page, etc. The comments to the code are in Russian.
 ---
 Код, отрисовывающий ссылочную структуру по данной странице и ссылкам на ней и т.д..
 

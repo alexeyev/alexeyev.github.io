@@ -1,5 +1,6 @@
 ---
 title: Seqlearn for supervised sequence labeling
+description: How to run an unsopported library 'seqlearn' to do some supervised sequence prediction.
 ---
 
 Now that's something.

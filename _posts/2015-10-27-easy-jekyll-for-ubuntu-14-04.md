@@ -1,5 +1,6 @@
 ---
 title: Jekyll, the easy way installation, Ubuntu 14.04
+description: How to install Jekyll without pain (the instruction for old Ubuntu distributives).
 ---
 Installing ```jekyll``` on Ubuntu is not much pain, but I feel I should publish a recipe for Ubuntu 14.04 users (at least because I have one more Ubuntu machine),
 which is based on [Github instructions](https://help.github.com/articles/using-jekyll-with-pages/).

@@ -1,5 +1,6 @@
 ---
 title: How to get a set of points' convex hull vertices
+description: Once in a while I need to build a convex hull or two; here's the reminder code.
 ---
 
 ``` python

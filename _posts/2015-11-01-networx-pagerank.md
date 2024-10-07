@@ -1,5 +1,6 @@
 ---
 title: PageRank using NetworkX
+description: Just in case. Building PR with NetworkX is easily googlable nowadays, however.
 ---
 
 ```python
