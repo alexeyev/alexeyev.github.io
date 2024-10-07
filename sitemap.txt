@@ -48,6 +48,8 @@ https://alexeyev.github.io/pdf/Alekseev_OIE2021.pdf
 https://alexeyev.github.io/pdf/AntonAlekseev.poster-slides.AINL.2017.pdf
 https://alexeyev.github.io/pdf/Apertium-List_of_Symbols.pdf
 https://alexeyev.github.io/pdf/apertium-tags-comments-russian.pdf
+https://alexeyev.github.io/pdf/cv.alekseev.20240929.pdf
+https://alexeyev.github.io/pdf/cv.alekseev.20240929-industry-work-and-education.pdf
 https://alexeyev.github.io/pdf/how_to_build_a_search_engine.alekseev.pdf
 https://alexeyev.github.io/pdf/kyrgyz-nlp-slides_2023.pdf
 https://alexeyev.github.io/pdf/LMAC2019Alekseev.pdf
