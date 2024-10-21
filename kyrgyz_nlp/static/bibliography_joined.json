@@ -1,0 +1,648 @@
+{
+  "pankov1992obuch": {
+    "title": "Obuchayushchaya i kontroliruyushchaya programma po slovoizmeneniyu v kyrgyzskom yazyke na PEVM",
+    "rawauthor": "Pankov, P.S.",
+    "author": "pankov",
+    "journal": "Bishkek: Mektep",
+    "pages": "20",
+    "year": "1992",
+    "cyrtitle": "Обучающая и контролирующая программа по словоизменению в кыргызском языке на ПЭВМ",
+    "cyrjournal": "Бишкек: Мектеп"
+  },
+  "washington2012finite": {
+    "title": "A finite-state morphological transducer for Kyrgyz.",
+    "rawauthor": "Washington, Jonathan North and Ipasov, Mirlan and Tyers, Francis M",
+    "author": "washington and ipasov and tyers",
+    "booktitle": "LREC",
+    "pages": "934--940",
+    "year": "2012"
+  },
+  "problems2013musayev": {
+    "title": "Problemy i perspekt ivy razvitiya kompyuternoy lingvistiki v Kyrgyzstane",
+    "rawauthor": "Musaev, S. Zh. and Karabaeva, S. Zh. and Imanalieva, A.I.",
+    "author": "musayev and karabaeva and imanalieva",
+    "booktitle": "PROCEEDINGS Of the I International Conference on Computer processing of Turkic Languages (TurkLang-2013)",
+    "pages": "34--37",
+    "year": "2013",
+    "cyrtitle": "Проблемы и перспект ивы развития компьютерной лингвистики в Кыргызстане"
+  },
+  "sadykov2013manas": {
+    "title": "<<Manas>> eposunun ulttuk korpusun tüzüü zhönündö",
+    "rawauthor": "Sadykov, T. and Sharshembaev, B.",
+    "author": "sadykov and sharshembayev",
+    "booktitle": "Kompyuternaya obrabotka tyurkskikh yazykov. Pervaya mezh dunarodnaya konferentsiya: Trudy.",
+    "publisher": "Astana: ENU im. LN Gumileva.",
+    "number": "6",
+    "pages": "148--154",
+    "year": "2013",
+    "cyrtitle": "<<Манас>> эпосунун улттук корпусун түзүү жөнүндө",
+    "cyrbooktitle": "Компьютерная обработка тюркских языков. Первая меж дународная конференция: Труды.",
+    "cyrpublisher": "Астана: ЕНУ им. ЛН Гумилева."
+  },
+  "washington2014finite": {
+    "title": "Finite-state morphological transducers for three Kypchak languages.",
+    "rawauthor": "Washington, Jonathan North and Salimzyanov, Ilnar and Tyers, Francis M",
+    "author": "washington and salimzyanov and tyers",
+    "booktitle": "LREC",
+    "pages": "3378--3385",
+    "year": "2014"
+  },
+  "baisa2015turkic": {
+    "title": "Turkic language support in Sketch Engine",
+    "rawauthor": "Baisa, Vit and Suchomel, Vit",
+    "author": "baisa and suchomel",
+    "booktitle": "Proceedings of the International conference ``Turkic Languages Processing'' TurkLang-2015",
+    "pages": "214--223",
+    "year": "2015"
+  },
+  "karabaeva2015computer": {
+    "title": "COMPUTER-MATHEMATICAL MODELING OF NATIONAL SPECIFICITY OF SPATIAL MODELS IN KYRGYZ LANGUAGE",
+    "rawauthor": "Karabaeva, Sonunbubu and Dolmatova, Polina and Imanalieva, Aisuluu",
+    "author": "karabaeva and dolmatova and imanalieva",
+    "booktitle": "Proceedings of the International conference ``Turkic Languages Processing'' TurkLang-2015",
+    "pages": "416--422",
+    "year": "2015"
+  },
+  "sadykovbook2015": {
+    "rawauthor": "Sadykov, T. and Zhumalieva, G.E. and Tümönbaeva, M.Zh. and Sharshembaev, B.",
+    "author": "sadykov and zhumalieva and tumenbaeva and sharshembayev",
+    "title": "Kyrgyz tili: kompyuterdik lingvistikanyn negizderi",
+    "publisher": "Bishkek: Imak ofset",
+    "year": "2015",
+    "pages": "400 pp.",
+    "cyrtitle": "Кыргыз тили: компьютердик лингвистиканын негиздери",
+    "cyrpublisher": "Бишкек: Имак офсет"
+  },
+  "bakasova2016": {
+    "title": "Algoritm obrazovaniya slovoform dlya avtomatizatsii protsedury popolneniya bazy dannykh slovarya",
+    "rawauthor": "Bakasova, P. S. and Israilova, N. A.",
+    "author": "bakasova and israilova",
+    "journal": "Izvestiya Kyrgyzskogo gosudarstvennogo tekhnicheskogo universiteta im. I. Razzakova",
+    "number": "2",
+    "volume": "38",
+    "pages": "23--27",
+    "year": "2016",
+    "publisher": "Kyrgyzskiy gosudarstvennyy tekhnicheskiy universitet im. I. Razzakova",
+    "cyrtitle": "Алгоритм образования словоформ для автоматизации процедуры пополнения базы данных словаря",
+    "cyrjournal": "Известия Кыргызского государственного технического университета им. И. Раззакова",
+    "cyrpublisher": "Кыргызский государственный технический университет им. И. Раззакова"
+  },
+  "kochkonbaeva2016": {
+    "title": "Tabigyy tildegi tekstterdi orus tilinen kyrgyz tiline mashinalyk kotoruuda sezderdy analizdve\\^{ n algoritmin tyzyy",
+    "rawauthor": "Kochkonbaeva, B. O.",
+    "author": "kochkonbaeva",
+    "journal": "Izvestiya Kyrgyzskogo gosudarstvennogo tekhnicheskogo universiteta im. I. Razzakova",
+    "number": "38",
+    "volume": "2",
+    "pages": "52--54",
+    "year": "2016",
+    "publisher": "Kyrgyzskiy gosudarstvennyy tekhnicheskiy universitet im. I. Razzakova",
+    "cyrtitle": "Табигый тилдеги тексттерди орус тилинен кыргыз тилине машиналык которууда сeздeрдy анализдве\\^{ н алгоритмин тyзyy",
+    "cyrjournal": "Известия Кыргызского государственного технического университета им. И. Раззакова",
+    "cyrpublisher": "Кыргызский государственный технический университет им. И. Раззакова"
+  },
+  "momunaliev2016": {
+    "title": "Parsirovanie i annotirovanie turetsko-kyrgyzskogo slovarya",
+    "rawauthor": "Momunaliev, K. Z.",
+    "author": "momunaliev",
+    "journal": "Izvestiya Kyrgyzskogo gosudarstvennogo tekhnicheskogo universiteta im. I. Razzakova",
+    "number": "2",
+    "pages": "68--81",
+    "year": "2016",
+    "publisher": "Kyrgyzskiy gosudarstvennyy tekhnicheskiy universitet im. I. Razzakova",
+    "cyrtitle": "Парсирование и аннотирование турецко-кыргызского словаря",
+    "cyrjournal": "Известия Кыргызского государственного технического университета им. И. Раззакова",
+    "cyrpublisher": "Кыргызский государственный технический университет им. И. Раззакова"
+  },
+  "yiner2016kyrgyz": {
+    "title": "Kyrgyz orthography and morphotactics with implementation in NUVE",
+    "rawauthor": "Yiner, Z{\\",
+    "author": "yiner and  kurt and kulamshaev and zafer",
+    "booktitle": "Proceedings of International Conference on Engineering and Natural Sciences",
+    "pages": "1650--1658",
+    "year": "2016"
+  },
+  "karabaeva2016virt": {
+    "title": "Virtualnye geometricheskie obekty, sozdavaemye glagolami v kyrgyzskom yazyke",
+    "rawauthor": "Karabaeva, Sonunbubu Zhenishbekovna",
+    "author": "karabaeva",
+    "journal": "V mire nauki i iskusstva: voprosy filologii, iskusstvovedeni i kulturologii",
+    "number": "11 (66)",
+    "pages": "74--79",
+    "year": "2016",
+    "publisher": "ANS <<SibAK>>",
+    "cyrtitle": "Виртуальные геометрические объекты, создаваемые глаголами в кыргызском языке",
+    "cyrjournal": "В мире науки и искусства: вопросы филологии, искусствоведени и культурологии",
+    "cyrpublisher": "АНС <<СибАК>>"
+  },
+  "boizou2017kyrgyz": {
+    "title": "From Kyrgyz Internet Texts to an XML Full-form Annotated Lexicon: a Simple Semi-automatic Pipeline",
+    "rawauthor": "Boizou, Lo{\\",
+    "author": "boizou  and mambetkazieva",
+    "booktitle": "TurkLang 2017: Pyataya mezhdunarodnaya konferentsiya po kompyuternoy obrabotke tyurkskikh yazykov: Trudy konferentsii. T 1. Kazan: Izdatelstvo Akademii nauk Respubliki Tatarstan, 2017",
+    "year": "2017",
+    "organization": "Kazan: Izdatelstvo Akademii nauk Respubliki Tatarstan, 2017",
+    "cyrbooktitle": "TurkLang 2017: Пятая мeждународная конференция по компьютерной обработке тюркских языков: Труды конференции. Т 1. Казань: Издательство Академии наук Республики Татарстан, 2017",
+    "cyrorganization": "Казань: Издательство Академии наук Республики Татарстан, 2017"
+  },
+  "israilova2017morphological": {
+    "title": "Morphological analyzer of the Kyrgyz language",
+    "rawauthor": "Israilova, N. A. and Bakasova, P. S.",
+    "author": "israilova and bakasova",
+    "booktitle": "Proceedings of the V International Conference on Computer Processing of Turkic Languages Turklang",
+    "pages": "100--116",
+    "volume": "2",
+    "year": "2017"
+  },
+  "israilova2017algo": {
+    "title": "Algoritm morfologicheskogo analiza i sinteza v translyatore",
+    "rawauthor": "Israilova, N. A.",
+    "author": "israilova",
+    "journal": "Sovremennye problemy mekhaniki",
+    "number": "28",
+    "pages": "11--19",
+    "year": "2017",
+    "publisher": "Institut geomekhaniki i osvoeniya nedr Natsionalnoy Akademii Nauk Kyrgyzskoy Respubliki",
+    "cyrtitle": "Алгоритм морфологического анализа и синтеза в трансляторе",
+    "cyrjournal": "Современные проблемы механики",
+    "cyrpublisher": "Институт геомеханики и освоения недр Национальной Академии Наук Кыргызской Республики"
+  },
+  "sadykov2017model": {
+    "rawauthor": "Sadykov, T. and Kochkonbayeva, B.",
+    "author": "sadykov and kochkonbaeva",
+    "title": "MODEL OF MORPHOLOGICAL ANALYSIS OF THE KYRGYZ LANGUAGE",
+    "booktitle": "Proceedings of the V International Conference on Computer Processing of Turkic Languages Turklang",
+    "volume": "2",
+    "pages": "135--154",
+    "year": "2017"
+  },
+  "ablimit2017multilingual": {
+    "title": "A multilingual language processing tool for Uyghur, Kazak and Kirghiz",
+    "rawauthor": "Ablimit, Mijit and Parhat, Sardar and Hamdulla, Askar and Zheng, Thomas Fang",
+    "author": "ablimit and parhat and hamdulla and zheng",
+    "booktitle": "2017 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)",
+    "pages": "737--740",
+    "year": "2017",
+    "organization": "IEEE"
+  },
+  "polat2018machine": {
+    "title": "Machine Translation for Kyrgyz Proverbs—Google Translate Vs. Yandex Translate-From Kyrgyz into English and Turkish",
+    "rawauthor": "Polat, Y. and Zakirov, A. and Bajak, S. and Mamatzhanova, Z.",
+    "author": "polat and zakirov and bajak and mamatzhanova",
+    "booktitle": "Materialy Shestoy Mezhdunarodnoy konferentsii po kompyuternoy obrabotke tyurkskikh yazykov <<TurkLang-2018>>(Tashkent, Uzbekistan, 18--20 oktyabrya 2018 g.)",
+    "year": "2018",
+    "cyrbooktitle": "Материалы Шестой Международной конференции по компьютерной обработке тюркских языков <<TurkLang-2018>>(Ташкент, Узбекистан, 18--20 октября 2018 г.)"
+  },
+  "sharipbay2018comparison": {
+    "title": "Sravnenie ontologicheskikh modeley sushchestvitelnykh kazakhskogo i kyrgyzskogo yazykov",
+    "rawauthor": "Sharipbay, A. A. and Ergesh, B. Zh. and Elibaeva, G. K. and Zhetkenbay, L. and Israilova, N. and Bakasova, P.",
+    "author": "sharipbai and ergesh and elibaeva and zhetkenbai and israilova and bakasova",
+    "booktitle": "Materialy Shestoy Mezhdunarodnoy konferentsii po kompyuternoy obrabotke tyurkskikh yazykov <<TurkLang-2018>> (Tashkent, Uzbekistan, 18--20 oktyabrya 2018 g.)",
+    "year": "2018",
+    "cyrtitle": "Сравнение онтологических моделей существительных казахского и кыргызского языков",
+    "cyrbooktitle": "Материалы Шестой Международной конференции по компьютерной обработке тюркских языков {\\guillemotleftTurkLang-2018{\\guillemotright"
+  },
+  "sadykov2018optim": {
+    "title": "Ob optimizatsii algoritma morfologicheskogo analiza",
+    "rawauthor": "Sadykov, T and Kochkonbaeva, B",
+    "author": "sadykov and kochkonbaeva",
+    "booktitle": "Sbornik materialov Shestoy Mezhdunarodnoy konferentsii po kompyuternoy obrabotke tyurkskikh yazykov <<TurkLang-2018>>(Tashkent, Uzbekistan, 18--20 oktyabrya 2018 g.)",
+    "year": "2018",
+    "cyrtitle": "Об оптимизации алгоритма морфологического анализа",
+    "cyrbooktitle": "Сборник материалов Шестой Международной конференции по компьютерной обработке тюркских языков {\\guillemotleftTurkLang-2018{\\guillemotright"
+  },
+  "washington2019free": {
+    "title": "Free/open-source technologies for Turkic languages developed in the Apertium project",
+    "rawauthor": "Washington, Jonathan N and Salimzianov, Ilnar and Tyers, Francis M and ...",
+    "author": "washington and salimzianov and tyers and gokirmak and ivanova and kuyrukcu",
+    "booktitle": "Proceedings of the International Conference on Turkic Language Processing (TURKLANG 2019)",
+    "year": "2019"
+  },
+  "israilova2019": {
+    "rawauthor": "Israilova, N. A. and Bakasova, P. S.",
+    "author": "israilova and bakasova",
+    "title": "Ontologicheskie modeli morfologicheskikh pravil kyrgyzskogo yazyka",
+    "booktitle": "Sedmaya Mezhdunarodnaya konferentsiya po kompyuternoy obrabotke tyurkskikh yazykov «TurkLang 2019»: Trudy konferentsii (Simferopol, Krym, Rossiya, 3–5 oktyabrya 2019 g.)",
+    "year": "2019",
+    "cyrtitle": "Онтологические модели морфологических правил кыргызского языка",
+    "cyrbooktitle": "Седьмая Международная конференция по компьютерной обработке тюркских языков «TurkLang 2019»: Труды конференции (Симферополь, Крым, Россия, 3–5 октября 2019 г.)"
+  },
+  "satybaev2019math": {
+    "title": "Matematicheskoe modelirovanie i algoritm morfologicheskogo analiza kyrgyzskogo yazyka",
+    "rawauthor": "Satybaev, Abdygany Dzhunusovich and Kochkonbaeva, Buazhar Osmonalievna",
+    "author": "satybaev and kochkonbaeva",
+    "journal": "Byulleten nauki i praktiki",
+    "volume": "5",
+    "number": "3",
+    "pages": "220--224",
+    "year": "2019",
+    "publisher": "Izdatelskiy tsentr <<Nauka i praktika>>",
+    "cyrtitle": "Математическое моделирование и алгоритм морфологического анализа кыргызского языка",
+    "cyrjournal": "Бюллетень науки и практики",
+    "cyrpublisher": "Издательский центр <<Наука и практика>>"
+  },
+  "tukeyev2020": {
+    "rawauthor": "Tukeyev, U. and  Karibayeva, A. and  Zhumanov, Z h.",
+    "author": "tukeyev and karibayeva and zhumanov",
+    "editor": "Duc Pham",
+    "title": "Morphological segmentation method for Turkic language neural machine translation",
+    "journal": "Cogent Engineering",
+    "volume": "7",
+    "number": "1",
+    "pages": "1856500",
+    "year": "2020",
+    "publisher": "Cogent OA"
+  },
+  "kasieva2020pos": {
+    "title": "PARTS-OF-SPEECH ANNOTATION OF THE NEWLY CREATED KYRGYZ CORPUS",
+    "rawauthor": "Kasieva, A. A. and Satybekova, A. T.",
+    "author": "kasieva and satybekova",
+    "journal": "Herald of KRSU",
+    "volume": "20",
+    "number": "6",
+    "pages": "67--72",
+    "year": "2020"
+  },
+  "kasieva2020poster": {
+    "rawauthor": "Kasieva, Aida and Knappen, Jörg and Fischer, Stefan and Teich, Elke",
+    "author": "kasieva and knappen and fischer and teich",
+    "title": "A new Kyrgyz corpus: sampling, compilation, annotation",
+    "booktitle": "Jahrestagung der Deutschen Gesellschaft für Sprachwissenschaft (poster session)",
+    "year": "2020",
+    "url": "http://hdl.handle.net/21.11119/0000-0004-B62D-D"
+  },
+  "kochkonvaeva2020modeling": {
+    "title": "Modeling of Morphological Analysis and Synthesis of Word Forms of the Natural Language",
+    "rawauthor": "Kochkonbaeva, B. O. and Egemberdieva, Zh.S.",
+    "author": "kochkonbaeva and egemberdieva",
+    "journal": "Byulleten nauki i praktiki",
+    "volume": "6",
+    "number": "9",
+    "pages": "435--439",
+    "year": "2020",
+    "cyrjournal": "Бюллетень науки и практики"
+  },
+  "li2020agglutifit": {
+    "title": "AgglutiFiT: efficient low-resource agglutinative language model fine-tuning",
+    "rawauthor": "Li, Zhe and Li, Xiuhong and Sheng, Jiabao and Slamu, Wushour",
+    "author": "lizhe and lixiuhong and sheng and slamu",
+    "journal": "IEEE Access",
+    "volume": "8",
+    "pages": "148489--148499",
+    "year": "2020",
+    "publisher": "IEEE"
+  },
+  "washington2020multi": {
+    "title": "Multi-script morphological transducers and transcribers for seven Turkic languages",
+    "rawauthor": "Washington, Jonathan North and Tyers, Francis Morton and Kuyruk{\\c{c",
+    "author": "washington and tyers and kuyrukcu",
+    "booktitle": "Proceedings of the Workshop on Turkic and Languages in Contact with Turkic",
+    "volume": "5",
+    "pages": "173--185",
+    "year": "2020"
+  },
+  "toleush2021development": {
+    "title": "Development of Morphological Segmentation for the Kyrgyz Language on Complete Set of Endings",
+    "rawauthor": "Toleush, Aigerim and Israilova, Nella and Tukeyev, Ualsher",
+    "author": "toleush and israilova and tukeyev",
+    "booktitle": "Intelligent Information and Database Systems: 13th Asian Conference, ACIIDS 2021, Phuket, Thailand, April 7--10, 2021, Proceedings 13",
+    "pages": "327--339",
+    "year": "2021",
+    "organization": "Springer"
+  },
+  "mirzakhalov2021evaluating": {
+    "title": "Evaluating Multiway Multilingual NMT in the Turkic Languages",
+    "rawauthor": "Mirzakhalov, Jamshidbek and Babu, Anoop and Kunafin, Aigiz and Wahab, Ahsan and Moydinboyev, Bekhzodbek and Ivanova, Sardana and Uzokova, Mokhiyakhon and Pulatova, Shaxnoza and Ataman, Duygu and Kreutzer, Julia and Tyers, Francis and Firat, Orhan and Licato, John and Chellappan, Sriram",
+    "author": "mirzakhalov and babu and kunafin and wahab and moydinboyev and ivanova and uzokova and pulatova and ataman and kreutzer and tyers and firat and licato and chellappan",
+    "booktitle": "Proceedings of the Sixth Conference on Machine Translation",
+    "pages": "518--530",
+    "year": "2021"
+  },
+  "mirzakhalov2021large": {
+    "title": "A Large-Scale Study of Machine Translation in Turkic Languages",
+    "rawauthor": "Mirzakhalov, Jamshidbek and Babu, Anoop and Ataman, Duygu and Kariev, Sherzod and Tyers, Francis and Abduraufov, Otabek and Hajili, Mammad and Ivanova, Sardana and Khaytbaev, Abror and Laverghetta Jr, Antonio and Moydinboyev, Behzodbek and Onal, Esra and Pulatova, Shaxnoza and Wahab, Ahsan and Firat, Orhan and Chellappan, Sriram",
+    "author": "mirzakhalov and babu and ataman and kariev and tyers and abduraufov and hajili and ivanova and khaytbaev and laverghetta and moydinboyev and onal and pulatova and wahab and firat and chellappan",
+    "booktitle": "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+    "pages": "5876--5890",
+    "year": "2021"
+  },
+  "kasieva2021corpus": {
+    "title": "CORPUS ANNOTATION TOOLS: KYRGYZ LANGUAGE CORPUS (USING TURKIC LEXICON APERTIUM AND PENN TREEBANK TOOLS)",
+    "rawauthor": "Kasieva, A. A. and Kadyrbekova, A. K.",
+    "author": "kasieva and kadyrbekova",
+    "booktitle": "Obshchestvo, yazyk i kultura XXI veka",
+    "pages": "207--214",
+    "year": "2021",
+    "cyrbooktitle": "Общество, язык и культура XXI века"
+  },
+  "arycoglu2021": {
+    "title": "Slovarnyy proekt sovremennogo kyrgyzskogo yazyka",
+    "rawauthor": "Arykoglu, Ekrem",
+    "author": "arikoglu",
+    "booktitle": "Obshchestvo, yazyk i kultura XXI veka",
+    "pages": "85--91",
+    "year": "2021",
+    "cyrtitle": "Словарный проект современного кыргызского языка",
+    "cyrbooktitle": "Общество, язык и культура XXI века"
+  },
+  "washington2022nfverb": {
+    "rawauthor": "Washington, J. and Tyers, F. and Salimzianov, I.",
+    "author": "washington and tyers and salimzianov",
+    "title": "Non-finite verb forms in Turkic exhibit syncretism, not multifunctionality",
+    "journal": "Folia Linguistica.",
+    "volume": "56",
+    "number": "3",
+    "year": "2022"
+  },
+  "kasieva2022disambiguation": {
+    "title": "KYRGYZ TILINDEGI ETIShTERDIN KOSh MAANILÜÜLÜGÜN ZhOYuU (zhany tüzülgön kyrgyz tilinin korpusunun negizinde)",
+    "rawauthor": "Kasieva, A. and Kadyrbekova, A.",
+    "author": "kasieva and kadyrbekova",
+    "journal": "IZVESTIYA VUZOV KYRGYZSTANA",
+    "volume": "6",
+    "year": "2022",
+    "cyrtitle": "КЫРГЫЗ ТИЛИНДЕГИ ЭТИШТЕРДИН КОШ МААНИЛҮҮЛҮГҮН ЖОЮУ (жаны түзүлгөн кыргыз тилинин корпусунун негизинде)",
+    "cyrjournal": "ИЗВЕСТИЯ ВУЗОВ КЫРГЫЗСТАНА"
+  },
+  "benli2023": {
+    "rawauthor": "Benli, Ibrahim",
+    "author": "benli",
+    "title": "UD\\_Kyrgyz-KTMU: UD for Kyrgyz",
+    "lastchecked": "20.07.2023",
+    "url": "{https://github.com/UniversalDependencies/UD_Kyrgyz-KTMU/",
+    "year": "2023"
+  },
+  "alekseev2023benchmarking": {
+    "title": "Benchmarking Multilabel Topic Classification in the Kyrgyz Language",
+    "rawauthor": "Alekseev, Anton and Nikolenko, Sergey I. and  Kabaeva, Gulnara",
+    "author": "alekseev and nikolenko and kabaeva",
+    "year": "2023",
+    "eprint": "2308.15952",
+    "archivePrefix": "arXiv",
+    "primaryClass": "cs.CL"
+  },
+  "alekseev2023embeddings": {
+    "rawauthor": "Alekseev, A. and Kabaeva, G.",
+    "author": "alekseev and kabaeva",
+    "title": "HJ-Ky-0.1: nabor dannykh dlya~otsenki kachestva vektornykh predstavleniy slov kyrgyzskogo yazyka",
+    "journal": "Herald of KSTU",
+    "volume": "4",
+    "year": "2023",
+    "cyrtitle": "HJ-Ky-0.1: набор данных для~оценки качества векторных представлений слов кыргызского языка"
+  },
+  "nazirova2023morph": {
+    "rawauthor": "Nazirova, E. and Abdurakhmonova, N. and Abidova, Sh. and Uzakova, M.",
+    "author": "nazirova and abdurakhmonova and abidova and uzakova",
+    "title": "Morfologicheskiy analiz slovoform v uzbekskom, karakalpakskom i kyrgyzskom yazykakh, prinadlezhashchikh k tyurkskoy seme yazykov.",
+    "booktitle": "TurkLang, Buxoro",
+    "year": "2023",
+    "cyrtitle": "Морфологический анализ словоформ в узбекском, каракалпакском и кыргызском языках, принадлежащих к тюркской семье языков."
+  },
+  "sadykov2023morph": {
+    "rawauthor": "Sadykov, T. S. and Turatali, T. and Turdubaeva, A. B.",
+    "author": "sadykov and turatali and turdubaeva",
+    "title": "Morfologicheskiy analiz dlya sbora tekstovykh dannykh v Natsionalnom korpuse kyrgyzskogo yazyka",
+    "booktitle": "TurkLang, Buxoro",
+    "year": "2023",
+    "cyrtitle": "Морфологический анализ для сбора текстовых данных в Национальном корпусе кыргызского языка"
+  },
+  "kasieva2023problems": {
+    "rawauthor": "Kasieva, A. and Dzhumalieva, G. and Tompson, A. and Yumashev, M. and Chontaeva, B. and Vashington, Dzh.",
+    "author": "kasieva and dzhumalieva and thompson and yumashev and chontaeva and washington",
+    "title": "Problemy kyrgyzskoy sintaksicheskoy annotatsii v freymvorke Universal Dependencies",
+    "booktitle": "TurkLang, Buxoro",
+    "year": "2023",
+    "cyrtitle": "Проблемы кыргызской синтаксической аннотации в фреймворке Universal Dependencies"
+  },
+  "dzhumalieva2023": {
+    "rawauthor": "Dzhumalieva, G. K. and Kasieva, A. A. and Musazhanova, S.Zh.",
+    "author": "dzhumalieva and kasieva and musazhanova",
+    "title": "Adaptatsiya terminov veb-proekta <<Universalnye zavisimosti>> na kyrgyzskiy yazyk",
+    "journal": "Vestnik KRSU",
+    "year": "2023",
+    "volume": "23~(6)",
+    "pages": "71-75",
+    "cyrtitle": "Адаптация терминов веб-проекта <<Универсальные зависимости>> на кыргызский язык",
+    "cyrjournal": "Вестник КРСУ"
+  },
+  "musazhanova2023": {
+    "rawauthor": "Musazhanova, S. Zh. and Kasieva, A. A. and Dzhumalieva, G. K.",
+    "author": "musazhanova and kasieva and dzhumalieva",
+    "title": "Cintaksicheskaya annotatsiya kyrgyzskogo yazyka na osnove novosozdannogo korpusa",
+    "journal": "Vestnik Issyk-Kulskogo universiteta",
+    "year": "2023",
+    "volume": "54 (2)",
+    "pages": "140--148",
+    "cyrtitle": "Cинтаксическая аннотация кыргызского языка на основе новосозданного корпуса",
+    "cyrjournal": "Вестник Иссык-Кульского университета"
+  },
+  "senel2024kardecs": {
+    "title": "Kardes-NLU: Transfer to Low-Resource Languages with the Help of a High-Resource Cousin --- A Benchmark and Evaluation for Turkic Languages",
+    "rawauthor": "Senel, L{\\",
+    "author": "senel and ebing and baghirova and schuetze and glavas",
+    "booktitle": "Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    "pages": "1672--1688",
+    "year": "2024",
+    "cyrtitle": "Karde{\\c{s"
+  },
+  "sadykov2018morfologicheskie": {
+    "title": "Morfologicheskie razmetki dlya natsionalnogo korpusa",
+    "rawauthor": "Sadykov, Tashpolot Sadykovich and Sharshembaev, Bakyt Sharshembaevich and Köchkönbaeva, Buazhar Osmonalievna",
+    "author": "sadykov and sharshembayev and kochkonbaeva",
+    "journal": "Vestnik Kyrgyzsko-Rossiyskogo Slavyanskogo universiteta",
+    "volume": "18",
+    "number": "1",
+    "pages": "91--94",
+    "year": "2018",
+    "publisher": "Gosudarstvennoe obrazovatelnoe uchrezhdenie vysshego professionalnogo"
+  },
+  "veitsman2024recentadvancementschallengesturkic": {
+    "title": "Recent Advancements and Challenges of Turkic Central Asian Language Processing",
+    "rawauthor": "Yana Veitsman",
+    "author": "veitsman",
+    "year": "2024",
+    "eprint": "2407.05006",
+    "archivePrefix": "arXiv",
+    "primaryClass": "cs.CL",
+    "url": "https://arxiv.org/abs/2407.05006"
+  },
+  "buazhar2018automatic": {
+    "title": "Automatic processing of text in natural language",
+    "rawauthor": "Buazhar, Kochkonbaeva and Aziza, Aldosova",
+    "author": "kochkonbaeva and aldosova",
+    "journal": "Byulleten nauki i praktiki",
+    "volume": "4",
+    "number": "7",
+    "pages": "216--221",
+    "year": "2018",
+    "publisher": "Izdatelskiy tsentr <<Nauka i praktika>>",
+    "cyrjournal": "Бюллетень науки и практики",
+    "cyrpublisher": "Издательский центр <<Наука и практика>>"
+  },
+  "kochkonbaeva2018morpho": {
+    "title": "O morfologicheskom analize v prilozheniyakh avtomaticheskoy obrabotki tekst",
+    "rawauthor": "Kochkonbaeva, Buazhar Osmonalievna",
+    "author": "kochkonbaeva",
+    "journal": "Byulleten nauki i praktiki",
+    "volume": "4",
+    "number": "12",
+    "pages": "608--612",
+    "year": "2018",
+    "publisher": "Izdatelskiy tsentr <<Nauka i praktika>>",
+    "cyrtitle": "О морфологическом анализе в приложениях автоматической обработки текст",
+    "cyrjournal": "Бюллетень науки и практики",
+    "cyrpublisher": "Издательский центр <<Наука и практика>>"
+  },
+  "sadykov1995foundations": {
+    "title": "Osnovy kyrgyzskoy fonologii i morfonologii",
+    "rawauthor": "Sadykov, Tashpolot",
+    "author": "sadykov",
+    "year": "1995",
+    "publisher": "Ilim",
+    "cyrtitle": "Основы кыргызской фонологии и морфонологии",
+    "cyrpublisher": "Илим"
+  },
+  "abduvaliev1997azyrky": {
+    "title": "Azyrky kyrgyz tili: morfologiya: zhogorku okuu zhaylarynyn filologiya fakultetterinin studentteri üchün okuu kitep",
+    "rawauthor": "Abduvaliev, Ibraim and Sadykov, Tashpolot",
+    "author": "abduvaliev and sadykov",
+    "year": "1997",
+    "publisher": "<<Kyrgyzstan-Soros>> fondu"
+  },
+  "tohti2008character": {
+    "title": "Character code conversion and misspelled word processing in Uyghur, Kazak, Kyrgyz multilingual information retrieval system",
+    "rawauthor": "Tohti, Turdi and Musajan, Winira and Hamdulla, Askar",
+    "author": "tohti and musajan and hamdulla",
+    "booktitle": "2008 International Conference on Advanced Language Processing and Web Information Technology",
+    "pages": "139--144",
+    "year": "2008",
+    "organization": "IEEE"
+  },
+  "sadykov1987problemy": {
+    "title": "Problemy modelirovaniya tyurkskoy morfologii",
+    "rawauthor": "Sadykov, T",
+    "author": "sadykov",
+    "journal": "Frunze: Ilim",
+    "pages": "3",
+    "year": "1987"
+  },
+  "bekarystankyzy2024integrated": {
+    "title": "Integrated End-to-End automatic speech recognition for languages for agglutinative languages",
+    "rawauthor": "Bekarystankyzy, Akbayan and Mamyrbayev, Orken and Anarbekova, Tolganay",
+    "author": "bekarystankyzy and mamyrbayev and anarbekova",
+    "journal": "ACM Transactions on Asian and Low-Resource Language Information Processing",
+    "year": "2024",
+    "publisher": "ACM New York, NY"
+  },
+  "isaev2023towards": {
+    "title": "Towards Kyrgyz stop words",
+    "rawauthor": "Isaev, Ruslan and Esenalieva, Gulzada and Doszhanov, Ermek",
+    "author": "isaev and esenalieva and doszhanov",
+    "journal": "Kalbotyra",
+    "volume": "76",
+    "pages": "54--65",
+    "year": "2023"
+  },
+  "ali2023improved": {
+    "title": "Improved Character-Based Neural Network for POS Tagging on Morphologically Rich Languages.",
+    "rawauthor": "Ali, Samat and Murat, Alim",
+    "author": "ali and murat",
+    "journal": "Journal of Information Processing Systems",
+    "volume": "19",
+    "number": "3",
+    "year": "2023"
+  },
+  "tukeyev2023new": {
+    "title": "A NEW COMPUTATIONAL MODEL FOR TURKIC LANGUAGES MORPHOLOGY AND PROCESSING",
+    "rawauthor": "Tukeyev, Ualsher",
+    "author": "tukeyev",
+    "journal": "Journal of Problems in Computer Science and Information Technologies",
+    "volume": "1",
+    "number": "1",
+    "year": "2023"
+  },
+  "du2022automatic": {
+    "title": "Automatic speech recognition for Uyghur, Kazakh, and Kyrgyz: An overview",
+    "rawauthor": "Du, Wenqiang and Maimaitiyiming, Yikeremu and Nijat, Mewlude and Li, Lantian and Hamdulla, Askar and Wang, Dong",
+    "author": "duwenqiang and maimaitiyiming and nijat and lixiuhong and hamdulla and wang",
+    "journal": "Applied Sciences",
+    "volume": "13",
+    "number": "1",
+    "pages": "326",
+    "year": "2022",
+    "publisher": "MDPI"
+  },
+  "koshueva2020phonetic": {
+    "title": "Phonetic features of sound-copying words based on the archival materials",
+    "rawauthor": "Koshueva, Mainisa and Abduvalieva, Elmira and Yzabekova, Dinara and Mamasadykov, Aibek and Abduvaliev, Ibraim and Abdullaeva, Zhypargul",
+    "author": "koshueva and abduvaliev and yzabekova and mamasadykov and abduvaliev and abdullaeva",
+    "journal": "Open Journal of Modern Linguistics",
+    "volume": "10",
+    "number": "6",
+    "pages": "665--674",
+    "year": "2020",
+    "publisher": "Scientific Research Publishing"
+  },
+  "vylomova2020sigmorphon": {
+    "title": "SIGMORPHON 2020 Shared Task 0: Typologically Diverse Morphological Inflection",
+    "rawauthor": "Vylomova, Ekaterina and White, Jennifer and Salesky, Elizabeth and Mielke, Sabrina J and Wu, Shijie and Ponti, Edoardo Maria and Hall Maudslay, Rowan and Zmigrod, Ran and Valvoda, Josef and Toldova, Svetlana and Tyers, Francis  and Klyachko, Elena  and Yegorov, Ilya  and Krizhanovsky, Natalia  and Czarnowska, Paula  and Nikkarinen, Irene  and Krizhanovsky, Andrew  and Pimentel, Tiago  and Torroba Hennigen, Lucas and Kirov, Christo  and Nicolai, Garrett  and Williams, Adina  and Anastasopoulos, Antonios  and Cruz, Hilaria  and Chodroff, Eleanor  and Cotterell, Ryan  and Silfverberg, Miikka  and Hulden, Mans",
+    "author": "vylomova and white and salesky and mielke and wu and ponti and hallmaudslay and zmigrod and valvoda and toldova and tyers and klyachko and yegorov and krizhanovskynatalia and czarnowska and nikkarinen and krizhanovsky and pimentel and hennigen and kirov and nicolai and williams and anastasopoulos and cruz and chodroff and cotterell and silfverberg and hulden",
+    "booktitle": "Proceedings of the 17th SIGMORPHON Workshop on Computational Research in Phonetics, Phonology, and Morphology",
+    "year": "2020"
+  },
+  "gatiatullin2020turkic": {
+    "title": "About Turkic Morpheme Portal.",
+    "rawauthor": "Gatiatullin, Ayrat and Suleymanov, Dzhavdet and Prokopyev, Nikolai and Khakimov, Bulat",
+    "author": "gatiatullin and suleymanov and prokopyev and khakimov",
+    "booktitle": "CMCL",
+    "pages": "226--243",
+    "year": "2020"
+  },
+  "li2020low": {
+    "title": "Low-resource text classification via cross-lingual language model fine-tuning",
+    "rawauthor": "Li, Xiuhong and Li, Zhe and Sheng, Jiabao and Slamu, Wushour",
+    "author": "lixiuhong and lizhe and sheng and slamu",
+    "booktitle": "China National Conference on Chinese Computational Linguistics",
+    "pages": "231--246",
+    "year": "2020",
+    "organization": "Springer"
+  },
+  "meyer2019multi": {
+    "title": "Multi-task and transfer learning in low-resource speech recognition",
+    "rawauthor": "Meyer, Josh",
+    "author": "meyer",
+    "year": "2019",
+    "school": "The University of Arizona"
+  },
+  "satybaev2019testirovanie": {
+    "title": "Testirovanie programmy morfologicheskogo analizatora estestvennogo yazyka",
+    "rawauthor": "Satybaev, Abdygany Dzhunusovich and Kochkonbaeva, Buazhar Osmonalievna",
+    "author": "satybaev and kochkonbaeva",
+    "journal": "Byulleten nauki i praktiki",
+    "volume": "5",
+    "number": "3",
+    "pages": "215--219",
+    "year": "2019",
+    "publisher": "Izdatelskiy tsentr <<Nauka i praktika>>"
+  },
+  "sadykov2015kompyuter": {
+    "rawauthor": "Sadykov, T. and Zhumalieva, G. E. and Tumonbaev M. Zh. and Sharshembiev, B.",
+    "author": "sadykov and zhumalieva and tumonbaev and sharshembiev",
+    "title": "Kompyuternye lingvisticheskie osnovy kyrgyzskogo yazyka",
+    "publisher": "Bishkek",
+    "year": "2015",
+    "cyrtitle": "Компьютерные лингвистические основы кыргызского языка",
+    "cyrpublisher": "Бишкек"
+  },
+  "shliazhko2024mgpt": {
+    "rawauthor": "Shliazhko, Oleh and Fenogenova, Alena and Tikhonova, Maria and Kozlova, Anastasia and Mikhailov, Vladislav and Shavrina, Tatiana",
+    "author": "shliazhko and fenogenova and tikhonova and kozlova and mikhailov and shavrina",
+    "title": "mGPT: Few-Shot Learners Go Multilingual",
+    "journal": "Transactions of the Association for Computational Linguistics",
+    "volume": "12",
+    "pages": "58-79",
+    "year": "2024",
+    "month": "01",
+    "issn": "2307-387X"
+  }
+}
