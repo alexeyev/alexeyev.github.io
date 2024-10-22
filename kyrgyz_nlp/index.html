@@ -3,6 +3,41 @@ layout: default
 title: KyrgyzNLP Scientometrics
 description: Kyrgyz NLP. Challenges, Progress, and Future (a webpage accompanying the talk by Anton Alekseev and Timur Turatali).
 ---
+<head>
+    <style>
+        .content ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .content li {
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #0074D9;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #005bb5;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <header class="masthead">
     <h1 class="masthead-title">
         <a href="{{ site.baseurl }}">KyrgyzNLP: Browsing, Bibliography, and Scientometrics</a>
@@ -17,8 +52,8 @@ description: Kyrgyz NLP. Challenges, Progress, and Future (a webpage accompanyin
     This is a webpage accompanying the talk <a href="/pdf/kyrgyz-nlp-slides_2024.pdf">KyrgyzNLP: Challenges, Progress, and Future</a> 
     given on October 18th, 2024 at the <a href="https://aistconf.org/">AIST-2024</a> conference.<br/><br/>
 
-    <ul>
-      <li><a href="/kyrgyz_nlp/bibliography">KyrgyzNLP bibliography browser</a></li>
-      <li><a href="/kyrgyz_nlp/coauthorship">Co-authorship graph</a></li>
-    <ul/>
+    <div class="button-container">
+        <a href="/kyrgyz_nlp/bibliography" class="button">KyrgyzNLP Bibliography Browser</a>
+        <a href="/kyrgyz_nlp/coauthorship" class="button">Co-authorship Graph</a>
+    </div>
 </div>
