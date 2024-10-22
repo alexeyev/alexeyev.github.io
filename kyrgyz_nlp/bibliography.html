@@ -1,0 +1,441 @@
+---
+layout: default
+title: KyrgyzNLP Papers Registry
+description: Kyrgyz NLP Research Papers Browser
+---
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Works on Kyrgyz Language Processing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            padding: 20px;
+            text-align: center;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            max-width: 850px;
+            margin: 0 auto 20px auto;
+        }
+        input {
+            padding: 10px;
+            width: 200px;
+            box-sizing: border-box;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px dotted lightgray;
+            padding: 15px;
+            margin: 10px auto;
+            border-radius: 12px;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+            max-width: 850px;
+            box-sizing: border-box;
+            text-align: left;
+            position: relative;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            word-wrap: break-word;
+            display: inline;
+        }
+        .card-year {
+            font-size: 14px;
+            color: gray;
+            margin-left: 5px;
+            display: inline;
+        }
+        .card-subtitle {
+            font-size: 14px;
+            color: gray;
+            margin-top: 5px;
+            word-wrap: break-word;
+        }
+        .card-authors {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .author-link {
+            color: blue;
+            text-decoration: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .author-separator {
+            margin: 0 5px;
+            color: gray;
+        }
+        .export-button {
+            padding: 4px 8px;
+            background-color: #BFD3E6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+        .export-all-button, .clear-filters-button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        .export-all-button {
+            background-color: #BFD3E6;
+            color: black;
+        }
+        .clear-filters-button {
+            background-color: lightgray;
+            color: black;
+        }
+        .export-all-container {
+            margin-bottom: 20px;
+        }
+        .results-info {
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 10px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border: 1px solid lightgray;
+            background-color: white;
+            z-index: 1000;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            text-align: left;
+            max-width: 500px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        .popup h3 {
+            margin-top: 0;
+        }
+        .close-button {
+            padding: 6px 10px;
+            background-color: #BFD3E6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>Research Works on Kyrgyz Language Processing</h1>
+    If you are aware of any computation- and data-oriented KyrgyzNLP studies not listed here, feel free to gmail me on <b>anton.m.alexeyev+kyrgyz</b>, will be happy to update the dataset.
+
+    <!-- Export All and Clear Filters Buttons -->
+    <div class="export-all-container">
+        <button class="export-all-button" onclick="exportAll('latin')">Export All (BibTeX, Latin)</button>
+        <button class="export-all-button" onclick="exportAll('cyrillic')">Export All (BibTeX, Cyrillic)</button>
+        <button class="clear-filters-button" onclick="clearFilters()">Clear Filters</button>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="author-filter" placeholder="Filter by author" oninput="applyFilters()">
+        <input type="text" id="title-filter" placeholder="Filter by title" oninput="applyFilters()">
+        <input type="number" id="year-start" placeholder="Year from" oninput="applyFilters()">
+        <input type="number" id="year-end" placeholder="Year to" oninput="applyFilters()">
+    </div>
+
+    <div id="results-info" class="results-info" style="display: none;"></div>
+
+    <div id="card-container">
+        <!-- Research cards will be generated here -->
+    </div>
+
+    <!-- Citation Export Popup -->
+    <div id="citation-popup" class="popup">
+        <button class="close-button" onclick="closePopup()">Close</button>
+        <h3>Citation Export</h3>
+        <p><strong>APA (Latin):</strong> <span id="apa-citation-latin"></span></p>
+        <p><strong>APA (Cyrillic):</strong> <span id="apa-citation-cyr"></span></p>
+        <p><strong>BibTeX (Latin):</strong> <pre id="bibtex-citation-latin"></pre></p>
+        <p><strong>BibTeX (Cyrillic):</strong> <pre id="bibtex-citation-cyr"></pre></p>
+    </div>
+    <div id="overlay" class="overlay" onclick="closePopup()"></div>
+
+    <script>
+        let researchData = [];
+        let authorsIndex = {};
+
+        // Fetch JSON data from the static folder
+        async function fetchData() {
+            try {
+                const authorsResponse = await fetch('static/authors_index.json');
+                const bibliographyResponse = await fetch('static/bibliography_joined.json');
+
+                authorsIndex = await authorsResponse.json();
+                const bibliographyData = await bibliographyResponse.json();
+
+                // Process bibliography data into an array
+                researchData = Object.keys(bibliographyData).map(key => {
+                    const entry = bibliographyData[key];
+                    return {
+                        title: entry.title,
+                        cyrtitle: entry.cyrtitle,
+                        authors: entry.author.split(' and '),
+                        year: parseInt(entry.year, 10),
+                        booktitle: entry.booktitle,
+                        journal: entry.journal,
+                        volume: entry.volume,
+                        number: entry.number,
+                        pages: entry.pages,
+                        publisher: entry.publisher,
+                        url: entry.url,
+                        citation: generateCitations(entry, key)
+                    };
+                });
+
+                initCards();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Generate APA and BibTeX citations in Latin and Cyrillic
+        function generateCitations(entry, key) {
+            const authorsRu = entry.author.split(' and ').map(authorKey => authorsIndex[authorKey]?.ru || authorKey).join(', ');
+            const authorsEn = entry.author.split(' and ').map(authorKey => authorsIndex[authorKey]?.en || authorKey).join(', ');
+
+            // Prepare Latin and Cyrillic citations separately
+            const apaLatin = `${authorsEn} (${entry.year}). ${entry.title}.`;
+            const apaCyr = `${authorsRu} (${entry.year}). ${entry.cyrtitle || entry.title}.`;
+
+            const bibtexFieldsLatin = {
+                author: authorsEn,
+                title: entry.title,
+                year: entry.year,
+                booktitle: entry.booktitle,
+                journal: entry.journal,
+                volume: entry.volume,
+                number: entry.number,
+                pages: entry.pages,
+                publisher: entry.publisher,
+                url: entry.url
+            };
+
+            const bibtexFieldsCyrillic = {
+                author: authorsRu,
+                title: entry.cyrtitle || entry.title,
+                year: entry.year,
+                booktitle: entry.booktitle,
+                journal: entry.journal,
+                volume: entry.volume,
+                number: entry.number,
+                pages: entry.pages,
+                publisher: entry.publisher,
+                url: entry.url
+            };
+
+            const bibtexLatin = generateBibTeX(bibtexFieldsLatin, key);
+            const bibtexCyr = generateBibTeX(bibtexFieldsCyrillic, key);
+
+            return { apaLatin, apaCyr, bibtexLatin, bibtexCyr };
+        }
+
+        // Generate BibTeX citation
+        function generateBibTeX(fields, key) {
+            let bibtex = `@${fields.journal ? 'article' : 'inproceedings'}{${key},\n`;
+            for (const [field, value] of Object.entries(fields)) {
+                if (value) {
+                    bibtex += `  ${field} = {${value}},\n`;
+                }
+            }
+            bibtex = bibtex.slice(0, -2) + '\n}'; // Remove last comma and add closing brace
+
+            return bibtex;
+        }
+
+        // Initialize the research cards
+        function initCards(data = researchData) {
+            const container = document.getElementById('card-container');
+            container.innerHTML = '';
+
+            const resultsInfo = document.getElementById('results-info');
+            resultsInfo.style.display = data.length > 0 ? 'block' : 'none';
+            resultsInfo.textContent = `${data.length} papers found`;
+
+            data.forEach((work, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Display main title (Latin or Cyrillic) and year
+                const title = document.createElement('div');
+                title.className = 'card-title';
+                title.textContent = work.cyrtitle ? work.cyrtitle : work.title;
+
+                const year = document.createElement('span');
+                year.className = 'card-year';
+                year.textContent = ` [${work.year}]`;
+                year.onclick = () => filterByYear(work.year);
+
+                title.appendChild(year);
+                card.appendChild(title);
+
+                const subtitle = document.createElement('div');
+                subtitle.className = 'card-subtitle';
+                if (work.cyrtitle && work.title !== work.cyrtitle) {
+                    subtitle.textContent = work.title;
+                    card.appendChild(subtitle);
+                }
+
+                // Display authors
+                const authorsContainer = document.createElement('div');
+                authorsContainer.className = 'card-authors';
+                work.authors.forEach((authorKey, i) => {
+                    const author = document.createElement('a');
+                    author.className = 'author-link';
+                    author.textContent = authorsIndex[authorKey]?.en || authorKey;
+                    author.onclick = () => filterByAuthor(authorsIndex[authorKey]?.en || authorKey);
+                    authorsContainer.appendChild(author);
+
+                    // Add bullet separator between authors
+                    if (i < work.authors.length - 1) {
+                        const separator = document.createElement('span');
+                        separator.className = 'author-separator';
+                        separator.textContent = '•';
+                        authorsContainer.appendChild(separator);
+                    }
+                });
+
+                card.appendChild(authorsContainer);
+
+                const exportButton = document.createElement('button');
+                exportButton.className = 'export-button';
+                exportButton.textContent = 'Export Citation';
+                exportButton.onclick = () => openPopup(index);
+
+                card.appendChild(exportButton);
+                container.appendChild(card);
+            });
+        }
+
+        // Clear filters
+        function clearFilters() {
+            document.getElementById('author-filter').value = '';
+            document.getElementById('title-filter').value = '';
+            document.getElementById('year-start').value = '';
+            document.getElementById('year-end').value = '';
+            applyFilters();
+        }
+
+        // Open popup with citation data
+        function openPopup(index) {
+            const popup = document.getElementById('citation-popup');
+            const citations = researchData[index].citation;
+
+            document.getElementById('apa-citation-latin').textContent = citations.apaLatin;
+            document.getElementById('apa-citation-cyr').textContent = citations.apaCyr;
+            document.getElementById('bibtex-citation-latin').textContent = citations.bibtexLatin;
+            document.getElementById('bibtex-citation-cyr').textContent = citations.bibtexCyr;
+
+            popup.style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        // Close popup
+        function closePopup() {
+            document.getElementById('citation-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Export all citations in a BibTeX file
+        function exportAll(format) {
+            let bibtex = '';
+
+            researchData.forEach(work => {
+                bibtex += format === 'latin' ? work.citation.bibtexLatin : work.citation.bibtexCyr;
+                bibtex += '\n\n';
+            });
+
+            downloadBibtex(bibtex, `research_works_${format}.bib`);
+        }
+
+        // Download BibTeX file
+        function downloadBibtex(content, filename) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+
+            URL.revokeObjectURL(url);
+        }
+
+        // Apply filters dynamically
+        function applyFilters() {
+            const authorFilter = document.getElementById('author-filter').value.toLowerCase();
+            const titleFilter = document.getElementById('title-filter').value.toLowerCase();
+            const yearStart = parseInt(document.getElementById('year-start').value, 10) || null;
+            const yearEnd = parseInt(document.getElementById('year-end').value, 10) || null;
+
+            const filteredData = researchData.filter(work => {
+                const authorMatch = work.authors.some(authorKey => {
+                    const authorNameEn = authorsIndex[authorKey]?.en.toLowerCase();
+                    const authorNameRu = authorsIndex[authorKey]?.ru.toLowerCase();
+                    return (authorNameEn?.startsWith(authorFilter) || authorNameRu?.startsWith(authorFilter));
+                });
+                const titleMatch = work.title.toLowerCase().includes(titleFilter) ||
+                                   (work.cyrtitle && work.cyrtitle.toLowerCase().includes(titleFilter));
+                const yearMatch = (!yearStart || work.year >= yearStart) &&
+                                  (!yearEnd || work.year <= yearEnd);
+                return authorMatch && titleMatch && yearMatch;
+            });
+
+            initCards(filteredData);
+        }
+
+        // Filter by author
+        function filterByAuthor(author) {
+            document.getElementById('author-filter').value = author;
+            applyFilters();
+        }
+
+        // Filter by year
+        function filterByYear(year) {
+            document.getElementById('year-start').value = year;
+            document.getElementById('year-end').value = year;
+            applyFilters();
+        }
+
+        // Initialize data fetching
+        fetchData();
+    </script>
+</body>
