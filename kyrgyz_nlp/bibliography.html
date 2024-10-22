@@ -3,6 +3,10 @@ layout: default
 title: KyrgyzNLP Papers Registry
 description: Kyrgyz NLP Research Papers Browser
 ---
+
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,10 +71,10 @@ description: Kyrgyz NLP Research Papers Browser
             margin-bottom: 10px;
         }
         .author-link {
-            color: blue;
             text-decoration: none;
             cursor: pointer;
-            margin-right: 5px;
+            margin-right: 3px;
+            margin-left: 3px;
         }
         .author-separator {
             margin: 0 5px;
@@ -152,7 +156,39 @@ description: Kyrgyz NLP Research Papers Browser
             white-space: pre-wrap;
             word-wrap: break-word;
         }
-    </style>
+
+    .label {
+        display: inline-block;
+        padding: 4px 4px;
+        border-radius: 4px;
+        font-size: 9px;
+        color: white;
+        margin: 2px 2px;
+        //opacity: 0.6;
+    }
+
+.label-MOR { background-color: rgb(120, 180, 200); }  /* Dusty Blue */
+.label-SEM { background-color: rgb(140, 200, 220); }  /* Soft Sky Blue */
+.label-COR { background-color: rgb(100, 160, 200); }  /* Slate Blue */
+.label-SYN { background-color: rgb(80, 140, 180); }   /* Steel Blue */
+.label-MSC { background-color: rgb(130, 170, 210); }  /* Light Azure */
+.label-APP { background-color: rgb(110, 150, 190); }  /* Muted Cyan */
+.label-DIC { background-color: rgb(90, 130, 170); }   /* Deep Cerulean */
+
+        .view-pdf-button {
+            padding: 4px 8px;
+            background-color: #BFD3E6; /* Same color as Export Citation */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10px;
+            margin-top: 10px;
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+</style>
 </head>
 <body>
     <h1>Research Works on Kyrgyz Language Processing</h1>
@@ -217,6 +253,7 @@ description: Kyrgyz NLP Research Papers Browser
                         pages: entry.pages,
                         publisher: entry.publisher,
                         url: entry.url,
+                        labels: entry.labels,
                         citation: generateCitations(entry, key)
                     };
                 });
@@ -281,6 +318,19 @@ description: Kyrgyz NLP Research Papers Browser
             return bibtex;
         }
 
+
+        // Function to create label elements
+        function createLabels(labelString) {
+            if (!labelString) return '';
+            const labels = labelString.split(', ');
+            return labels.map(label => {
+                const span = document.createElement('span');
+                span.className = `label label-${label}`;
+                span.textContent = label;
+                return span.outerHTML;
+            }).join(' ');
+        }
+
         // Initialize the research cards
         function initCards(data = researchData) {
             const container = document.getElementById('card-container');
@@ -335,12 +385,27 @@ description: Kyrgyz NLP Research Papers Browser
 
                 card.appendChild(authorsContainer);
 
+                const labelsContainer = document.createElement('div');
+                labelsContainer.className = 'card-labels';
+                labelsContainer.innerHTML = createLabels(work.labels);
+                card.appendChild(labelsContainer);
+
                 const exportButton = document.createElement('button');
                 exportButton.className = 'export-button';
                 exportButton.textContent = 'Export Citation';
                 exportButton.onclick = () => openPopup(index);
-
                 card.appendChild(exportButton);
+
+
+                // Add 'View PDF' button if URL is available
+                if (work.url) {
+                    const viewPdfButton = document.createElement('button');
+                    viewPdfButton.className = 'view-pdf-button';
+                    viewPdfButton.textContent = 'View PDF';
+                    viewPdfButton.onclick = () => window.open(work.url, '_blank');
+                    card.appendChild(viewPdfButton);
+                }
+
                 container.appendChild(card);
             });
         }

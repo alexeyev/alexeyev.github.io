@@ -11,7 +11,7 @@
     "labels": "MOR"
   },
   "washington2012finite": {
-    "title": "A finite-state morphological transducer for Kyrgyz.",
+    "title": "A finite-state morphological transducer for Kyrgyz",
     "rawauthor": "Washington, Jonathan North and Ipasov, Mirlan and Tyers, Francis M",
     "author": "washington and ipasov and tyers",
     "booktitle": "LREC",
@@ -21,13 +21,13 @@
     "labels": "MOR"
   },
   "problems2013musayev": {
-    "title": "Problemy i perspekt ivy razvitiya kompyuternoy lingvistiki v Kyrgyzstane",
+    "title": "Problemy i perspektivy razvitiya kompyuternoy lingvistiki v Kyrgyzstane",
     "rawauthor": "Musaev, S. Zh. and Karabaeva, S. Zh. and Imanalieva, A.I.",
     "author": "musayev and karabaeva and imanalieva",
     "booktitle": "PROCEEDINGS Of the I International Conference on Computer processing of Turkic Languages (TurkLang-2013)",
     "pages": "34--37",
     "year": "2013",
-    "cyrtitle": "Проблемы и перспект ивы развития компьютерной лингвистики в Кыргызстане",
+    "cyrtitle": "Проблемы и перспективы развития компьютерной лингвистики в Кыргызстане",
     "url": "http://www.turklang.org/wp-content/uploads/2017/05/TurkLang-2013-Proceedings.pdf",
     "labels": "MSC"
   },
@@ -41,15 +41,15 @@
     "pages": "148--154",
     "year": "2013",
     "cyrtitle": "<<Манас>> эпосунун улттук корпусун түзүү жөнүндө",
-    "cyrbooktitle": "Компьютерная обработка тюркских языков. Первая меж дународная конференция: Труды.",
+    "cyrbooktitle": "Компьютерная обработка тюркских языков. Первая международная конференция: Труды.",
     "cyrpublisher": "Астана: ЕНУ им. ЛН Гумилева.",
     "url": "http://www.turklang.org/wp-content/uploads/2017/05/TurkLang-2013-Proceedings.pdf",
     "labels": "COR, MSC"
   },
   "washington2014finite": {
-    "title": "Finite-state morphological transducers for three Kypchak languages.",
+    "title": "Finite-state morphological transducers for three Kypchak languages",
     "rawauthor": "Washington, Jonathan North and Salimzyanov, Ilnar and Tyers, Francis M",
-    "author": "washington and salimzyanov and tyers",
+    "author": "washington and salimzianov and tyers",
     "booktitle": "LREC",
     "pages": "3378--3385",
     "year": "2014",
@@ -85,7 +85,6 @@
     "pages": "400 pp.",
     "cyrtitle": "Кыргыз тили: компьютердик лингвистиканын негиздери",
     "cyrpublisher": "Бишкек: Имак офсет",
-    "url": "none",
     "labels": "MSC"
   },
   "bakasova2016": {
@@ -466,10 +465,10 @@
   "nazirova2023morph": {
     "rawauthor": "Nazirova, E. and Abdurakhmonova, N. and Abidova, Sh. and Uzakova, M.",
     "author": "nazirova and abdurakhmonova and abidova and uzakova",
-    "title": "Morfologicheskiy analiz slovoform v uzbekskom, karakalpakskom i kyrgyzskom yazykakh, prinadlezhashchikh k tyurkskoy seme yazykov.",
+    "title": "Morfologicheskiy analiz slovoform v uzbekskom, karakalpakskom i kyrgyzskom yazykakh, prinadlezhashchikh k tyurkskoy seme yazykov",
     "booktitle": "TurkLang, Buxoro",
     "year": "2023",
-    "cyrtitle": "Морфологический анализ словоформ в узбекском, каракалпакском и кыргызском языках, принадлежащих к тюркской семье языков.",
+    "cyrtitle": "Морфологический анализ словоформ в узбекском, каракалпакском и кыргызском языках, принадлежащих к тюркской семье языков",
     "labels": "MOR"
   },
   "sadykov2023morph": {
@@ -589,7 +588,6 @@
     "publisher": "Ilim",
     "cyrtitle": "Основы кыргызской фонологии и морфонологии",
     "cyrpublisher": "Илим",
-    "url": "none",
     "labels": "MOR"
   },
   "abduvaliev1997azyrky": {
@@ -616,7 +614,6 @@
     "journal": "Frunze: Ilim",
     "pages": "3",
     "year": "1987",
-    "url": "none",
     "labels": "MOR"
   },
   "bekarystankyzy2024integrated": {
@@ -641,7 +638,7 @@
     "labels": "DIC"
   },
   "ali2023improved": {
-    "title": "Improved Character-Based Neural Network for POS Tagging on Morphologically Rich Languages.",
+    "title": "Improved Character-Based Neural Network for POS Tagging on Morphologically Rich Languages",
     "rawauthor": "Ali, Samat and Murat, Alim",
     "author": "ali and murat",
     "journal": "Journal of Information Processing Systems",
@@ -698,7 +695,7 @@
     "labels": "MOR, COR"
   },
   "gatiatullin2020turkic": {
-    "title": "About Turkic Morpheme Portal.",
+    "title": "About Turkic Morpheme Portal",
     "rawauthor": "Gatiatullin, Ayrat and Suleymanov, Dzhavdet and Prokopyev, Nikolai and Khakimov, Bulat",
     "author": "gatiatullin and suleymanov and prokopyev and khakimov",
     "booktitle": "CMCL",
@@ -748,7 +745,6 @@
     "year": "2015",
     "cyrtitle": "Компьютерные лингвистические основы кыргызского языка",
     "cyrpublisher": "Бишкек",
-    "url": "none",
     "labels": "MSC"
   },
   "shliazhko2024mgpt": {
