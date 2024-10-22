@@ -20,8 +20,8 @@ description: Kyrgyz NLP Co-Authorship Interactive Visualization
             font-size: 14px;
         }
         #graph {
-          //width: 760x;
-          //height: 400px;
+          width: 760x;
+          height: 400px;
           border: 1px solid gray;
         }
         svg {
@@ -37,7 +37,7 @@ description: Kyrgyz NLP Co-Authorship Interactive Visualization
             //width:150px;
             margin: 10px;
             background-color: #BFD3E6;
-            color: white;
+            color: black;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -282,7 +282,7 @@ description: Kyrgyz NLP Co-Authorship Interactive Visualization
         // Create a temporary download link and trigger the download
         const downloadLink = document.createElement("a");
         downloadLink.href = url;
-        downloadLink.download = "graph.svg";
+        downloadLink.download = "kyrgyz-nlp-coauthorship-network.svg";
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
