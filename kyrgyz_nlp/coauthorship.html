@@ -112,8 +112,8 @@ description: Kyrgyz NLP Co-Authorship Interactive Visualization
         authorPositions = data;
 
         // Normalize positions
-        const width = 760;
-        const height = 400;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
         authorPositions.forEach(pos => {
             normalizedPositions[pos.author_id] = {
