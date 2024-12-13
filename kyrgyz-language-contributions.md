@@ -18,7 +18,7 @@ description: papers, models, data, tools, cheatsheets, etc.
 
 ### Models
 
-* Trained a better-performing fastText embeddings, will to be published on Zenodo soon.
+* Trained a better-performing fastText embeddings, will be published on Zenodo soon.
 
 ### Tools (including issues and pull requests)
 
