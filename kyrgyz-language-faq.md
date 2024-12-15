@@ -4,38 +4,38 @@ title: Frequently Asked Questions
 description: What people ask about Kyrgyz NLP, Kyrgyz language and my venture into its depths
 ---
 
-# Frequently Asked Questions
+### Frequently Asked Questions
 
 These are my responses to questions I am tired of answering repeatedly.
 
 ---
 
-## What’s so special about the Kyrgyz language? Does it require any unique NLP methods?
+#### What’s so special about the Kyrgyz language? Does it require any unique NLP methods?
 
 The best answer I can give so far is our [paper on Kyrgyz NLProc](https://arxiv.org/pdf/2411.05503), particularly sections 3 and 4.
 
-## Do you speak Kyrgyz?
+#### Do you speak Kyrgyz?
 
 Not yet.
 
-## …Then how can you work with the Kyrgyz language?!
+#### …Then how can you work with the Kyrgyz language?!
 
 NLP researchers often work with languages they don’t speak. No one expects those developing models for hundreds of languages, or even working with extinct languages, to be fluent in all of them — so why is this *an issue for me*? 🙂  
 That said, I only take criticism on this topic from those who have already contributed to Kyrgyz NLP. Otherwise, it’s just gatekeeping, which is counterproductive given the current state of the field.  
 
 Of course, there are limitations. I can’t work on tasks requiring manual evaluation of colloquial usage, syntax nuances, or similar expertise. In such cases, I either avoid those tasks or collaborate with native speakers and language experts.
 
-## You collaborate with Kyrgyz institutions. Is your work motivated by Russia’s foreign affairs? (Why else would a Russian suddenly focus on Kyrgyzstan?)
+#### You collaborate with Kyrgyz institutions. Is your work motivated by Russia’s foreign affairs? (Why else would a Russian suddenly focus on Kyrgyzstan?)
 
 I do research for the sake of research — mostly for the fun of it, not profit. It’s a rare privilege to work on something simply because you can and because you care. I’m also writing my doctoral thesis at KSTU n.a. I. Razzakov, and that’s the extent of it. Maybe I should care more about political implications, but I don’t. See also my response to the last question.
 
-## Is your work motivated by non-Russian foreign affairs (since you promote working on Kyrgyz language tools)?
+#### Is your work motivated by non-Russian foreign affairs (since you promote working on Kyrgyz language tools)?
 
 Actually, I work on Russian NLP as well!
 
 Again, I don’t care about such labels. I research for the sake of research — mostly for fun and personal interest. It’s a privilege to work on something purely because you care. Also, as mentioned, I’m writing my doctoral thesis at KSTU n.a. I. Razzakov. That’s all there is to it. For more context, see the response to the last question.
 
-## Why did you choose Kyrgyz NLP?
+#### Why did you choose Kyrgyz NLP?
 
 This is by far the most common question. There are several reasons.
 
