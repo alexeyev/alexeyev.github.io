@@ -27,6 +27,7 @@ description: papers, models, data, tools, cheatsheets, etc.
 ### Other Materials 
 ...supporting the development of Kyrgyz NLP
 
+* [KyrgyzNLP bibliometrics](https://kyrgyznlp.github.io/): all papers on KyrgyzNLP I am aware of + the co-authorship graph
 * Awesome Kyrgyz NLP on [github](https://github.com/alexeyev/awesome-kyrgyz-nlp): curated list of Kyrgyz language processing software, relevant datasets, etc.
 * Apertium's List of Symbols: [PDF poster](https://alexeyev.github.io/pdf/Apertium-List_of_Symbols.pdf), A0 format; tables copied from the <a href="https://wiki.apertium.org/w/index.php?title=List_of_symbols">Apertium Project Wiki</a>
 * Apertium tags description: a [PDF table](https://alexeyev.github.io/pdf/apertium-tags-comments-russian.pdf); Apertium tags glossary translated into Russian where possible.
