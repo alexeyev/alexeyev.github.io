@@ -6,7 +6,7 @@ description: papers, models, data, tools, cheatsheets, etc.
 ### Papers
 
 #### 2025
-* A. Alekseev, A. Tillabaeva, G. Dzh. Kabaeva, and S. I. Nikolenko. Syntax Transfer to Kyrgyz Using the Treebank Translation Method (in print). Journal of Mathematical Sciences, 2025.
+* A. Alekseev, A. Tillabaeva, G. Dzh. Kabaeva, and S. I. Nikolenko. Syntactic Transfer to Kyrgyz Using the Treebank Translation Method (in print). Journal of Mathematical Sciences, 2025. [arXiv](https://arxiv.org/abs/2412.13146)
 * A. Drozin and A. Alekseev. Label Transfer Across Languages for Information Extraction: Yet Another Alignment-Based Approach (in print). Системы управления и цифровые технологии, 2025
 
 #### 2024
