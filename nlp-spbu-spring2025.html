@@ -1,0 +1,51 @@
+---
+layout: default
+title: NLP course at MCS Department of SPbU (2025)
+description: NLP course materials in Russian, 2025, MCS Department of SPbU. From Zipf's law to PEFT for neural LMs
+---
+<header class="masthead">
+    <h1 class="masthead-title">
+        <a href="{{ site.baseurl }}">NLP, SPbU, Spring 2023</a>
+    </h1>
+    <nav class="masthead-nav">
+        {% for nav in site.nav %}
+        <a href="{{ nav.href }}">{{ nav.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+
+<div class="content list">
+	<h4>Exam questions</h4>
+	<ol>
+<li> Zipf's Law, its importance for NLP. Language processing in information retrieval: lemmatization, 
+	stemming, Boolean search, inverted indices, execution of Boolean queries on them, skip-lists.
+<li> Language processing in information retrieval: vector space model, cosine distance, TF-IDF.
+	Common ways of representing texts for machine learning tasks.
+<li>String distances and the algorithms for their computation: Hamming distance, Jaro-Winkler distance, 
+	Levenshtein distance, the longest common subsequence, Jaccard distance for character N-grams. Indices for typos detection/correction in words.
+<li>  Markov chains. Ergodic theorem. PageRank and Markov chains. Direct applications in the text analysis.
+<li>  Elements of information theory: self-information, bit, pointwise mutual information, Kullback-Leibler divergence,
+	Shannon entropy, its interpretations. Cross-entropy. Example of an application: collocations extraction.
+<li> Language modeling. N-gram models. Perplexity. The reasons for doing smoothing. Additive (Laplace) smoothing. 
+	Interpolation and backoff. The ideas on which the Kneser-Ney smoothing is based.
+<li> Language modeling. Probabilistic Neural Language Model (2003). AWD-LSTM (2017). Perplexity.
+<li> Vector semantics: term-document matrices, term-context matrices, HAL. SVD, LSA, NMF. Methods for quality evaluation 
+	of vector semantics models.
+<li> Vector semantics: what is word2vec (the core principles of the SGNS algorithm and its relationship with 
+	matrix factorization), word2vec as a neural network. Methods for quality evaluation of vector semantics models.
+<li>  Sequence tagging. PoS tagging. Named entity recognition. Hidden Markov models. 
+		Estimation of the probability of a sequence of states. 
+		Estimation of the probability of a sequence of observations. 
+		Quality evaluation.
+<li>  Sequence tagging. PoS tagging. Named entity recognition. Hidden Markov models. 
+		Decoding of the most probable sequence of states (Veterbi algorithm without proof). 
+    Quality evaluation.
+<li>  Sequence tagging. PoS tagging. Named entity recognition. Structured perceptron. 
+		Structured perceptron training. Sequente tagging quality evaluation.
+<li>  Neural sequence tagging. Simple RNN aproach, bidirectional RNNs, biLSTM-CRF.
+<li>Encoding-decoding approach in NLP. OOV tokens processing. BPE. 'Transformer' architecture.
+<li>Transfer learning. ELMo. BERT.
+<li>PEFT.
+<!--<li>  ... 
+	</ol>
+</div>
