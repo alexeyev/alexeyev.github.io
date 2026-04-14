@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Минута на всё про всё</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #222; overscroll-behavior: none; }
+  #app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+  header { padding: 10px 14px; background: #fff; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  #prompt { font-size: 1.25em; font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #timer { font-size: 1.25em; font-variant-numeric: tabular-nums; color: #333; font-weight: 600; }
+  #timer.urgent { color: #d33; }
+  main { flex: 1; position: relative; overflow: hidden; background: #fff; }
+  canvas { display: block; background: #fff; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
+  footer { display: flex; gap: 8px; padding: 8px; background: #fff; border-top: 1px solid #ddd; }
+  button { flex: 1; padding: 14px 10px; font-size: 1em; border: 1px solid #ccc; background: #fafafa; border-radius: 6px; cursor: pointer; font-family: inherit; color: inherit; }
+  button.primary { background: #2a7f4f; color: #fff; border-color: #2a7f4f; }
+  button.danger { background: #fff; color: #c33; border-color: #e2b0b0; }
+  button:active { transform: scale(0.98); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .screen { position: absolute; inset: 0; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; gap: 16px; z-index: 10; overflow: auto; }
+  .screen.hidden { display: none; }
+  .screen h1 { font-size: 1.8em; }
+  .screen p { font-size: 1.05em; color: #555; max-width: 520px; line-height: 1.4; }
+  .screen label { font-size: 1em; display: flex; align-items: center; gap: 8px; }
+  .screen input[type=number] { font-size: 1em; padding: 6px 8px; width: 90px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+  #endActions, #startActions { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 320px; }
+  #endActions button, #startActions button { flex: 0 0 auto; }
+  .muted { color: #888; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div id="prompt">Загрузка…</div>
+    <div id="timer">1:00</div>
+  </header>
+  <main>
+    <canvas id="canvas"></canvas>
+
+    <div id="startScreen" class="screen">
+      <h1>Минута на всё про всё</h1>
+      <p>Вам будут показаны подсказки — на каждый рисунок даётся 1 минута. После серии рисунков можно сохранить результаты как NDJSON и PNG.</p>
+      <label>Сколько рисунков: <input id="count" type="number" value="6" min="1" max="100"></label>
+      <div id="startActions">
+        <button id="startBtn" class="primary">Начать</button>
+      </div>
+      <p id="loadStatus" class="muted"></p>
+    </div>
+
+    <div id="endScreen" class="screen hidden">
+      <h1>Готово!</h1>
+      <p id="endSummary"></p>
+      <div id="endActions">
+        <button id="savePngs" class="primary">Сохранить PNG + NDJSON (ZIP)</button>
+        <button id="saveNdjson">Сохранить только NDJSON</button>
+        <button id="restartBtn">Ещё одна сессия</button>
+        <button id="discardBtn" class="danger">Выйти без сохранения</button>
+      </div>
+<!--      <p class="muted">NDJSON содержит по одному JSON на строку: слово, штрихи (x, y, t) и метаданные.</p>-->
+    </div>
+  </main>
+  <footer id="controls" style="display:none">
+    <button id="clearBtn">Стереть</button>
+    <button id="skipBtn">Пропустить</button>
+    <button id="doneBtn" class="primary">Готово</button>
+  </footer>
+</div>
+
+<!-- JSZip: needed only to pack PNGs + NDJSON into one download. ~95KB, loaded from CDN. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+'use strict';
+
+// ---- Config ---------------------------------------------------------------
+const PROMPTS_URL = '../static/gym-prompts-russian.txt'; // relative to this page
+const DRAW_SECONDS = 60;
+const STROKE_WIDTH = 3;
+// ---------------------------------------------------------------------------
+
+const $ = id => document.getElementById(id);
+const canvas = $('canvas');
+const ctx = canvas.getContext('2d');
+
+let prompts = [];
+let session = [];         // completed drawings {word, drawing, ...}
+let sessionPrompts = [];  // prompts chosen for this session
+let currentIndex = 0;
+let currentStrokes = [];  // [[x[], y[], t[]], ...]
+let currentStroke = null;
+let startTime = 0;
+let timerInterval = null;
+let drawing = false;
+let activePointerId = null;
+
+// ---- Canvas sizing (HiDPI) ------------------------------------------------
+function resizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width  = Math.max(1, Math.round(rect.width  * dpr));
+  canvas.height = Math.max(1, Math.round(rect.height * dpr));
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = STROKE_WIDTH;
+  ctx.strokeStyle = '#000';
+  redraw();
+}
+
+function redraw() {
+  const rect = canvas.getBoundingClientRect();
+  ctx.clearRect(0, 0, rect.width, rect.height);
+  for (const [xs, ys] of currentStrokes) {
+    if (!xs.length) continue;
+    ctx.beginPath();
+    ctx.moveTo(xs[0], ys[0]);
+    if (xs.length === 1) {
+      ctx.lineTo(xs[0] + 0.1, ys[0] + 0.1);
+    } else {
+      for (let i = 1; i < xs.length; i++) ctx.lineTo(xs[i], ys[i]);
+    }
+    ctx.stroke();
+  }
+}
+
+// ---- Pointer drawing ------------------------------------------------------
+function pointerPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  return [e.clientX - rect.left, e.clientY - rect.top];
+}
+
+canvas.addEventListener('pointerdown', e => {
+  if ($('controls').style.display === 'none') return;
+  if (activePointerId !== null) return; // ignore multi-touch
+  activePointerId = e.pointerId;
+  canvas.setPointerCapture(e.pointerId);
+  drawing = true;
+  const [x, y] = pointerPos(e);
+  const t = Date.now() - startTime;
+  currentStroke = [[x], [y], [t]];
+  currentStrokes.push(currentStroke);
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  e.preventDefault();
+});
+
+canvas.addEventListener('pointermove', e => {
+  if (!drawing || e.pointerId !== activePointerId) return;
+  const [x, y] = pointerPos(e);
+  const t = Date.now() - startTime;
+  const s = currentStroke;
+  // thin out duplicate points
+  const lx = s[0][s[0].length - 1], ly = s[1][s[1].length - 1];
+  if (Math.abs(x - lx) < 0.5 && Math.abs(y - ly) < 0.5) return;
+  s[0].push(x); s[1].push(y); s[2].push(t);
+  ctx.lineTo(x, y);
+  ctx.stroke();
+  e.preventDefault();
+});
+
+function endStroke(e) {
+  if (!drawing) return;
+  if (e && e.pointerId !== activePointerId) return;
+  drawing = false;
+  activePointerId = null;
+  if (currentStroke && currentStroke[0].length === 1) {
+    // draw a dot for a single-tap stroke
+    ctx.lineTo(currentStroke[0][0] + 0.1, currentStroke[1][0] + 0.1);
+    ctx.stroke();
+  }
+  currentStroke = null;
+}
+canvas.addEventListener('pointerup', endStroke);
+canvas.addEventListener('pointercancel', endStroke);
+canvas.addEventListener('pointerleave', endStroke);
+
+// prevent any context menu / long-press selection
+canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+// ---- Timer & flow ---------------------------------------------------------
+function fmtTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function updateTimer() {
+  const elapsed = (Date.now() - startTime) / 1000;
+  const remaining = Math.max(0, DRAW_SECONDS - elapsed);
+  $('timer').textContent = fmtTime(remaining);
+  $('timer').classList.toggle('urgent', remaining <= 10);
+  if (remaining <= 0) finishCurrent(false);
+}
+
+function startCurrent() {
+  if (currentIndex >= sessionPrompts.length) return endSession();
+  $('prompt').textContent = `Нарисуйте: ${sessionPrompts[currentIndex]}`;
+  currentStrokes = [];
+  currentStroke = null;
+  drawing = false;
+  activePointerId = null;
+  redraw();
+  startTime = Date.now();
+  if (timerInterval) clearInterval(timerInterval);
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 200);
+  $('controls').style.display = 'flex';
+}
+
+function finishCurrent(completed) {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  const duration = Date.now() - startTime;
+  const rect = canvas.getBoundingClientRect();
+  // Snapshot PNG data URL now, while canvas still shows this drawing
+  const pngDataUrl = canvas.toDataURL('image/png');
+  session.push({
+    word: sessionPrompts[currentIndex],
+    index: currentIndex,
+    completed,
+    duration_ms: duration,
+    canvas_width: Math.round(rect.width),
+    canvas_height: Math.round(rect.height),
+    timestamp: new Date().toISOString(),
+    drawing: currentStrokes.map(s => [s[0].slice(), s[1].slice(), s[2].slice()]),
+    _png: pngDataUrl // kept in memory only; stripped from NDJSON output
+  });
+  currentIndex++;
+  if (currentIndex >= sessionPrompts.length) endSession();
+  else startCurrent();
+}
+
+function endSession() {
+  $('controls').style.display = 'none';
+  $('prompt').textContent = '—';
+  $('timer').textContent = '0:00';
+  $('timer').classList.remove('urgent');
+  const completed = session.filter(s => s.completed).length;
+  $('endSummary').textContent = `Всего рисунков: ${session.length}, завершено до таймера: ${completed}.`;
+  $('endScreen').classList.remove('hidden');
+}
+
+// ---- Output ---------------------------------------------------------------
+function buildNdjson() {
+  return session.map(item => {
+    const copy = Object.assign({}, item);
+    delete copy._png;
+    return JSON.stringify(copy);
+  }).join('\n') + '\n';
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function safeName(s) {
+  return s.replace(/[^\p{L}\p{N}_-]+/gu, '_').replace(/^_+|_+$/g, '') || 'item';
+}
+
+function sessionStamp() {
+  const d = new Date();
+  const p = n => n.toString().padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+
+$('saveNdjson').addEventListener('click', () => {
+  if (!session.length) return;
+  const blob = new Blob([buildNdjson()], { type: 'application/x-ndjson' });
+  downloadBlob(blob, `drawings_${sessionStamp()}.ndjson`);
+});
+
+$('savePngs').addEventListener('click', async () => {
+  if (!session.length) return;
+  const btn = $('savePngs');
+  btn.disabled = true;
+  const oldText = btn.textContent;
+  btn.textContent = 'Упаковка…';
+  try {
+    if (typeof JSZip === 'undefined') throw new Error('JSZip не загружен (нет интернета?)');
+    const zip = new JSZip();
+    session.forEach((item, i) => {
+      const base64 = item._png.split(',')[1];
+      const name = `${(i+1).toString().padStart(3,'0')}_${safeName(item.word)}.png`;
+      zip.file(name, base64, { base64: true });
+    });
+    zip.file('drawings.ndjson', buildNdjson());
+    const blob = await zip.generateAsync({ type: 'blob' });
+    downloadBlob(blob, `drawings_${sessionStamp()}.zip`);
+  } catch (e) {
+    alert('Не удалось собрать ZIP: ' + e.message + '\nСохраняю только NDJSON.');
+    const blob = new Blob([buildNdjson()], { type: 'application/x-ndjson' });
+    downloadBlob(blob, `drawings_${sessionStamp()}.ndjson`);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = oldText;
+  }
+});
+
+// ---- Controls -------------------------------------------------------------
+$('clearBtn').addEventListener('click', () => {
+  currentStrokes = []; currentStroke = null; drawing = false; activePointerId = null; redraw();
+});
+$('skipBtn').addEventListener('click', () => finishCurrent(false));
+$('doneBtn').addEventListener('click', () => finishCurrent(true));
+$('restartBtn').addEventListener('click', () => location.reload());
+$('discardBtn').addEventListener('click', () => {
+  if (confirm('Выйти без сохранения? Все рисунки из этой сессии будут потеряны.')) location.reload();
+});
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+$('startBtn').addEventListener('click', () => {
+  if (!prompts.length) return;
+  const raw = parseInt($('count').value, 10) || 1;
+  const n = Math.max(1, Math.min(prompts.length, raw));
+  sessionPrompts = shuffle(prompts).slice(0, n);
+  session = [];
+  currentIndex = 0;
+  $('startScreen').classList.add('hidden');
+  resizeCanvas(); // make sure canvas matches its now-visible main area
+  startCurrent();
+});
+
+// ---- Init -----------------------------------------------------------------
+async function loadPrompts() {
+  $('loadStatus').textContent = 'Загрузка списка…';
+  try {
+    const res = await fetch(PROMPTS_URL, { cache: 'no-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    prompts = text.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+    if (!prompts.length) throw new Error('список пуст');
+    $('loadStatus').textContent = `Загружено: ${prompts.length}`;
+    $('prompt').textContent = 'Готово. Нажмите «Начать».';
+    const c = $('count');
+    c.max = prompts.length;
+    if (parseInt(c.value, 10) > prompts.length) c.value = prompts.length;
+    $('startBtn').disabled = false;
+  } catch (e) {
+    $('loadStatus').textContent = `Ошибка загрузки ${PROMPTS_URL}: ${e.message}`;
+    $('prompt').textContent = 'Ошибка загрузки';
+    $('startBtn').disabled = true;
+  }
+}
+
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
+resizeCanvas();
+loadPrompts();
+</script>
+</body>
+</html>
