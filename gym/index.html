@@ -6,14 +6,14 @@
 <title>Минута на всё про всё</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #222; overscroll-behavior: none; }
+  html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #444; overscroll-behavior: none; }
   #app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
   header { padding: 10px 14px; background: #fff; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   #prompt { font-size: 1.25em; font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #timer { font-size: 1.25em; font-variant-numeric: tabular-nums; color: #333; font-weight: 600; }
   #timer.urgent { color: #d33; }
   main { flex: 1; position: relative; overflow: hidden; background: #fff; }
-  canvas { display: block; background: #fff; width: 100%; height: 100%; touch-action: none; cursor: crosshair; border: 1px solid #ccc; }
+  canvas { display: block; background: #fff; width: 100%; height: 100%; touch-action: none; cursor: crosshair;}
   footer { display: flex; gap: 8px; padding: 8px; background: #fff; border-top: 1px solid #ddd; }
   button { flex: 1; padding: 14px 10px; font-size: 1em; border: 1px solid #ccc; background: #fafafa; border-radius: 6px; cursor: pointer; font-family: inherit; color: inherit; }
   button.primary { background: #999; color: #fff; border-color: #fff; }
@@ -356,6 +356,12 @@ async function loadPrompts() {
 
 window.addEventListener('resize', resizeCanvas);
 window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
+if (window.ResizeObserver) {
+  new ResizeObserver(() => resizeCanvas()).observe(canvas);
+}
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', resizeCanvas);
+}
 resizeCanvas();
 loadPrompts();
 </script>
