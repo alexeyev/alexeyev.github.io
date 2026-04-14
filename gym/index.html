@@ -41,11 +41,10 @@
     <canvas id="canvas"></canvas>
 
     <div id="startScreen" class="screen">
-      <h1>Минута на всё про всё</h1>
       <p>На каждый рисунок даётся 1 минута. После можно сохранить.</p>
-      <label>Сколько рисунков: <input id="count" type="number" value="3" min="1" max="100"></label>
+      <label>Сколько подряд: <input id="count" type="number" value="3" min="1" max="100"></label>
       <div id="startActions">
-        <button id="startBtn" class="primary">Начать</button>
+        <button id="startBtn" class="primary">Стартуем</button>
       </div>
       <p id="loadStatus" class="muted"></p>
     </div>
@@ -342,8 +341,8 @@ async function loadPrompts() {
     const text = await res.text();
     prompts = text.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
     if (!prompts.length) throw new Error('список пуст');
-    $('loadStatus').textContent = `Загружено: ${prompts.length}`;
-    $('prompt').textContent = 'Готово. Нажмите «Начать».';
+    $('loadStatus').textContent = `Всего слов: ${prompts.length}`;
+    $('prompt').textContent = '';
     const c = $('count');
     c.max = prompts.length;
     if (parseInt(c.value, 10) > prompts.length) c.value = prompts.length;
