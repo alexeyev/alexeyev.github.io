@@ -38,14 +38,38 @@
     margin-top: 4px;
   }
   .gallery-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .gallery-item img {
+  .gallery-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    cursor: pointer;
+  }
+  .gallery-thumb {
+    position: relative;
     width: 100%;
     aspect-ratio: 1;
+  }
+  .gallery-thumb img {
+    width: 100%; height: 100%;
     object-fit: contain;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
+    display: block;
+    transition: opacity 0.15s;
   }
+  .gallery-thumb .overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9em; color: #222; font-weight: 500;
+    background: rgba(255,255,255,0.0);
+    opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+    border-radius: 4px;
+  }
+  .gallery-item:hover .gallery-thumb img,
+  .gallery-item:focus-visible .gallery-thumb img { opacity: 0.35; }
+  .gallery-item:hover .gallery-thumb .overlay,
+  .gallery-item:focus-visible .gallery-thumb .overlay { opacity: 1; }
   .gallery-item .cap {
     font-size: 0.85em;
     color: #555;
@@ -264,18 +288,39 @@ function endSession() {
   $('endSummary').textContent = `Всего рисунков: ${session.length}, завершено за минуту: ${completed}.`;
   const gallery = $('gallery');
   gallery.innerHTML = '';
-  session.forEach(item => {
+  session.forEach((item, i) => {
     const div = document.createElement('div');
     div.className = 'gallery-item' + (item.completed ? '' : ' skipped');
+    div.tabIndex = 0;
+    div.title = `Скачать PNG: ${item.word}`;
+
+    const thumb = document.createElement('div');
+    thumb.className = 'gallery-thumb';
+
     const img = document.createElement('img');
     img.src = item._png;
     img.alt = item.word;
     img.loading = 'lazy';
+
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    overlay.textContent = 'скачать PNG';
+
+    thumb.appendChild(img);
+    thumb.appendChild(overlay);
+
     const cap = document.createElement('div');
     cap.className = 'cap';
     cap.textContent = item.word;
-    div.appendChild(img);
+
+    div.appendChild(thumb);
     div.appendChild(cap);
+
+    div.addEventListener('click', () => downloadOnePng(item, i));
+    div.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); downloadOnePng(item, i); }
+    });
+
     gallery.appendChild(div);
   });
   $('endScreen').classList.remove('hidden');
@@ -296,6 +341,17 @@ function downloadBlob(blob, filename) {
   a.href = url; a.download = filename;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function downloadOnePng(item, i) {
+  // data URL → Blob, so the filename in `download=` is honoured everywhere
+  const base64 = item._png.split(',')[1];
+  const bytes = atob(base64);
+  const buf = new Uint8Array(bytes.length);
+  for (let k = 0; k < bytes.length; k++) buf[k] = bytes.charCodeAt(k);
+  const blob = new Blob([buf], { type: 'image/png' });
+  const name = `${(i+1).toString().padStart(3,'0')}_${safeName(item.word)}.png`;
+  downloadBlob(blob, name);
 }
 
 function safeName(s) {
