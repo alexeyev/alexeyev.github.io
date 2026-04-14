@@ -29,6 +29,31 @@
   #endActions, #startActions { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 320px; }
   #endActions button, #startActions button { flex: 0 0 auto; }
   .muted { color: #888; font-size: 0.9em; }
+  #gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 720px;
+    margin-top: 4px;
+  }
+  .gallery-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .gallery-item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .gallery-item .cap {
+    font-size: 0.85em;
+    color: #555;
+    text-align: center;
+    word-break: break-word;
+  }
+  .gallery-item.skipped img { opacity: 0.4; }
+  .gallery-item.skipped .cap::after { content: ' (пропущено)'; color: #999; }
 </style>
 </head>
 <body>
@@ -52,6 +77,7 @@
     <div id="endScreen" class="screen hidden">
       <h1>Готово!</h1>
       <p id="endSummary"></p>
+      <div id="gallery"></div>
       <div id="endActions">
         <button id="savePngs" class="primary">Сохранить PNG + NDJSON (ZIP)</button>
         <button id="saveNdjson">Сохранить только NDJSON</button>
@@ -232,11 +258,27 @@ function finishCurrent(completed) {
 
 function endSession() {
   $('controls').style.display = 'none';
-  $('prompt').textContent = '—';
+  $('prompt').textContent = 'Вот и всё. Или ещё?';
   $('timer').textContent = '0:00';
   $('timer').classList.remove('urgent');
   const completed = session.filter(s => s.completed).length;
-  $('endSummary').textContent = `Всего рисунков: ${session.length}, завершено до таймера: ${completed}.`;
+  $('endSummary').textContent = `Всего рисунков: ${session.length}, завершено за минуту: ${completed}.`;
+  const gallery = $('gallery');
+  gallery.innerHTML = '';
+  session.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'gallery-item' + (item.completed ? '' : ' skipped');
+    const img = document.createElement('img');
+    img.src = item._png;
+    img.alt = item.word;
+    img.loading = 'lazy';
+    const cap = document.createElement('div');
+    cap.className = 'cap';
+    cap.textContent = item.word;
+    div.appendChild(img);
+    div.appendChild(cap);
+    gallery.appendChild(div);
+  });
   $('endScreen').classList.remove('hidden');
 }
 
