@@ -195,7 +195,7 @@ function updateTimer() {
 
 function startCurrent() {
   if (currentIndex >= sessionPrompts.length) return endSession();
-  $('prompt').textContent = `Нарисуйте: ${sessionPrompts[currentIndex]}`;
+  $('prompt').textContent = `Нарисуйте, пожалуйста: ${sessionPrompts[currentIndex]}`;
   currentStrokes = [];
   currentStroke = null;
   drawing = false;
