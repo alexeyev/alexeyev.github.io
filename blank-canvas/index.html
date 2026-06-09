@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blank Canvas — a white-nights wander</title>
+<style>
+  :root { --ink:#e8e6df; --warm:#ffcf8f; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; min-height: 100%; }
+  body {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    color: var(--ink);
+    /* the game's white-nights sky: cool above, warm at the horizon */
+    background: linear-gradient(180deg,#0a0c14 0%,#171a2c 38%,#2a2740 60%,#5b4a63 80%,#caa090 100%);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 24px 12px 48px;
+  }
+  h1 { font-size: 22px; letter-spacing: 2px; margin: 8px 0 0; text-align: center; }
+  .sub { color: #b9b6c8; font-size: 13px; margin: 4px 0 20px; text-align: center; }
+  /* the emulator mounts here; keep the GBA 3:2 aspect */
+  #screen { width: 100%; max-width: 720px; aspect-ratio: 3 / 2; background: #000;
+            border-radius: 8px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+  #game { width: 100%; height: 100%; }
+  .panel { max-width: 720px; width: 100%; margin-top: 20px; background: rgba(10,12,20,.55);
+           border: 1px solid rgba(255,255,255,.10); border-radius: 8px; padding: 14px 18px; }
+  .panel h2 { font-size: 13px; letter-spacing: 1px; color: var(--warm); margin: 0 0 8px; }
+  .panel p, .panel li { font-size: 13px; line-height: 1.55; color: #cdcad9; }
+  .keys { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 4px 18px;
+          list-style: none; padding: 0; margin: 0; }
+  .keys b { color: var(--ink); }
+  .foot { color: #8f8ca0; font-size: 11px; margin-top: 18px; text-align: center; max-width: 720px; }
+  a { color: var(--warm); }
+</style>
+</head>
+<body>
+  <h1>BLANK CANVAS</h1>
+  <div class="sub">a white-nights wander</div>
+
+  <div id="screen"><div id="game"></div></div>
+
+  <div class="panel">
+    <h2>CONTROLS</h2>
+    <ul class="keys">
+      <li><b>D-pad</b> — walk Sima around</li>
+      <li><b>A</b> — talk / examine / advance</li>
+      <li><b>B</b> — back / cancel</li>
+      <li><b>START</b> — begin · advance</li>
+      <li><b>SELECT</b> — open the Sketchbook</li>
+      <li><b>L</b> — open the Konspekt</li>
+    </ul>
+    <p style="margin:10px 0 0;color:#a9a6b8">Tap the gear icon in the player to see or remap the keyboard
+       bindings. On a phone, an on-screen gamepad appears automatically.</p>
+  </div>
+
+  <p class="foot">Runs in your browser via the mGBA core (WebAssembly), embedded with EmulatorJS.</p>
+
+  <!-- EmulatorJS: loads the mGBA (GBA) core as WebAssembly from the public CDN.
+       No BIOS file is needed (the core has a built-in HLE BIOS). Single-threaded,
+       so it works on GitHub Pages with no special HTTP headers. -->
+  <script>
+    EJS_player    = "#game";
+    EJS_core      = "gba";                 /* the mGBA Game Boy Advance core */
+    EJS_gameUrl   = "blankcanvas.gba";     /* the ROM, sitting next to this file */
+    EJS_gameName  = "Blank Canvas";
+    EJS_color     = "#ffcf8f";
+    EJS_startOnLoaded = true;             /* show a Start button (also unlocks audio) */
+    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+  </script>
+  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+</body>
+</html>
