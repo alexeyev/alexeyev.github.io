@@ -22,6 +22,21 @@
   #screen { width: 100%; max-width: 720px; aspect-ratio: 3 / 2; background: #000;
             border-radius: 8px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
   #game { width: 100%; height: 100%; }
+  /* On phones, lay out like the actual handheld: picture on top, controls below.
+   * The EmulatorJS gamepad zones are bottom-anchored inside the player, so we
+   * grow the player by a 240px control strip and pin the canvas to a 3:2 band
+   * at the top; the zone offsets below re-stack the cluster inside the strip. */
+  @media (pointer: coarse) and (max-width: 900px) {
+    #screen { aspect-ratio: auto;
+              height: calc(min(100vw - 24px, 720px) * 2 / 3 + 240px); }
+    #game .ejs_canvas_parent, #game .ejs_canvas {
+              height: calc(min(100vw - 24px, 720px) * 2 / 3) !important; }
+    #game .ejs_virtualGamepad_parent { bottom: 0 !important; }
+    #game .ejs_virtualGamepad_left   { bottom: 60px !important; }   /* d-pad      */
+    #game .ejs_virtualGamepad_right  { bottom: 60px !important; }   /* A/B        */
+    #game .ejs_virtualGamepad_bottom { bottom: 12px !important; }   /* start row  */
+    #game .ejs_virtualGamepad_top    { bottom: 196px !important; }  /* extras row */
+  }
   .panel { max-width: 720px; width: 100%; margin-top: 20px; background: rgba(10,12,20,.55);
            border: 1px solid rgba(255,255,255,.10); border-radius: 8px; padding: 14px 18px; }
   .panel h2 { font-size: 13px; letter-spacing: 1px; color: var(--warm); margin: 0 0 8px; }
@@ -51,8 +66,8 @@
       <li><b>R</b> — <b>e</b> on the keyboard</li>
     </ul>
     <p style="margin:10px 0 0;color:#a9a6b8">Tap the gear icon in the player to see or remap the keyboard
-       bindings. On a phone, an on-screen gamepad appears automatically. Some of your progress may be
-       saved in your browser between visits.</p>
+       bindings. On a phone, an on-screen gamepad appears below the picture, handheld-style. Your konspekt, sketches, etc.
+       are saved in your browser between visits.</p>
   </div>
 
   <!-- EmulatorJS: loads the mGBA (GBA) core as WebAssembly. Everything is
