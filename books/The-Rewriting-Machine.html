@@ -1,0 +1,1085 @@
+---
+layout: clean
+title: The Rewriting Machine — Markov's algorithms and constructive mathematics
+description: An interactive small book about Andrey Markov Jr's normal algorithms, the Russian school of constructive mathematics, its famous theorems, and what survived
+---
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#1b1a17; --muted:#5f5c55; --faint:#8b877e;
+  --line:#d8d5cc; --panel:#f7f6f2; --panel2:#efede7;
+  --accent:#2b3f9e; --warn:#a33224; --ok:#25683f; --amber:#8a6a12;
+  --serif:"PT Serif",Georgia,serif;
+  --display:"Old Standard TT","PT Serif",Georgia,serif;
+  --mono:"Courier Prime","Courier New",Courier,monospace;
+}
+html[data-theme="dark"]{
+  --bg:#000000; --ink:#e7e4db; --muted:#a09d93; --faint:#75726a;
+  --line:#2e2d29; --panel:#101010; --panel2:#181816;
+  --accent:#9dadf5; --warn:#f0937f; --ok:#84cc9e; --amber:#d8b45a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:clamp(16.5px,1rem + .2vw,20px);line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .25s,color .25s}
+.wrap{max-width:780px;margin:0 auto;padding:0 26px}
+p{margin:0 0 1.1em}
+strong{font-weight:700}
+em{font-style:italic}
+a{color:var(--accent)}
+code,.mono{font-family:var(--mono)}
+code{font-size:.88em;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:.02em .3em}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;line-height:1.08}
+h2{font-size:clamp(2rem,5.2vw,3rem);letter-spacing:-.01em;margin:.2em 0 .5em}
+h3{font-size:clamp(1.3rem,3.2vw,1.65rem);color:var(--accent);margin:2.2em 0 .45em}
+h4{font-size:1.15rem;margin:1.4em 0 .3em}
+.lead{font-size:1.16em;line-height:1.6}
+.small{font-family:var(--mono);font-size:.76rem;color:var(--muted);line-height:1.55}
+.kicker,.eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.2em;font-size:.7rem;color:var(--accent)}
+mark,.hl{color:inherit;background:linear-gradient(180deg,transparent 66%,color-mix(in srgb,var(--accent) 26%,transparent) 66%);padding:0 .05em}
+.hl-warn{background:linear-gradient(180deg,transparent 66%,color-mix(in srgb,var(--warn) 30%,transparent) 66%);padding:0 .05em}
+.hl-ok{background:linear-gradient(180deg,transparent 66%,color-mix(in srgb,var(--ok) 30%,transparent) 66%);padding:0 .05em}
+
+.progress{position:fixed;left:0;top:0;height:3px;width:0;background:var(--accent);z-index:100}
+.topctl{position:fixed;right:14px;top:12px;z-index:95;display:flex;gap:8px;align-items:center}
+.themebtn{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--ink);background:var(--bg);border:1px solid var(--ink);padding:.35em .7em;cursor:pointer}
+.themebtn:hover{background:var(--ink);color:var(--bg)}
+.mininav{position:fixed;right:14px;bottom:14px;z-index:90;background:var(--bg);border:1px solid var(--line);padding:.3em .7em;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--muted);opacity:0;transition:opacity .25s}
+.mininav.show{opacity:1}
+
+.cover{min-height:96vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.cover .wrap{position:relative;z-index:4;text-align:center}
+.cover h1{font-size:clamp(3rem,10.5vw,6.4rem);letter-spacing:-.015em;line-height:.98;margin:.1em 0}
+.cover h1 span{display:block;color:var(--accent)}
+.cover-sub{font-size:1.12rem;max-width:44ch;margin:1.4rem auto 0;color:var(--muted)}
+.cover-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;color:var(--faint);margin-top:2rem;text-transform:uppercase}
+.cover-trace{position:absolute;inset:0;z-index:1;pointer-events:none;display:flex;justify-content:space-between;padding:4vh 3vw;font-family:var(--mono);font-size:clamp(.6rem,1.1vw,.8rem);color:var(--faint);opacity:.5;line-height:2.3;white-space:pre;user-select:none}
+.stamp{position:absolute;z-index:2;right:clamp(2%,6vw,12%);top:9%;width:clamp(130px,18vw,190px);opacity:.8;transform:rotate(-9deg);pointer-events:none}
+.scrollcue{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.24em;color:var(--accent);z-index:5}
+
+section.chapter{padding:7vh 0 3vh}
+.chapter-head{padding-top:2vh;margin-bottom:1.3em}
+.chapnum{display:inline-block;border:1px solid var(--accent);padding:.16em .8em;color:var(--accent);font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;margin-bottom:.9rem}
+.ruleline{border:none;border-top:1px dashed var(--line);margin:3em 0}
+.pull{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3.9vw,1.9rem);line-height:1.25;text-align:center;color:var(--accent);max-width:24ch;margin:1.6em auto}
+.reveal{opacity:0;transition:opacity .55s ease}.reveal.in{opacity:1}
+
+.toc{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:2em 0}
+.toc a{text-decoration:none;color:var(--ink);border:1px solid var(--line);padding:.34em .8em;font-family:var(--mono);font-size:.72rem;letter-spacing:.03em}
+.toc a:hover{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+
+figure{margin:2.1em 0}
+.card{background:var(--panel);border:1px solid var(--line);padding:18px;overflow:hidden}
+.card svg{display:block;width:100%;height:auto}
+figcaption{font-family:var(--mono);font-size:.74rem;line-height:1.6;color:var(--muted);margin-top:.8em}
+figcaption b{color:var(--accent);font-weight:700}
+svg text{font-family:var(--mono)}
+
+.aside,.worked,.definition,.sourcebox,.codefig{padding:16px 20px;margin:1.7em 0}
+.aside{font-size:.92rem;line-height:1.65;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--muted)}
+.aside .lbl,.worked .tag,.definition .tag,.sourcebox .tag{display:block;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;margin-bottom:.5em;color:var(--muted)}
+.aside.think{border-left-color:var(--accent)}.aside.think .lbl{color:var(--accent)}
+.aside.key{border-left-color:var(--ok)}.aside.key .lbl{color:var(--ok)}
+.aside.warn{border-left-color:var(--warn)}.aside.warn .lbl{color:var(--warn)}
+.aside.deep{border-left-color:var(--amber)}.aside.deep .lbl{color:var(--amber)}
+.worked{background:var(--panel);border:1px solid var(--line)}
+.worked .tag{color:var(--amber)}
+.worked .step{padding-left:1.5em;position:relative;margin:.5em 0;font-size:.95rem}
+.worked .step:before{content:"→";position:absolute;left:0;color:var(--amber);font-family:var(--mono)}
+.definition{background:var(--bg);border:3px double var(--accent)}
+.definition .tag{color:var(--accent)}
+.definition .statement{font-size:1.02em}
+.sourcebox{background:var(--panel);border:1px solid var(--line);font-size:.85rem;line-height:1.6}
+.sourcebox a{word-break:break-word}
+.codefig{background:var(--panel);border:1px solid var(--line);overflow-x:auto}
+.codefig pre{margin:0;font-family:var(--mono);font-size:.82rem;line-height:1.7}
+.codefig .cm{color:var(--muted)}
+
+.demo{background:var(--bg);border:1px solid var(--ink);padding:20px;margin:2.1em 0}
+.demo h4{margin:0 0 .2em;color:var(--accent)}
+.ctrlrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:.75em 0;font-family:var(--mono);font-size:.78rem}
+.btn{border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);padding:.42em .95em;font-family:var(--mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.demo input[type=text],.demo select{border:1.5px solid var(--ink);background:var(--bg);padding:.42em .6em;font-family:var(--mono);font-size:.78rem;color:var(--ink);max-width:100%}
+.demo input[type=range]{accent-color:var(--accent);min-width:150px;flex:1}
+.readout{font-family:var(--mono);font-size:.76rem;background:var(--panel);border:1px solid var(--line);padding:.7em .8em;overflow-x:auto;line-height:1.6}
+.wordstage{display:flex;gap:4px;min-height:60px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px;background:var(--panel);border:1px solid var(--line);margin:.7em 0}
+.tile{min-width:36px;height:40px;display:grid;place-items:center;border:1.5px solid var(--ink);background:var(--bg);font-family:var(--mono);font-size:1rem}
+.tile.hit{background:color-mix(in srgb,var(--amber) 30%,var(--bg));transform:translateY(-3px)}
+.tile.new{background:color-mix(in srgb,var(--ok) 25%,var(--bg))}
+.rulelist{display:grid;gap:5px;margin:.8em 0}
+.ruleitem{display:grid;grid-template-columns:2em 1fr auto;align-items:center;gap:8px;border:1px solid var(--line);padding:.45em .65em;font-family:var(--mono);font-size:.76rem;background:var(--panel)}
+.ruleitem.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--bg))}
+.terminal{color:var(--warn);font-weight:700}
+.logic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:1em 0}
+.logic-card{border:1px solid var(--line);background:var(--bg);padding:10px;cursor:pointer;text-align:center;font-family:var(--mono);font-size:.72rem}
+.logic-card b{display:block;font-size:1.2rem;color:var(--accent);font-weight:700}
+.logic-card.active{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--bg))}
+.searchstrip{display:flex;gap:5px;flex-wrap:wrap;margin:1em 0}
+.searchcell{width:33px;height:33px;border:1px solid var(--ink);display:grid;place-items:center;font-family:var(--mono);font-size:.7rem;background:var(--bg)}
+.searchcell.checked{background:var(--panel);color:var(--faint)}
+.searchcell.current{background:color-mix(in srgb,var(--amber) 32%,var(--bg));transform:translateY(-3px)}
+.searchcell.found{background:color-mix(in srgb,var(--ok) 30%,var(--bg))}
+.pattern-stage{display:grid;gap:10px}
+.exprline{border:1px solid var(--line);padding:.6em .8em;font-family:var(--mono);font-size:.78rem;background:var(--panel);overflow-wrap:anywhere}
+.binding{display:inline-block;border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--bg));padding:.14em .4em;margin:.14em;font-family:var(--mono);font-size:.76rem}
+.zerobar{position:relative;height:56px;border:1px solid var(--line);background:var(--panel);margin:.8em 0;overflow:hidden}
+.zerobar .axis{position:absolute;top:50%;left:0;right:0;height:1.5px;background:var(--line)}
+.zerobar .zeromark{position:absolute;top:0;bottom:0;left:50%;width:1.5px;background:var(--ink)}
+.zerobar .val{position:absolute;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;background:var(--warn);border:2px solid var(--bg);transition:left .3s}
+.zerobar .band{position:absolute;top:22%;bottom:22%;background:color-mix(in srgb,var(--accent) 16%,transparent);border-left:1px dashed var(--accent);border-right:1px dashed var(--accent)}
+
+.timeline{position:relative;margin:2em 0;padding-left:30px}
+.timeline:before{content:"";position:absolute;left:9px;top:8px;bottom:10px;width:1.5px;background:var(--line)}
+.moment{position:relative;margin:1.4em 0}
+.moment:before{content:"";position:absolute;left:-26px;top:.4em;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2.5px solid var(--bg);outline:1px solid var(--line)}
+.moment .year{font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.08em}
+.moment b{font-family:var(--display);font-size:1.08em}
+
+table.compare,table.ledger{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.74rem;line-height:1.5;margin:1.2em 0}
+.compare th,.compare td,.ledger th,.ledger td{border:1px solid var(--line);padding:.55em .65em;vertical-align:top;text-align:left}
+.compare th,.ledger th{background:var(--panel);color:var(--accent)}
+.ledger .yes{color:var(--ok);font-weight:700}.ledger .no{color:var(--warn);font-weight:700}.ledger .maybe{color:var(--amber);font-weight:700}
+.endcard{text-align:center;padding:9vh 0 12vh;border-top:1px solid var(--line)}
+.endcard .big{font-family:var(--display);font-size:clamp(2.4rem,7vw,4.4rem);line-height:1;color:var(--accent)}
+
+@media(max-width:600px){.wrap{padding:0 18px}.card,.demo{padding:13px}.mininav{display:none}.logic-grid{grid-template-columns:repeat(2,1fr)}.compare,.ledger{font-size:.66rem}.stamp{display:none}.cover-trace{font-size:.55rem}}
+@media(min-width:601px) and (max-width:1000px){.stamp{width:110px;right:12px;top:6%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1}html{scroll-behavior:auto}}
+</style>
+<div class="progress" id="progress"></div>
+<div class="topctl"><button class="themebtn" id="themeBtn" aria-label="Toggle color theme">[ dark ]</button></div>
+<div class="mininav" id="mininav">§ 0 · pencil</div>
+
+<header class="cover" id="top">
+<div class="cover-trace" aria-hidden="true"><span>111+11
+11+111
+1+1111
++11111
+11111 .
+
+101
+R101
+1R01
+10R1
+101R
+101C
+10C0
+110 .</span><span>abba
+mabba
+bmbba
+bamba
+baama
+baabm
+baab .
+
+¬¬∃n P(n)
+P(0)? P(1)?
+P(2)? P(3)?
+...</span></div>
+<svg class="stamp" viewBox="0 0 200 200" aria-hidden="true">
+  <g fill="none" stroke="var(--accent)" stroke-width="2.5">
+    <circle cx="100" cy="100" r="94"/>
+    <circle cx="100" cy="100" r="66"/>
+  </g>
+  <defs><path id="stampArcT" d="M100,100 m-80,0 a80,80 0 1,1 160,0"/><path id="stampArcB" d="M100,100 m-80,0 a80,80 0 1,0 160,0"/></defs>
+  <text font-size="15" letter-spacing="3.5" fill="var(--accent)"><textPath href="#stampArcT" startOffset="8%">ТЕОРИЯ АЛГОРИФМОВ</textPath></text>
+  <text font-size="12" letter-spacing="2.5" fill="var(--accent)"><textPath href="#stampArcB" startOffset="16%">ТРУДЫ МИАН · Т.42 · 1954</textPath></text>
+  <text x="100" y="94" text-anchor="middle" font-size="13" fill="var(--accent)">НОРМАЛЬНЫЙ</text>
+  <text x="100" y="114" text-anchor="middle" font-size="13" fill="var(--accent)">АЛГОРИФМ</text>
+</svg>
+<div class="wrap">
+  <div class="kicker">A small book about an exact idea</div>
+  <h1>The Rewriting<span>Machine</span></h1>
+  <p class="cover-sub">How a pencil, a word, and an ordered list of substitutions became a model of computation — and grew into a school of mathematics that refuses to say “exists” without showing you the thing.</p>
+  <div class="cover-meta">Andrey Markov Jr · normal algorithms · constructive mathematics · what survived</div>
+</div>
+<div class="scrollcue">start with a word ↓</div>
+</header>
+
+<section class="chapter" id="read">
+<div class="wrap reveal">
+<p class="lead">Before the machines, before the philosophy, before the Russian school of constructive mathematics, take a pencil. Write a word. Cross out one piece. Write another piece in its place. That single gesture is the only physical act this whole book needs.</p>
+<p><strong>Andrey Andreyevich Markov Jr.</strong> (1903–1979) — son and full namesake of the great Petersburg mathematician, and a major mathematician in his own right — made a startling bet: perhaps the vague human word <em>algorithm</em> could be pinned down with almost nothing more than this gesture. A finite alphabet. A finite ordered list of substitutions. A merciless rule about which substitution fires first. He called the results <strong>normal algorithms</strong>, and in 1954 he devoted a monograph of nearly four hundred pages to their theory.</p>
+<p>Most of what follows is Markov's mathematics: the machine itself, the theorems it made possible — including some of the most surprising impossibility results of the century — and the school of <span class="hl">constructive mathematics</span> that grew around one stubborn question: <em>what should “there exists” mean when a proof is required to compute?</em> A short coda at the end follows the same rewriting instinct one generation forward, into Valentin Turchin's language Refal.</p>
+
+<h3>How to read the machine</h3>
+<p>Five kinds of box recur. Learn them once:</p>
+<div class="aside think"><span class="lbl">Think box</span>A conceptual snag worth stopping for. These are where the philosophy hides.</div>
+<div class="definition"><span class="tag">Exact statement</span><div class="statement">The informal picture is over. Here is the definition or theorem, with its conditions stated precisely.</div></div>
+<div class="worked"><span class="tag">Run it by hand</span><div class="step">A concrete word.</div><div class="step">A concrete ordered rule list.</div><div class="step">Every rewrite shown, one step at a time.</div></div>
+<div class="aside key"><span class="lbl">Keep this</span>The one sentence from a section worth carrying forward.</div>
+<div class="aside deep"><span class="lbl">Going deeper</span>History, logic, or a technical subtlety. The main path survives if you skip it on a first reading.</div>
+<p>The live panels are not animations pretending to be algorithms. They are small interpreters written for this page, and every program they contain was machine-tested before being printed here. Press the buttons. Change the words. Break them.</p>
+<div class="toc">
+<a href="#c1">1 · Cross out &amp; replace</a><a href="#c2">2 · Four decisions</a><a href="#c3">3 · Exact definition</a><a href="#c4">4 · Why Markov?</a><a href="#c5">5 · Universal machine</a><a href="#cU">6 · Undecidability</a><a href="#c6">7 · Constructive turn</a><a href="#c6h">8 · Markov's principle</a><a href="#c7">9 · Analysis</a><a href="#cB">10 · The ledger</a><a href="#c8">11 · The map today</a><a href="#refal">Coda · Refal</a><a href="#sources">Sources</a>
+</div>
+<div class="sourcebox"><span class="tag">Reading note · where the claims come from</span>The spine is Markov's 1954 monograph <em>Theory of Algorithms</em>, the Stanford Encyclopedia of Philosophy's article on constructive mathematics, the Mints–Nikolenko history of the Leningrad school, standard references on undecidability, and, for the coda, Turchin's writings and the Refal-5λ documentation. Every named theorem, date, and quotation was checked against a cited source; the full list, with links, is in the Reading Room at the end. Where a claim is an interpretation or an analogy rather than a documented fact, the text says so in plain words.</div>
+</div>
+</section>
+
+<section class="chapter" id="c1">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 1</span> <span class="eyebrow">no tapes · no states · no mystique</span><h2>Cross out this piece. Write that piece.</h2></div>
+<p class="reveal">Suppose our alphabet contains three symbols: <code>a</code>, <code>b</code>, and <code>c</code>. A word is a finite row of them: <code>abba</code>, <code>c</code>, the empty word, whatever. Now write one instruction:</p>
+<div class="definition reveal"><span class="tag">A substitution</span><div class="statement"><code>ab → c</code> &nbsp; means: find <code>ab</code> inside the current word and replace it by <code>c</code>.</div></div>
+<p class="reveal">On the word <code>abab</code>, the instruction could apparently act in two places. But an algorithm cannot shrug and say “whichever.” It must say exactly what happens next. Markov's mechanism decides for us: replace the <strong>leftmost</strong> occurrence.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 250" role="img" aria-label="The leftmost occurrence of ab is cut out of the word abab and replaced by c">
+<text x="330" y="26" text-anchor="middle" font-size="12" fill="var(--muted)" letter-spacing="2">ONE REWRITE IS A SMALL PIECE OF SURGERY</text>
+<g text-anchor="middle" font-size="22" fill="var(--ink)">
+<g transform="translate(120 60)">
+<rect x="0" y="0" width="52" height="52" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/>
+<rect x="58" y="0" width="52" height="52" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/>
+<rect x="116" y="0" width="52" height="52" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/>
+<rect x="174" y="0" width="52" height="52" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/>
+<text x="26" y="34">a</text><text x="84" y="34">b</text><text x="142" y="34">a</text><text x="200" y="34">b</text>
+<rect x="-6" y="-6" width="122" height="64" fill="none" stroke="var(--warn)" stroke-width="2.5" stroke-dasharray="8 5"/>
+</g>
+<path d="M235 132 C235 168 300 168 300 186" fill="none" stroke="var(--warn)" stroke-width="2" marker-end="url(#arr1)"/>
+<defs><marker id="arr1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="var(--warn)"/></marker></defs>
+<g transform="translate(215 192)">
+<rect x="0" y="0" width="52" height="44" fill="color-mix(in srgb,var(--ok) 22%,var(--bg))" stroke="var(--ink)" stroke-width="1.5"/>
+<rect x="58" y="0" width="52" height="44" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/>
+<rect x="116" y="0" width="52" height="44" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/>
+<text x="26" y="30" font-size="20">c</text><text x="84" y="30" font-size="20">a</text><text x="142" y="30" font-size="20">b</text>
+</g>
+<text x="480" y="92" fill="var(--warn)" font-size="17">ab → c</text>
+<text x="480" y="116" fill="var(--muted)" font-size="12">the second ab waits</text>
+</g></svg>
+</div><figcaption><b>One cut, one paste.</b> Even when the pattern occurs twice, a single step rewrites only one occurrence: the leftmost one, for the first applicable rule.</figcaption></figure>
+
+<h3 class="reveal">Try the real thing before learning its name</h3>
+<p class="reveal">The little machine below adds unary numbers. Three is <code>111</code>; two is <code>11</code>. The sum is written <code>111+11</code> — one plus sign between two blocks of strokes, and that shape is part of the specification. The first rule shuffles the plus rightward, one step at a time. The second rule erases it and <em>halts immediately</em>.</p>
+<div class="demo reveal" id="runnerDemo">
+<h4>Machine 01 · unary addition</h4>
+<p class="small">Input contract: words of the form 1…1+1…1 (exactly one plus). Edit it, then step through the ordered substitutions. ε means “write nothing.” The dot <span class="terminal">●</span> marks a terminal substitution that stops the machine.</p>
+<div class="ctrlrow"><label for="runnerInput"><b>input</b></label><input id="runnerInput" type="text" value="111+11" maxlength="24"><button class="btn" id="stepBtn">Step</button><button class="btn" id="runBtn">Run</button><button class="btn" id="resetBtn">Reset</button></div>
+<div class="rulelist" id="runnerRules"></div>
+<div class="wordstage" id="runnerWord" aria-live="polite"></div>
+<div class="readout" id="runnerLog">ready · no rule inspected yet</div>
+</div>
+<div class="worked reveal"><span class="tag">Run it by hand · 3 + 2</span><div class="step"><code>111+11</code> — the first rule sees <code>1+</code> and swaps it to <code>+1</code>.</div><div class="step"><code>11+111</code> — the plus has moved one place right.</div><div class="step"><code>1+1111</code></div><div class="step"><code>+11111</code></div><div class="step"><code>11111</code> — the terminal rule <code>+ →● ε</code> fires: erase the plus and stop. Four rewrite steps; five strokes remain, and 3 + 2 = 5.</div></div>
+<div class="aside key reveal"><span class="lbl">The important feeling</span>Nothing in the machine “knows” addition. It knows literal words and literal substitutions. <span class="hl">Meaning lives in the encoding and in our proof that the rewriting behaves like addition — on inputs of the promised shape.</span> That separation — syntax first, interpretation second, correctness proved rather than assumed — runs through everything Markov did next.</div>
+</div>
+</section>
+
+<section class="chapter" id="c2">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 2</span> <span class="eyebrow">determinism is made of small tyrannies</span><h2>The four decisions hidden in one step</h2></div>
+<p class="reveal">“Apply a rewrite rule” sounds simple until two rules match, or one rule matches twice, or a rule says we are done. A normal algorithm gets its exactness from four decisions. Forget any one of them and you have described a family of possible computations, not this single deterministic machine.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 352" role="img" aria-label="Flow chart of one step of a Markov normal algorithm">
+<defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0L0,6L7,3z" fill="var(--accent)"/></marker></defs>
+<g text-anchor="middle">
+<rect x="240" y="16" width="180" height="46" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/><text x="330" y="44" font-size="14" fill="var(--ink)">current word</text>
+<path d="M330 62V92" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr2)"/>
+<rect x="175" y="98" width="310" height="58" fill="var(--bg)" stroke="var(--accent)" stroke-width="1.5"/><text x="330" y="122" font-size="13" fill="var(--ink)">scan the rules from the top:</text><text x="330" y="142" font-size="12" fill="var(--muted)">first rule whose left side occurs</text>
+<path d="M330 156V186" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr2)"/>
+<rect x="175" y="192" width="310" height="58" fill="var(--bg)" stroke="var(--accent)" stroke-width="1.5"/><text x="330" y="216" font-size="13" fill="var(--ink)">within that rule:</text><text x="330" y="236" font-size="12" fill="var(--muted)">replace the leftmost occurrence</text>
+<path d="M255 250 L185 288" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr2)"/>
+<path d="M405 250 L475 288" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr2)"/>
+<rect x="42" y="294" width="256" height="46" fill="var(--bg)" stroke="var(--ok)" stroke-width="1.5"/><text x="170" y="313" font-size="12" fill="var(--ink)">ordinary rule?</text><text x="170" y="330" font-size="11" fill="var(--muted)">loop with the new word</text>
+<rect x="362" y="294" width="256" height="46" fill="var(--bg)" stroke="var(--warn)" stroke-width="1.5"/><text x="490" y="313" font-size="12" fill="var(--ink)">terminal rule?</text><text x="490" y="330" font-size="11" fill="var(--muted)">halt with the new word</text>
+</g></svg>
+</div><figcaption><b>The entire control structure.</b> Priority chooses the rule; leftmostness chooses the occurrence; the terminal mark chooses whether the new word is an intermediate state or the final answer.</figcaption></figure>
+
+<h3 class="reveal">Decision 1 · rules are ordered</h3>
+<p class="reveal">The list is not a bag. Rule 1 is privileged over Rule 2, Rule 2 over Rule 3, and so on. This is not an implementation detail; the order is part of the program. The demo below proves it: same word, same two rules, and swapping the order changes the answer.</p>
+<div class="demo reveal" id="priorityDemo">
+<h4>Machine 02 · priority changes the answer</h4>
+<p class="small">Input is always <code>ab</code>. Two rules: <code>ab → x</code> and <code>a → y</code>. Swap which one comes first and watch the result flip.</p>
+<div class="ctrlrow"><button class="btn" id="priorityToggle">Swap rule order</button><button class="btn" id="priorityReset">Reset</button></div>
+<div class="rulelist" id="priorityRules"></div>
+<div class="wordstage" id="priorityWord"></div>
+<div class="readout" id="priorityLog"></div>
+</div>
+
+<h3 class="reveal">Decision 2 · the first applicable rule wins</h3>
+<p class="reveal">The machine scans from the top and stops searching the rule list as soon as it finds a left side that occurs in the word. A later rule may match more characters, look cleverer, or lead to a nicer answer. Irrelevant. Earlier means earlier.</p>
+<h3 class="reveal">Decision 3 · the leftmost occurrence wins</h3>
+<p class="reveal">Once the rule has been chosen, scan the word from the left. Only the first occurrence is replaced. There is no parallel rewriting — exactly one spot changes per step.</p>
+<h3 class="reveal">Decision 4 · some substitutions are final</h3>
+<p class="reveal">An ordinary substitution says “rewrite, then begin another step.” A <strong>terminal substitution</strong> says “rewrite, and this result is the output.” Books use several notations for the terminal arrow or dot; the notation varies, the control idea does not.</p>
+<div class="aside warn reveal"><span class="lbl">A common wrong picture</span>A Markov normal algorithm is <strong>not</strong> “keep applying all matching string rules until nothing changes.” That describes other rewriting systems. Here, each step performs an ordered search and one selected replacement, and the algorithm can also stop deliberately, via a terminal rule.</div>
+<div class="aside think reveal"><span class="lbl">Why make the machine so authoritarian?</span>Because Markov was defining an algorithm, not merely a relation between words. An algorithm must say what the next act <em>is</em>. Priority and leftmostness turn a potentially branching rewrite system into a single, reproducible history — exactly the kind of object you can prove theorems about.</div>
+</div>
+</section>
+
+<section class="chapter" id="c3">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 3</span> <span class="eyebrow">now we earn the word “normal”</span><h2>A normal algorithm, exactly</h2></div>
+<p class="reveal">We can now say the thing without metaphor. The definition is strikingly small. Its power does not come from a rich instruction set. It comes from iteration: a tiny exact step, repeated without a promised bound.</p>
+<div class="definition reveal"><span class="tag">Definition · Markov normal algorithm</span><div class="statement">Fix a finite alphabet. A normal algorithm is a finite <strong>ordered</strong> list of substitution formulas <code>u → v</code> and terminal substitution formulas <code>u →● v</code>, where <code>u</code> and <code>v</code> are words over that alphabet. To run it on an input word: scan the formulas in order; choose the first formula whose left side <code>u</code> occurs in the word; replace the <strong>leftmost</strong> occurrence of <code>u</code> by <code>v</code>. If the formula was terminal, halt with the new word; otherwise repeat from the top. If no left side occurs at all, halt with the current word.</div></div>
+<p class="reveal">One more possibility remains, and it matters enormously: the rewrites may continue forever.</p>
+<div class="demo reveal" id="divergeDemo">
+<h4>Machine 03 · the polite word is “partial”</h4>
+<p class="small">One rule: <code>a → aa</code>. There is always another <code>a</code> to rewrite, so this machine never halts. The “step budget” slider only limits how many steps this page will <em>watch</em>; it does not make the algorithm stop.</p>
+<div class="ctrlrow"><label>step budget</label><input type="range" id="fuel" min="1" max="18" value="8"><span class="mono" id="fuelVal">8</span><button class="btn" id="burnFuel">Spend budget</button></div>
+<div class="wordstage" id="divergeWord"></div><div class="readout" id="divergeLog"></div>
+</div>
+<div class="aside key reveal"><span class="lbl">Partial function</span>A program may return an output for some inputs and run forever on others. What it computes is therefore, honestly, a <strong>partial function</strong>. Divergence is not an embarrassing hole to be patched out of the theory; it is one of the phenomena the theory is built to describe. Keep the word — it returns when we reach constructive logic.</div>
+
+<h3 class="reveal">Learning to actually program the thing</h3>
+<p class="reveal">Two rules for addition may look like a lucky accident. It is not: there are reusable idioms. The most important is the <strong>marker</strong> — a fresh symbol, outside the input alphabet, that acts as a cursor. Rules move the marker through the word, transforming letters as it passes; a final rule deletes it and halts. A marker is, in effect, a machine “head” built out of nothing but substitutions. The gallery below contains nine small programs; each was run against an exhaustive machine test before being printed on this page.</p>
+<div class="demo reveal" id="galleryDemo">
+<h4>Machine 04 · a small program gallery</h4>
+<p class="small" id="galleryNote"></p>
+<div class="ctrlrow"><label for="gallerySelect"><b>program</b></label><select id="gallerySelect"></select><label for="galleryInput"><b>input</b></label><input id="galleryInput" type="text" maxlength="20"><button class="btn" id="galleryStep">Step</button><button class="btn" id="galleryRun">Run</button><button class="btn" id="galleryReset">Reset</button></div>
+<div class="rulelist" id="galleryRules"></div>
+<div class="wordstage" id="galleryWord" aria-live="polite"></div>
+<div class="readout" id="galleryLog"></div>
+</div>
+<div class="worked reveal"><span class="tag">Run it by hand · the marker idiom, on “swap a↔b”, input ab</span><div class="step"><code>ab</code> — no rule mentioning <code>m</code> applies, so the last rule <code>ε → m</code> fires: the empty word occurs at the far left, and inserting <code>m</code> there gives <code>mab</code>.</div><div class="step"><code>mab</code> — rule <code>ma → bm</code>: the marker eats an <code>a</code>, writes a <code>b</code>, and moves right: <code>bmb</code>.</div><div class="step"><code>bmb</code> — rule <code>mb → am</code>: <code>bam</code>.</div><div class="step"><code>bam</code> — the marker has reached the end, so only <code>m →● ε</code> applies: erase it and halt with <code>ba</code>.</div></div>
+<div class="aside deep reveal"><span class="lbl">Why the rule order is load-bearing here</span>Put <code>ε → m</code> anywhere but last and it fires on every step, flooding the word with markers. Put <code>m →● ε</code> before the two travel rules and the marker dies at birth. The ordered list is doing the work a Turing machine does with states — which is a first hint of the equivalence coming in Chapter 5.</div>
+
+<h3 class="reveal">What such a machine computes</h3>
+<p class="reveal">At the raw level: a partial function from words to words. But words can encode numbers, tuples, formulas, graphs, proofs, even other programs — anything with a finite symbolic description. Unary numerals are clumsy but honest; binary is efficient; delimiters pack several values into one word. Once the encoding is fixed, a string machine becomes a machine for mathematical objects.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 262" role="img" aria-label="Numbers, formulas, graphs and programs are encoded as words and processed by the same rewriting machine">
+<defs><marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0L0,6L7,3z" fill="var(--accent)"/></marker></defs>
+<g text-anchor="middle" font-size="12" fill="var(--ink)">
+<g fill="var(--bg)" stroke="var(--ink)" stroke-width="1.2"><rect x="22" y="26" width="128" height="42"/><rect x="22" y="84" width="128" height="42"/><rect x="22" y="142" width="128" height="42"/><rect x="22" y="200" width="128" height="42"/></g>
+<text x="86" y="51">number 13</text><text x="86" y="109">formula</text><text x="86" y="167">finite graph</text><text x="86" y="225">program</text>
+<path d="M154 47 C218 47 224 116 268 118M154 105 C210 105 216 124 268 126M154 163 C210 163 216 142 268 138M154 221 C218 221 224 152 268 146" fill="none" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#arr3)"/>
+<rect x="274" y="86" width="140" height="96" fill="var(--bg)" stroke="var(--warn)" stroke-width="1.5"/><text x="344" y="122" font-size="14" fill="var(--warn)">ENCODE</text><text x="344" y="146" font-size="11" fill="var(--muted)">finite words only</text>
+<path d="M418 134H478" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr3)"/>
+<rect x="484" y="86" width="152" height="96" fill="var(--bg)" stroke="var(--ok)" stroke-width="1.5"/><text x="560" y="120" font-size="14" fill="var(--ok)">REWRITE</text><text x="560" y="144" font-size="12" fill="var(--ink)">u → v</text><text x="560" y="166" font-size="11" fill="var(--muted)">same tiny machine</text>
+</g></svg>
+</div><figcaption><b>The alphabet is not the subject matter.</b> It is the transport layer. Once a coding is fixed, word rewriting can stand for computation on numbers or any other finitely presented object.</figcaption></figure>
+<div class="aside deep reveal"><span class="lbl">The word “normal”</span>Do not hear “ordinary,” and do not hear the “normal” of normal distributions or normal forms in linear algebra. In this historical context, “normal algorithm” is simply Markov's own name for this disciplined form of algorithm (in Russian, <em>нормальный алгорифм</em> — the older spelling <em>алгорифм</em> stands in the monograph's very title). English texts also write <em>Markov algorithm</em>. All of these name the object defined above.</div>
+</div>
+</section>
+
+<section class="chapter" id="c4">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 4</span> <span class="eyebrow">a definition is also a philosophical weapon</span><h2>What Markov wanted the machine for</h2></div>
+<p class="reveal">The 1930s and 1940s had already produced several exact models of effective calculation: Gödel–Kleene recursive functions, Turing's machines, Church's λ-calculus. Markov did not arrive in an empty field. His normal algorithms belong to the same great campaign: replace the pre-mathematical phrase “there is a mechanical procedure” with a precise object that can itself be studied.</p>
+<p class="reveal">But first, a disambiguation this subject genuinely needs:</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 240" role="img" aria-label="Two mathematicians named Andrey Andreyevich Markov: the elder, of probability and number theory, and the younger, of normal algorithms">
+<g text-anchor="middle">
+<text x="330" y="26" font-size="12" fill="var(--muted)" letter-spacing="2">TWO MATHEMATICIANS, ONE NAME</text>
+<rect x="30" y="46" width="285" height="150" fill="var(--bg)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="172" y="78" font-size="15" fill="var(--ink)">A. A. Markov Sr</text>
+<text x="172" y="100" font-size="12" fill="var(--muted)">1856 – 1922</text>
+<text x="172" y="132" font-size="12" fill="var(--ink)">probability · number theory</text>
+<text x="172" y="152" font-size="12" fill="var(--ink)">chains · the moment problem</text>
+<text x="172" y="180" font-size="11" fill="var(--faint)">a pillar of the Petersburg school</text>
+<rect x="345" y="46" width="285" height="150" fill="var(--bg)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="487" y="78" font-size="15" fill="var(--accent)">A. A. Markov Jr</text>
+<text x="487" y="100" font-size="12" fill="var(--muted)">1903 – 1979</text>
+<text x="487" y="132" font-size="12" fill="var(--ink)">normal algorithms</text>
+<text x="487" y="152" font-size="12" fill="var(--ink)">constructive mathematics</text>
+<text x="487" y="180" font-size="11" fill="var(--faint)">the subject of this book</text>
+<text x="330" y="222" font-size="12" fill="var(--muted)">father → son · both simply “A. A. Markov” on their papers</text>
+</g></svg>
+</div><figcaption><b>Same name, two great mathematicians.</b> The elder Markov — a pillar of Chebyshev's Petersburg school — left his name across probability (chains, his inequality), analysis (the moment problem, the Markov brothers' inequality), and number theory (the Markov spectrum). The younger built the theory of algorithms, and added Markov's principle, Markov's rule, and Markov's theorem in knot theory.</figcaption></figure>
+
+<p class="reveal">The son's path is worth a timeline, because the machine arrives in the middle of a long, wide-ranging career, and its arrival coincides with a philosophical turn.</p>
+<div class="timeline reveal">
+<div class="moment"><span class="year">1903</span><br><b>Born in Saint Petersburg</b>, son of A. A. Markov the elder — probabilist, analyst, number theorist, one of the most celebrated Russian mathematicians of his day.</div>
+<div class="moment"><span class="year">1936</span><br><b>Markov's theorem in knot theory.</b><br><span class="small">He proves the theorem on closed braids that still carries his name — a first sign of a lifelong instinct for problems about finite presentations of infinite objects. He works in Leningrad; the St Petersburg logic laboratory still names him the founder of its school of mathematical logic.</span></div>
+<div class="moment"><span class="year">1947</span><br><b>The word problem for semigroups is unsolvable.</b><br><span class="small">Markov and Emil Post prove it independently — one of the first undecidability results about an ordinary algebraic object. Chapter 6 tells this story. The Encyclopedia of Mathematics dates the concept of the normal algorithm itself to this same 1947 research.</span></div>
+<div class="moment"><span class="year">LATE 1940s</span><br><b>The constructive turn.</b><br><span class="small">He begins developing what the literature now calls recursive constructive mathematics, with normal algorithms as its notion of procedure.</span></div>
+<div class="moment"><span class="year">1951</span><br><b>Unrecognizability, stated early.</b><br><span class="small">Markov proves that whole families of properties of associative calculi admit no recognition algorithm — the pattern later called a “Markov property” and extended to groups by Adian and Rabin. Chapter 6 follows the chain.</span></div>
+<div class="moment"><span class="year">1954</span><br><b><em>Theory of Algorithms</em>.</b><br><span class="small">Volume 42 of the Proceedings of the Steklov Institute, pp. 3–375. One historian of the school, Boris Kushner, remarks that its scrupulous correctness proofs for specific normal algorithms can be read as the first examples of program-correctness verification.</span></div>
+<div class="moment"><span class="year">MID-1950s →</span><br><b>The Moscow years.</b><br><span class="small">Markov moves to Moscow and gathers the Moscow constructive school around him; a parallel Leningrad school grows under his student N. A. Shanin. Chapter 7 maps both cities.</span></div>
+<div class="moment"><span class="year">1958</span><br><b>The homeomorphy theorem.</b><br><span class="small">He proves that deciding whether two manifolds have the same shape is algorithmically unsolvable in dimensions above three — undecidability striking deep inside geometry.</span></div>
+<div class="moment"><span class="year">1979</span><br><b>Dies in Moscow.</b></div>
+</div>
+
+<div class="aside think reveal"><span class="lbl">Careful: motivation is not a one-line origin myth</span>It would be too neat to say “Markov invented normal algorithms because Turing machines were philosophically wrong.” He did not. The honest point is the <strong>fit</strong>: direct symbolic transformations gave him a technically universal model <em>and</em> a congenial language for a mathematics that insisted on effective constructions. Two needs, one tool.</div>
+<h3 class="reveal">A machine close to the mathematician's hand</h3>
+<p class="reveal">A Turing machine asks you to imagine a head, a set of states, and a tape scrolling underneath. A normal algorithm asks you to look at the expression already written on the page and perform textual surgery on it. For problems that are themselves about words, group presentations, formulas, and symbol systems, that directness is a real advantage — as the impossibility results two chapters ahead will show.</p>
+<p class="pull reveal">The program is a list of local textual acts. The computation is the history of the text.</p>
+</div>
+</section>
+
+<section class="chapter" id="c5">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 5</span> <span class="eyebrow">tiny instruction set · full computational power</span><h2>Four costumes, one computational power</h2></div>
+<p class="reveal">Can this little substitution machine do everything a computer can? In the formal sense of computability — yes. Normal algorithms compute the same partial functions as Turing machines, λ-calculus, and the recursive functions, once suitable encodings are fixed. The models look nothing alike, yet they carve out exactly the same class. Any one can be compiled into any other.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 356" role="img" aria-label="Four equivalent models of computation around one shared class">
+<g text-anchor="middle">
+<circle cx="330" cy="178" r="74" fill="var(--bg)" stroke="var(--warn)" stroke-width="1.8"/>
+<text x="330" y="170" font-size="13" fill="var(--warn)">the same class of</text><text x="330" y="190" font-size="13" fill="var(--warn)">computable</text><text x="330" y="210" font-size="13" fill="var(--warn)">partial functions</text>
+<g fill="var(--bg)" stroke="var(--ink)" stroke-width="1.3"><rect x="42" y="42" width="196" height="62"/><rect x="422" y="42" width="196" height="62"/><rect x="42" y="252" width="196" height="62"/><rect x="422" y="252" width="196" height="62"/></g>
+<text x="140" y="68" font-size="13" fill="var(--ink)">Turing machine</text><text x="140" y="90" font-size="11" fill="var(--muted)">head · tape · states</text>
+<text x="520" y="68" font-size="13" fill="var(--ink)">λ-calculus</text><text x="520" y="90" font-size="11" fill="var(--muted)">abstraction · application</text>
+<text x="140" y="278" font-size="13" fill="var(--ink)">recursive functions</text><text x="140" y="300" font-size="11" fill="var(--muted)">composition · recursion · μ</text>
+<text x="520" y="278" font-size="13" fill="var(--accent)">normal algorithm</text><text x="520" y="300" font-size="11" fill="var(--muted)">ordered substitutions</text>
+<g stroke="var(--accent)" stroke-width="1.6" fill="none" stroke-dasharray="7 5"><path d="M238 104L272 132"/><path d="M422 104L388 132"/><path d="M238 252L272 224"/><path d="M422 252L388 224"/></g>
+<text x="330" y="342" font-size="11" fill="var(--muted)">different mechanics · provably the same reach, once encodings are fixed</text>
+</g></svg>
+</div><figcaption><b>Four costumes for universality.</b> The equivalence is a theorem about formal models. It is not, by itself, a proof of the Church–Turing thesis about the informal notion of “all effective calculation.”</figcaption></figure>
+<div class="aside warn reveal"><span class="lbl">Do not overclaim the equivalence</span>The Church–Turing thesis is not “proved” by showing that Turing machines and normal algorithms simulate one another. The theorem says two <em>formal</em> classes coincide. The thesis says this recurring formal class captures the pre-formal human notion of an effectively calculable procedure. The convergence of very different models is powerful evidence for the thesis; it is not an ordinary theorem, because “effective procedure” has no formal definition in the premise.</div>
+<h3 class="reveal">The theorem under the picture — and whose name is on it</h3>
+<p class="reveal">For normal algorithms this equivalence is not folklore; it is a specific theorem with a specific author. Markov's monograph builds the programming side: combination theorems showing how normal algorithms are composed, branched between, and iterated — the marker idiom of Chapter 3 raised to a system. The equivalence with the recursive functions was then established by <strong>V. K. Detlovs</strong>, a student of Markov: announced in a short Doklady note in 1953, and worked out in a memoir of some 65 pages in 1958. Markov, introducing the monograph, says as much himself — it was natural to expect the theory of normal algorithms to be equivalent to the theory built on recursive functions, and it was Detlovs who showed that this is actually so.</p>
+<div class="definition reveal"><span class="tag">Theorem · Detlovs, 1953/1958 — normal computability = partial recursiveness</span><div class="statement">Fix the standard encoding of natural numbers by words. A partial function is computable by a normal algorithm <strong>if and only if</strong> it is partial recursive. In particular, normal algorithms compute exactly what Turing machines, the λ-calculus, and every other standard model compute.</div></div>
+<div class="aside deep reveal"><span class="lbl">How the two directions of the proof go</span>The directions have entirely different flavours. <strong>Recursive ⇒ normal</strong> is programming: implement the base functions (zero, successor, projections) on delimiter-packed unary numerals, then show the normally computable functions are closed under composition, primitive recursion, and μ-minimization — by explicitly splicing rule lists together, with fresh marker letters keeping the sub-programs out of each other's way. It is Machine 04's discipline at industrial scale. <strong>Normal ⇒ recursive</strong> is arithmetization: Gödel-number the words and the rule list; one step of the machine — first applicable rule, leftmost occurrence, substitute — involves only searches bounded by the length of the current word, so the step function is primitive recursive; a whole run is iteration of that step, the halting time is found by one unbounded μ-search, and decoding the final word is primitive recursive again. The same Kleene-normal-form shape underlies the analogous theorems for Turing machines.</div>
+<p class="reveal">On top of the theorem sits the school's own version of the Church–Turing thesis. The <strong>normalization principle</strong>, as the Encyclopedia of Mathematics states it, proposes that for every algorithm in an alphabet <code>A</code> one can construct an equivalent normal algorithm <em>over</em> <code>A</code> — and, the equivalence theorem in hand, this convention is equivalent to Church's thesis. The one small word is doing real work: <em>over</em> <code>A</code>, not <em>in</em> <code>A</code>. The constructed normal algorithm may use auxiliary letters beyond the input alphabet — and after watching the markers <code>m</code>, <code>R</code> and <code>C</code> do their sweeps in the gallery, you know exactly why that extra room to scribble matters.</p>
+<h3 class="reveal">Why universality is philosophically useful</h3>
+<p class="reveal">Once a precise universal model exists, “method” itself becomes a mathematical noun. Does a method for this problem exist? Can one procedure interpret all programs? Can termination be decided? These stop being vibes and become theorem questions — and, crucially, some of them turn out to have the answer <em>no</em>. That negative power is the subject of the next chapter.</p>
+<p class="reveal">And for Markov's constructive programme, the word <em>construct</em> can now be tethered to a precise class of effective procedures. The machine is no longer merely a model of a calculating clerk. It becomes part of the ontology of the mathematics itself.</p>
+<div class="aside deep reveal"><span class="lbl">Universal does not mean convenient</span>You could in principle implement a web browser in raw Markov substitutions, exactly as you could on a bare Turing machine. That makes neither a sensible engineering language. Universality is a claim about <em>what can in principle be computed</em>, not about ergonomic programming — a distinction that returns when the coda is honest about Refal's adoption.</div>
+</div>
+</section>
+
+<section class="chapter" id="cU">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 6</span> <span class="eyebrow">the most dramatic thing an exact machine can prove is a limit</span><h2>What the machine proves it <em>cannot</em> do</h2></div>
+<p class="reveal">Here is a turn people rarely expect. The reason mathematicians care about an exact model of computation is not mainly that it lets them compute things. It is that it lets them <strong>prove that certain things can never be computed at all</strong> — and Markov himself produced some of the most striking examples, reaching far outside logic into algebra and topology.</p>
+
+<h3 class="reveal">Words that cannot be sorted: the word problem</h3>
+<p class="reveal">Give yourself a finite alphabet and a finite list of two-way rewriting rules <code>u ↔ v</code> — a semigroup presentation, also called a Thue system. Two words count as “equal” if one can be turned into the other by applying rules in either direction, any number of times. A natural question: is there a single algorithm that, given any two words, decides whether they are equal?</p>
+<div class="definition reveal"><span class="tag">Theorem · Markov and Post, independently, 1947</span><div class="statement">There is a finitely presented semigroup whose <strong>word problem is undecidable</strong>: no algorithm can decide, for arbitrary words <code>P</code> and <code>Q</code>, whether the rules make them equal. String rewriting is powerful enough to be its own undecidable oracle.</div></div>
+<p class="reveal">This is a landmark: one of the earliest undecidability results about an everyday algebraic object rather than about self-referential logical sentences. And it lands in <em>exactly</em> the world of word rewriting that normal algorithms formalize — hardly a coincidence, since proving it means encoding machine histories as words.</p>
+<p class="reveal">The result set off a chain reaction across both cities. Markov himself widened it in 1951: not just equality — whole families of <em>properties</em> of associative calculi admit no recognition algorithm. In Moscow, <strong>P. S. Novikov</strong> then carried the hardness one algebraic floor up, proving in a memoir of some 140 pages that the word problem for <em>groups</em> is unsolvable (1955). Novikov's student <strong>S. I. Adian</strong> — with <strong>M. O. Rabin</strong> independently — took the recognition question to its bleak conclusion: no algorithm decides, from a finite presentation, whether a group is trivial, finite, abelian, or has any other “Markov property.” The name is exact, not honorary: the notion generalizes precisely what Markov had proved for semigroups, and this <strong>Adian–Rabin theorem</strong> supplies the group-theoretic hardness that Markov's manifold construction, three years later, transports into topology. Leningrad added a miniature: <strong>G. S. Tseitin</strong> wrote down a concrete, explicit associative calculus with an unsolvable equivalence problem (1958) — published, pleasingly, in the same Steklov volume as Detlovs' equivalence memoir.</p>
+
+<h3 class="reveal">Shapes that cannot be recognized: the homeomorphy problem</h3>
+<p class="reveal">Now the astonishing one. Two manifolds are <em>homeomorphic</em> if one can be continuously deformed into the other — the same shape, up to stretching. Surely, for such a geometric question, a patient enough procedure could always decide?</p>
+<div class="definition reveal"><span class="tag">Theorem · A. A. Markov Jr, 1958</span><div class="statement">For every dimension <code>d ≥ 4</code>, the <strong>homeomorphy problem is algorithmically unsolvable</strong>: no algorithm decides whether two given <code>d</code>-dimensional manifolds are homeomorphic. Markov even exhibited specific manifolds that are, in this precise sense, unrecognizable.</div></div>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 264" role="img" aria-label="A reduction turning the undecidable word problem into an undecidable topology problem">
+<defs><marker id="arr4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0L0,6L7,3z" fill="var(--accent)"/></marker></defs>
+<g text-anchor="middle">
+<rect x="24" y="72" width="188" height="120" fill="var(--bg)" stroke="var(--warn)" stroke-width="1.5"/>
+<text x="118" y="104" font-size="13" fill="var(--warn)">undecidable</text><text x="118" y="124" font-size="13" fill="var(--warn)">group problem</text>
+<text x="118" y="152" font-size="11" fill="var(--muted)">is this presented</text><text x="118" y="170" font-size="11" fill="var(--muted)">group trivial?</text>
+<path d="M216 132H268" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr4)"/>
+<rect x="274" y="52" width="196" height="160" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.3"/>
+<text x="372" y="82" font-size="12" fill="var(--ink)">build a manifold whose</text><text x="372" y="100" font-size="12" fill="var(--ink)">fundamental group is</text><text x="372" y="118" font-size="12" fill="var(--ink)">the given group</text>
+<g stroke="var(--ok)" stroke-width="1.8" fill="none"><ellipse cx="372" cy="168" rx="58" ry="24"/><ellipse cx="350" cy="168" rx="12" ry="9"/><ellipse cx="394" cy="168" rx="12" ry="9"/></g>
+<path d="M474 132H526" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr4)"/>
+<rect x="532" y="72" width="106" height="120" fill="var(--bg)" stroke="var(--ok)" stroke-width="1.5"/>
+<text x="585" y="116" font-size="12" fill="var(--ink)">so shape-</text><text x="585" y="134" font-size="12" fill="var(--ink)">sorting is</text><text x="585" y="152" font-size="12" fill="var(--ok)">undecidable</text>
+<text x="330" y="244" font-size="11" fill="var(--muted)">deciding the shapes would decide the groups — which is impossible</text>
+</g></svg>
+</div><figcaption><b>Undecidability travels by reduction.</b> Markov built manifolds whose fundamental group encodes an arbitrary finite presentation; the hardness in the left box is Novikov's theorem and — for the triviality question specifically — Adian–Rabin. Hardness flows from algebra into geometry.</figcaption></figure>
+<div class="aside key reveal"><span class="lbl">Keep this</span><span class="hl">An exact model of computation is most powerful when it tells you a limit.</span> The same formalism that adds unary numbers underwrites proofs that no procedure whatsoever can sort four-dimensional shapes. Normal algorithms were not a toy alternative to Turing machines; in Markov's hands they were a tool for drawing the boundary of the computable — and pushing that boundary into topology surprised everyone.</div>
+<div class="aside deep reveal"><span class="lbl">Why the string setting helps</span>All of these proofs run by <em>reduction</em>: encode a known-hard problem as words, then transform. Normal algorithms live natively in the world of words and presentations, so the encodings are not an afterthought bolted onto a tape machine — they are the machine's home turf. That is the concrete payoff of Chapter 4's claim that Markov's model sits close to the mathematician's hand.</div>
+</div>
+</section>
+
+<section class="chapter" id="c6">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 7</span> <span class="eyebrow">existence is asked to show its papers</span><h2>The constructive turn</h2></div>
+<p class="reveal">This is the heart of the book. Classical mathematics is comfortable proving that an object must exist without handing you the object or any procedure for finding it. Constructive mathematics changes what the sentence is allowed to mean. <strong>“There exists an x” becomes a demand: produce x, and produce evidence that it works.</strong></p>
+<p class="reveal">This is <em>not</em> merely a ban on proof by contradiction. Constructive mathematics happily proves negations by deriving contradictions. The delicate move is the step from <code>¬¬P</code> back to <code>P</code>, and above all from <code>¬¬∃x P(x)</code> — “it is impossible that no witness exists” — to an actual witness. Classically these are interchangeable. Constructively they are worlds apart, because only one of them hands you the thing.</p>
+
+<div class="demo reveal" id="logicDemo">
+<h4>Proof passport · what evidence must cross the border?</h4>
+<p class="small">Tap a connective. The panel says what a constructive proof of it must actually carry — the Brouwer–Heyting–Kolmogorov reading, where a proof is a construction you can run.</p>
+<div class="logic-grid" id="logicGrid">
+<div class="logic-card active" data-logic="exists"><b>∃</b>there exists</div><div class="logic-card" data-logic="or"><b>∨</b>or</div><div class="logic-card" data-logic="and"><b>∧</b>and</div><div class="logic-card" data-logic="implies"><b>→</b>implies</div><div class="logic-card" data-logic="forall"><b>∀</b>for all</div><div class="logic-card" data-logic="not"><b>¬</b>not</div>
+</div>
+<div class="readout" id="logicReadout"></div>
+</div>
+
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 288" role="img" aria-label="Two passport desks: the classical desk accepts a double negation, the constructive desk demands a witness">
+<g>
+<rect x="34" y="42" width="270" height="206" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.3"/>
+<text x="169" y="74" text-anchor="middle" font-size="14" fill="var(--warn)">CLASSICAL DESK</text>
+<text x="58" y="112" font-size="12" fill="var(--muted)">Claim:</text>
+<text x="58" y="140" font-size="16" fill="var(--ink)">¬¬ ∃x P(x)</text>
+<line x1="58" y1="164" x2="280" y2="164" stroke="var(--line)" stroke-width="1"/>
+<text x="58" y="196" font-size="12" fill="var(--ink)">“Nonexistence is impossible.”</text>
+<text x="58" y="222" font-size="12" fill="var(--ink)">Stamp granted.</text>
+<rect x="356" y="42" width="270" height="206" fill="var(--bg)" stroke="var(--ok)" stroke-width="1.5"/>
+<text x="491" y="74" text-anchor="middle" font-size="14" fill="var(--ok)">CONSTRUCTIVE DESK</text>
+<text x="380" y="112" font-size="12" fill="var(--muted)">Present:</text>
+<text x="380" y="140" font-size="16" fill="var(--ink)">x  and  P(x)</text>
+<line x1="380" y1="164" x2="602" y2="164" stroke="var(--line)" stroke-width="1"/>
+<text x="380" y="196" font-size="12" fill="var(--ink)">“Here is the witness.”</text>
+<text x="380" y="222" font-size="12" fill="var(--ink)">Now stamp ∃.</text>
+<text x="330" y="28" text-anchor="middle" font-size="11" fill="var(--warn)" letter-spacing="1">¬¬∃ → ∃ : NOT AUTOMATIC</text>
+<path d="M308 144H352" stroke="var(--warn)" stroke-width="2.5" stroke-dasharray="7 5"/>
+</g></svg>
+</div><figcaption><b>Existence has a payload.</b> The formal machinery differs across constructive traditions, but the reading is stable: an existential proof should provide a witness, not merely rule out the absence of all witnesses.</figcaption></figure>
+
+<p class="reveal">The logical instruments here have Moscow roots older than the school itself. <strong>A. N. Kolmogorov</strong> was studying intuitionistic logic as early as 1925, embedding classical reasoning into it by a double-negation translation; <strong>V. I. Glivenko</strong> proved, in 1928–29, the little theorems relating classical and intuitionistic provability that still carry his name; and it is Kolmogorov's 1932 reading of intuitionistic logic as a <em>calculus of problems</em> that put the K into the Brouwer–Heyting–Kolmogorov interpretation the demo above uses. When Markov's school later demanded an algorithm as the content of a proof, it was, in effect, filling Kolmogorov's “problems” with an exact notion of solution.</p>
+<h3 class="reveal">Markov's recursive constructive mathematics (RUSS)</h3>
+<p class="reveal">In the late 1940s Markov began developing a distinct variety of constructive mathematics, now commonly labelled <strong>recursive constructive mathematics</strong>, or <strong>RUSS</strong>. In the Stanford Encyclopedia's summary, RUSS is essentially <span class="hl-ok">recursive function theory with intuitionistic logic</span>: mathematical objects are presented through Gödel numberings, and the procedures are all recursive. What separates RUSS from the classical “recursive analysis” developed in the West after Turing and Church is precisely the logic — RUSS reasons intuitionistically, so every theorem keeps its computational reading.</p>
+<p class="reveal">Now the two halves of this book connect. RUSS says a “construction” <em>is</em> a recursive procedure, and Chapter 5 showed normal algorithms compute exactly the recursive partial functions. So Markov's rewriting machine is a perfectly good official answer to “what counts as a construction?” The machine is not a warm-up act for the philosophy; it is the philosophy's model of what a proof may legitimately smuggle inside it.</p>
+<div class="aside key reveal"><span class="lbl">The programme in one sentence</span><span class="hl">Rebuild ordinary mathematics so that its assertions retain algorithmic content.</span> An existence theorem should carry a construction; a universal theorem should carry a method that works on arbitrary admissible input; a definition of an infinite object should say how finite information about it is actually obtained.</div>
+
+<h3 class="reveal">A school with two capitals</h3>
+<p class="reveal">“The Russian school” was never one seminar room. Markov's own circle formed in Moscow after his move there in the mid-1950s; a second, ultimately very influential centre grew in Leningrad around his student <strong>Nikolai Aleksandrovich Shanin</strong> (1919–2011). Mints and Nikolenko's history of the Leningrad school — written by a member of it and a successor at the same institute — is the dedicated account; the sketch below follows the record it belongs to.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 352" role="img" aria-label="The two centres of the Russian constructive school: Moscow around Markov, Leningrad around Shanin">
+<g>
+<text x="330" y="26" text-anchor="middle" font-size="12" fill="var(--muted)" letter-spacing="2">ONE PROGRAMME · TWO CITIES</text>
+<rect x="255" y="42" width="150" height="46" fill="var(--bg)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="330" y="62" text-anchor="middle" font-size="13" fill="var(--accent)">A. A. Markov Jr</text>
+<text x="330" y="80" text-anchor="middle" font-size="10" fill="var(--muted)">Leningrad → Moscow</text>
+<path d="M290 88 L180 118" stroke="var(--accent)" stroke-width="1.6" fill="none"/>
+<path d="M370 88 L480 118" stroke="var(--accent)" stroke-width="1.6" fill="none"/>
+<rect x="34" y="124" width="290" height="204" fill="var(--bg)" stroke="var(--line)" stroke-width="1.3"/>
+<text x="179" y="150" text-anchor="middle" font-size="13" fill="var(--ink)">MOSCOW</text>
+<text x="52" y="180" font-size="11" fill="var(--ink)">Markov's own group, from the</text>
+<text x="52" y="197" font-size="11" fill="var(--ink)">mid-1950s</text>
+<text x="52" y="226" font-size="11" fill="var(--ink)">N. M. Nagorny — co-author of the</text>
+<text x="52" y="243" font-size="11" fill="var(--ink)">monograph's 2nd edition (1984)</text>
+<text x="52" y="272" font-size="11" fill="var(--ink)">B. A. Kushner — the school's</text>
+<text x="52" y="289" font-size="11" fill="var(--ink)">standard Lectures (1973)</text>
+<text x="52" y="318" font-size="11" fill="var(--faint)">earlier logic: Kolmogorov · Glivenko</text>
+<rect x="336" y="124" width="290" height="204" fill="var(--bg)" stroke="var(--line)" stroke-width="1.3"/>
+<text x="481" y="150" text-anchor="middle" font-size="13" fill="var(--ink)">LENINGRAD</text>
+<text x="354" y="180" font-size="11" fill="var(--ink)">N. A. Shanin — constructive</text>
+<text x="354" y="197" font-size="11" fill="var(--ink)">semantics; “duplex” reals</text>
+<text x="354" y="226" font-size="11" fill="var(--ink)">1961 · LOMI logic group founded:</text>
+<text x="354" y="243" font-size="11" fill="var(--ink)">Davydov, Maslov, Mints — goal:</text>
+<text x="354" y="260" font-size="11" fill="var(--ink)">automated theorem proving</text>
+<text x="354" y="289" font-size="11" fill="var(--ink)">orbit: Tseitin · Orevkov · Zaslavsky ·</text>
+<text x="354" y="306" font-size="11" fill="var(--ink)">Slisenko · Matiyasevich</text>
+</g></svg>
+</div><figcaption><b>One programme, two cities.</b> Moscow kept the foundational flame; Leningrad, from remarkably early, pointed the constructive machinery at machines — its 1961 logic group was founded to build an automatic theorem prover.</figcaption></figure>
+<p class="reveal">Two Leningrad details deserve to be spelled out. First, Shanin insisted that constructive objects come packaged with their own effectivity: he defined a constructive real number as a <strong>“duplex”</strong> — a pair of algorithms, one producing rational approximations and one guaranteeing the rate at which they converge. That “object = data plus certified method” instinct is precisely the interface-flavoured thinking Chapter 9 develops. Second, the group Shanin founded at the Leningrad branch of the Steklov Institute in 1961 — its first three members were Gennady Davydov, Sergey Maslov, and Grigori Mints — was created not to contemplate algorithms but to <em>build one</em>: an automatic theorem prover. Out of that room came exports whose reach nobody predicted:</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 300" role="img" aria-label="Three famous exports of the Leningrad school: the inverse method, the Tseitin encoding, and the solution of Hilbert's tenth problem">
+<g>
+<text x="330" y="26" text-anchor="middle" font-size="12" fill="var(--muted)" letter-spacing="2">THREE EXPORTS FROM ONE SEMINAR</text>
+<rect x="34" y="46" width="592" height="68" fill="var(--bg)" stroke="var(--line)" stroke-width="1.3"/>
+<text x="52" y="74" font-size="12" fill="var(--accent)">1964 · S. Maslov · the inverse method</text>
+<text x="52" y="96" font-size="11" fill="var(--ink)">a proof-search calculus for predicate logic — early automated deduction</text>
+<rect x="34" y="128" width="592" height="68" fill="var(--bg)" stroke="var(--line)" stroke-width="1.3"/>
+<text x="52" y="156" font-size="12" fill="var(--accent)">1968 · G. Tseitin · the clause translation</text>
+<text x="52" y="178" font-size="11" fill="var(--ink)">the CNF translation that remains standard equipment in SAT solving</text>
+<rect x="34" y="210" width="592" height="68" fill="var(--bg)" stroke="var(--line)" stroke-width="1.3"/>
+<text x="52" y="238" font-size="12" fill="var(--accent)">1970 · Yu. Matiyasevich · Hilbert's tenth problem</text>
+<text x="52" y="260" font-size="11" fill="var(--ink)">no algorithm decides whether a Diophantine equation is solvable</text>
+</g></svg>
+</div><figcaption><b>From constructive philosophy to working machinery.</b> Maslov's inverse method is a landmark of automated deduction; Tseitin's 1968 translation — published in the seminar's own “Studies in Constructive Mathematics and Mathematical Logic” — is standard equipment in every SAT pipeline; Matiyasevich, in the same Leningrad orbit, completed the negative solution of Hilbert's tenth problem.</figcaption></figure>
+<p class="reveal">And the same rooms kept producing. Shanin turned his semantics itself into a procedure — an algorithm for the <em>constructive decoding</em> of mathematical judgments (1958). <strong>I. D. Zaslavsky</strong> worked with Tseitin on the singular constructions Chapter 9 will meet. <strong>A. O. Slisenko</strong> carried the seminar into computational complexity; his real-time recognition of palindromes became a landmark of the subject. And <strong>Grigori Mints</strong> spent a career threading Maslov's inverse method into Gentzen-style proof theory and resolution — the seminar's proof-search programme carried, personally, into modern automated deduction.</p>
+<div class="aside think reveal"><span class="lbl">The philosophy is operational, not ascetic</span>The constructive question is not “which beautiful classical objects shall we forbid?” It is “what information does this statement promise, and what would count as delivering on it?” The Leningrad group took that reading to its logical conclusion: if a proof is a procedure, a machine should be able to search for it. Read this way, a logical connective is a specification for the evidence a proof must return.</div>
+</div>
+</section>
+
+<section class="chapter" id="c6h">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 8</span> <span class="eyebrow">the school's one controversial bridge</span><h2>Markov's principle: search without a clock</h2></div>
+<p class="reveal">Here is the exact place where Markov's school parts company with many other constructivists — and it is named after him for good reason. Suppose a property of natural numbers is <em>decidable</em>: for each <code>n</code>, you can effectively check whether <code>P(n)</code> holds. Suppose further that assuming “no <code>n</code> satisfies <code>P</code>” leads to a contradiction. May you conclude that some <code>n</code> really does satisfy <code>P</code>?</p>
+<div class="definition reveal"><span class="tag">Markov's principle (MP) · as stated in the Stanford Encyclopedia</span><div class="statement">For each binary sequence <code>(aₙ)</code>, if it is contradictory that all the terms <code>aₙ</code> equal 0, then there exists a term equal to 1.</div></div>
+<p class="reveal">Equivalently, in the schematic form logic courses use: from <code>¬¬∃n P(n)</code> conclude <code>∃n P(n)</code>, for decidable <code>P</code>. Markov's computational intuition is an <strong>unbounded search</strong>: test 0, test 1, test 2, and keep going. If it is genuinely impossible for the search to run forever without success, then — on this reading — the search must eventually strike the witness.</p>
+<div class="demo reveal" id="searchDemo">
+<h4>Machine 05 · an unbounded search, seen through a small window</h4>
+<p class="small">Choose where the hidden witness sits. The search knows only how to test one position at a time. Notice the gap the whole principle turns on: “no witness seen yet” is never the same statement as “no witness exists.”</p>
+<div class="ctrlrow"><label>witness position</label><input type="range" id="witness" min="0" max="24" value="13"><span class="mono" id="witnessVal">13</span><button class="btn" id="searchStep">Check next n</button><button class="btn" id="searchRun">Search</button><button class="btn" id="searchReset">Reset</button></div>
+<div class="searchstrip" id="searchStrip"></div><div class="readout" id="searchLog"></div>
+</div>
+<div class="aside warn reveal"><span class="lbl">Why other constructivists hesitate</span>From the evidence <code>¬¬∃n P(n)</code> alone, you have not been handed any <em>bound</em> telling you where to stop looking. The search may run arbitrarily long before it succeeds. Markov's principle sanctions the leap anyway, for decidable predicates. Bishop-style and Brouwerian settings generally do <strong>not</strong> accept it wholesale; in the Stanford Encyclopedia's careful phrasing, its constructive status is less clear than that of the standard “omniscience” principles.</div>
+<h3 class="reveal">The wonderfully awkward status of the principle</h3>
+<p class="reveal">MP is computational in one sense and non-trivial constructively in another. The proposed realizer is almost insultingly concrete: enumerate and test. Yet the guarantee that this partial search must terminate is extracted from a double negation, not from a bound you can see. That tension is exactly why the principle is such a clean window into the school: <span class="hl">it trusts effective search further than its neighbours do.</span></p>
+<div class="aside deep reveal"><span class="lbl">Do not confuse it with omniscience</span>Markov's principle is <em>not</em> the claim that every question is decidable, nor that you can always tell in advance whether a witness exists. The test <code>P(n)</code> must itself be effective. MP concerns only the step from “the decidable search cannot fail forever” to the actual success of the unbounded search. It is a statement about search, not omniscience — and modern <em>constructive reverse mathematics</em> studies exactly which theorems need it.</div>
+</div>
+</section>
+
+<section class="chapter" id="c7">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 9</span> <span class="eyebrow">an infinite object must answer finite questions</span><h2>Analysis without invisible reals</h2></div>
+<p class="reveal">A classical real number is often treated as a completed point on an already-existing continuum. A constructive real must be something you can actually <em>work with</em>. Shanin's Leningrad formulation makes the demand explicit: a real is a <strong>duplex</strong>, a pair of algorithms — one producing rational approximations, one certifying how fast they converge. Ask for precision <code>1/2ⁿ</code>; the number is obliged to hand you a rational within that error.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 300" role="img" aria-label="Rational approximations with shrinking guaranteed error, narrowing around one constructive real">
+<g>
+<text x="330" y="26" text-anchor="middle" font-size="12" fill="var(--muted)" letter-spacing="2">ASK FOR MORE PRECISION · RECEIVE MORE FINITE INFORMATION</text>
+<g stroke="var(--line)" stroke-width="1.2"><line x1="150" y1="72" x2="612" y2="72"/><line x1="150" y1="128" x2="612" y2="128"/><line x1="150" y1="184" x2="612" y2="184"/><line x1="150" y1="240" x2="612" y2="240"/></g>
+<g font-size="11" fill="var(--accent)"><text x="46" y="76">err ≤ 1/2</text><text x="46" y="132">err ≤ 1/4</text><text x="46" y="188">err ≤ 1/8</text><text x="46" y="244">err ≤ 1/16</text></g>
+<g stroke="var(--accent)" stroke-width="7" stroke-linecap="round" opacity=".55"><line x1="230" y1="72" x2="560" y2="72"/><line x1="308" y1="128" x2="472" y2="128"/><line x1="352" y1="184" x2="434" y2="184"/><line x1="372" y1="240" x2="413" y2="240"/></g>
+<g fill="var(--warn)"><circle cx="410" cy="72" r="6"/><circle cx="378" cy="128" r="6"/><circle cx="391" cy="184" r="6"/><circle cx="389" cy="240" r="6"/></g>
+<path d="M392 52V262" stroke="var(--ok)" stroke-width="1.6" stroke-dasharray="6 5"/>
+<text x="330" y="286" text-anchor="middle" font-size="11" fill="var(--ok)">the same real, approached effectively — a duplex in Shanin's sense</text>
+</g></svg>
+</div><figcaption><b>A real as a service, not a hidden decimal scroll.</b> Each request for precision must be answered by a rational plus an error guarantee. Different constructive schools package this differently; effective access to finite approximations is the common core.</figcaption></figure>
+
+<h3 class="reveal">The theorem that makes it feel real: <code>x = 0</code> is not free</h3>
+<p class="reveal">Consider the innocent-looking claim “for every real number <code>x</code>, either <code>x = 0</code> or <code>x ≠ 0</code>.” Classically it is a tautology. Computationally it demands a uniform decision procedure — and a real only ever arrives through finite approximations, so an extremely small nonzero value can keep masquerading as zero at every precision inspected so far. The sentence has quietly asked for an oracle. Watch it happen:</p>
+<div class="demo reveal" id="zeroDemo">
+<h4>Machine 06 · is this real number zero?</h4>
+<p class="small">A hidden real is revealed only through rational approximations of shrinking error. You must decide “= 0” or “≠ 0” from finitely many of them. The catch: a small nonzero value hides inside the error band for a long time.</p>
+<div class="ctrlrow"><label>the hidden real is</label>
+<select id="zeroKind"><option value="zero">exactly 0</option><option value="tiny">a tiny positive number</option></select>
+<button class="btn" id="zeroReveal">Reveal next precision</button><button class="btn" id="zeroReset">Reset</button></div>
+<div class="zerobar" id="zeroBar"><div class="band" id="zeroBand"></div><div class="axis"></div><div class="zeromark"></div><div class="val" id="zeroVal"></div></div>
+<div class="readout" id="zeroLog"></div>
+</div>
+<div class="aside think reveal"><span class="lbl">What the demo is really showing</span>No finite amount of approximation can, in general, establish <code>x = 0</code>: staying inside the error band forever is consistent with a nonzero value smaller than every band inspected so far. So a single procedure deciding “<code>= 0</code> versus <code>≠ 0</code>” for arbitrary constructive reals cannot exist. The classical tautology was hiding a request for infinite information.</div>
+
+<h3 class="reveal">RUSS gets genuinely strange — and that is the point</h3>
+<p class="reveal">Inside Markov's recursive world, where every real is named by a program, you can prove theorems that sound false to a classically trained ear. These are not paradoxes; they are honest facts about the recursively presented continuum, and they show that the constructive setting is a different mathematical universe, not classical mathematics with some moves forbidden.</p>
+<div class="definition reveal"><span class="tag">Specker's theorem (1949), a landmark of RUSS</span><div class="statement">There is a computable, strictly increasing sequence of rational numbers in <code>[0,1]</code> that is <strong>eventually bounded away from every real number</strong>: for each <code>x</code>, from some index on, the sequence keeps a fixed positive distance from <code>x</code>. It climbs forever inside a bounded interval, yet converges to nothing the constructive world can name — a recursive counterexample to the sequential compactness of <code>[0,1]</code>.</div></div>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 320" role="img" aria-label="A Specker staircase: an increasing bounded sequence of rationals that avoids every constructive real">
+<g>
+<text x="330" y="24" text-anchor="middle" font-size="12" fill="var(--muted)" letter-spacing="2">A STAIRCASE WITH NO CONSTRUCTIVE TOP</text>
+<line x1="70" y1="44" x2="70" y2="262" stroke="var(--ink)" stroke-width="1.3"/>
+<line x1="70" y1="262" x2="626" y2="262" stroke="var(--ink)" stroke-width="1.3"/>
+<text x="52" y="50" font-size="11" fill="var(--muted)">1</text>
+<text x="52" y="266" font-size="11" fill="var(--muted)">0</text>
+<text x="602" y="282" font-size="11" fill="var(--muted)">n →</text>
+<path d="M70 82H626" stroke="var(--warn)" stroke-width="1.4" stroke-dasharray="7 5"/>
+<text x="336" y="72" font-size="11" fill="var(--warn)">classical supremum — not a constructive real</text>
+<rect x="70" y="132" width="556" height="14" fill="color-mix(in srgb,var(--accent) 14%,transparent)"/>
+<text x="626" y="127" text-anchor="end" font-size="11" fill="var(--accent)">x ± δ</text>
+<g fill="var(--ok)">
+<circle cx="95" cy="194" r="4"/><circle cx="137" cy="159" r="4"/><circle cx="179" cy="139" r="4"/><circle cx="221" cy="124" r="4"/><circle cx="263" cy="113" r="4"/><circle cx="305" cy="104" r="4"/><circle cx="347" cy="97" r="4"/><circle cx="389" cy="92" r="4"/><circle cx="431" cy="88" r="4"/><circle cx="473" cy="86" r="4"/><circle cx="515" cy="85" r="4"/><circle cx="557" cy="84" r="4"/>
+</g>
+<text x="95" y="296" font-size="11" fill="var(--muted)">rational, computable, strictly increasing — and eventually δ-far from any given x</text>
+</g></svg>
+</div><figcaption><b>Specker's staircase, schematically.</b> Take any constructive real x (the shaded strip): after finitely many steps the sequence leaves its neighbourhood for good. Classically the supremum exists — but it is not a computable number, so inside RUSS the staircase has no top.</figcaption></figure>
+
+<p class="reveal">Two companions from the same world, both stated in the Stanford Encyclopedia's survey of RUSS: there is a <span class="hl-warn">pointwise continuous function on <code>[0,1]</code> that is not uniformly continuous</span>, and a <span class="hl-warn">positive-valued uniformly continuous function on <code>[0,1]</code> whose infimum is 0</span> — so it never gets to claim the minimum the classical extreme-value theorem would promise. On the closed unit interval, several theorems every calculus student memorizes simply fail once “real number” means “program for a real number.”</p>
+<p class="reveal">Underneath examples of this kind sits one sharp construction from the Leningrad side: the <strong>singular coverings</strong> of I. D. Zaslavsky and G. S. Tseitin — sequences of intervals of arbitrarily small total length that nevertheless cover every constructive point of the unit interval. Classically, you cannot paint the whole of <code>[0,1]</code> with a tenth of a unit of paint; constructively, the points you can actually <em>name</em> are exactly that easy to paint over. Singular coverings are the raw material for several pathologies of this kind.</p>
+<p class="reveal">And the strangeness cuts in the opposite direction too, in a theorem from the Leningrad side of the school. Since a constructive function must act on <em>programs</em> for reals, it cannot secretly peek at an infinite decimal expansion — and Tseitin proved that, on constructive complete separable metric spaces, this forces continuity: <strong>every constructive function of a constructive real variable is continuous</strong>. You cannot program a genuine jump. Discontinuity, constructively, is not an available behaviour; what fails instead, as above, is <em>uniform</em> continuity.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 270" role="img" aria-label="Orevkov's constructive counterexample to the Brouwer fixed point theorem, schematically: a square whose every constructive point is moved">
+<g>
+<text x="330" y="24" text-anchor="middle" font-size="12" fill="var(--muted)" letter-spacing="2">A SQUARE WHERE EVERY CONSTRUCTIVE POINT MOVES</text>
+<rect x="240" y="52" width="180" height="180" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.4"/>
+<defs><marker id="arr9" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0L0,5L6,2.5z" fill="var(--accent)"/></marker></defs>
+<g stroke="var(--accent)" stroke-width="1.6" fill="none">
+<path d="M272 84 l24 10" marker-end="url(#arr9)"/>
+<path d="M366 76 l20 16" marker-end="url(#arr9)"/>
+<path d="M300 140 l26 -6" marker-end="url(#arr9)"/>
+<path d="M382 152 l-10 24" marker-end="url(#arr9)"/>
+<path d="M268 196 l24 12" marker-end="url(#arr9)"/>
+<path d="M344 206 l24 -10" marker-end="url(#arr9)"/>
+</g>
+<g fill="var(--warn)"><circle cx="272" cy="84" r="3.4"/><circle cx="366" cy="76" r="3.4"/><circle cx="300" cy="140" r="3.4"/><circle cx="382" cy="152" r="3.4"/><circle cx="268" cy="196" r="3.4"/><circle cx="344" cy="206" r="3.4"/></g>
+<text x="330" y="258" text-anchor="middle" font-size="11" fill="var(--muted)">Orevkov, 1963: a constructive self-map of the square with no constructive fixed point</text>
+</g></svg>
+</div><figcaption><b>Brouwer's fixed-point theorem, constructively refuted.</b> V. P. Orevkov built a constructive continuous map of the square into itself that moves every constructive point. (The drawing is schematic — the actual map is defined by an algorithm, not by these six arrows.) Classically a fixed point must exist; constructively, no algorithm can exhibit one.</figcaption></figure>
+
+<h3 class="reveal">Definitions become interfaces</h3>
+<p class="reveal">Step back and the pattern is unmistakable. A constructive definition behaves like a data structure with methods — Shanin's duplex is the plainest example, an object that literally ships as two algorithms. A continuous function may need a <em>modulus</em>: an effective control saying how much input precision buys how much output precision. A Cauchy sequence carries a convergence rate. A proof of <code>∀x ∃y R(x,y)</code> is expected to act like a program that receives <code>x</code> and returns <code>y</code> together with evidence of <code>R</code>.</p>
+<div class="aside key reveal"><span class="lbl">Why programmers feel an eerie familiarity</span>Input. Output. Invariant. Witness. Termination. Precision contract. Constructive mathematics did not secretly invent software engineering, but the resemblance is structural: <span class="hl-ok">a proposition is read by asking what usable evidence an implementation of it must return.</span> The next chapter asks whether that resemblance ever cashed out into real tools.</div>
+
+<h3 class="reveal">What constructivizing did to mathematics</h3>
+<p class="reveal">Constructivizing did not merely delete theorems; it forced new statements, new hypotheses, and new proof techniques. Constructive analysis, algebra, and topology became deep subjects in their own right. Errett Bishop's 1967 book then showed that a great deal of analysis can be rebuilt constructively in recognizably ordinary mathematical prose — free of the recursion-theoretic notation that made RUSS a hard read even for sympathetic mathematicians.</p>
+<p class="reveal">The Russian school was one route among several, distinguished by its explicit allegiance to recursive procedures and its acceptance of Markov's principle. A fair map shows the neighbouring roads:</p>
+<table class="compare reveal">
+<thead><tr><th>Tradition</th><th>Characteristic emphasis</th><th>Markov's principle?</th></tr></thead>
+<tbody><tr><td>Markov / RUSS</td><td>Recursive presentations and procedures; intuitionistic logic; a strongly algorithmic reading of everything.</td><td>Yes — its signature.</td></tr><tr><td>Brouwerian intuitionism</td><td>Mental constructions, choice sequences, distinctive continuity principles.</td><td>Not in general.</td></tr><tr><td>Bishop-style (BISH)</td><td>Constructive mathematics in ordinary mathematical language, engineered to keep numerical meaning.</td><td>Usually not assumed.</td></tr><tr><td>Martin-Löf type theory</td><td>Judgements, dependent types, proofs as structured terms with computational meaning.</td><td>Not a default.</td></tr></tbody>
+</table>
+<div class="aside deep reveal"><span class="lbl">The other rebuilt continuum: Robinson's infinitesimals</span>The twentieth century produced one more famous re-engineering of the real line, and it makes an instructive mirror. Abraham Robinson's <em>nonstandard analysis</em> (from 1961; the monograph in 1966) made infinitesimals rigorous at last: the hyperreal line adds numbers smaller than every 1/n, with a transfer principle moving first-order truths between the standard and enlarged worlds. But the construction runs through model theory — compactness, ultrapowers over a nonprincipal ultrafilter — machinery that calls on the axiom of choice and offers no recipe for exhibiting any particular infinitesimal: nothing one could hand to Chapter 7's passport desk. Where Markov's school shrank “real number” to what an algorithm can present, Robinson enlarged it past what any algorithm presents. The two programmes are opposite answers to the same unease about the classical continuum, with no direct lineage between them — this book's usual caution applies. There is, though, a late twist the school would have enjoyed: Palmgren (1998) built a constructive nonstandard analysis extending Bishop's, and van den Berg, Briseid and Safarik (2012) gave nonstandard systems a functional interpretation whose algorithm <em>rewrites</em> nonstandard proofs into standard ones, with term extraction. Even infinitesimals, suitably formalized, can be made to pay their computational debts — and the collecting instrument is, of all things, a rewriting procedure.</div>
+</div>
+</section>
+
+<section class="chapter" id="cB">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 10</span> <span class="eyebrow">where this pays off · and where the receipts run out</span><h2>The ledger: established, plausible, oversold</h2></div>
+<p class="reveal">A fair audit splits the record three ways: <strong>established</strong>, <strong>plausible</strong>, <strong>oversold</strong>. The subject deserves better than its own propaganda, so this chapter keeps receipts.</p>
+
+<h3 class="reveal">1 · Proofs: the rock-solid payoff</h3>
+<p class="reveal">There is a genuine, non-hand-wavy bridge from constructive mathematics to computation, and it has a name: the <strong>Curry–Howard correspondence</strong>. Stated plainly: <span class="hl">a constructive proof of an existential statement is an algorithm that produces a witness.</span> Propositions correspond to types, proofs to programs of those types; running the proof computes the object it claims exists. This is not a metaphor and not a Markov-specific slogan — it is the organizing principle behind an entire family of proof assistants.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 216" role="img" aria-label="Curry-Howard: a proposition is a type, a constructive proof is a program, running it yields the witness">
+<defs><marker id="arrA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0L0,6L7,3z" fill="var(--accent)"/></marker></defs>
+<g text-anchor="middle">
+<rect x="26" y="58" width="180" height="100" fill="var(--bg)" stroke="var(--warn)" stroke-width="1.5"/>
+<text x="116" y="92" font-size="13" fill="var(--warn)">proposition</text>
+<text x="116" y="116" font-size="13" fill="var(--ink)">∃x P(x)</text>
+<text x="116" y="140" font-size="10" fill="var(--muted)">a type</text>
+<path d="M210 108H246" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrA)"/>
+<text x="228" y="96" font-size="10" fill="var(--accent)">is</text>
+<rect x="252" y="58" width="180" height="100" fill="var(--bg)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="342" y="92" font-size="13" fill="var(--accent)">constructive proof</text>
+<text x="342" y="116" font-size="13" fill="var(--ink)">a program</text>
+<text x="342" y="140" font-size="10" fill="var(--muted)">of that type</text>
+<path d="M436 108H472" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrA)"/>
+<text x="454" y="96" font-size="10" fill="var(--accent)">run</text>
+<rect x="478" y="58" width="158" height="100" fill="var(--bg)" stroke="var(--ok)" stroke-width="1.5"/>
+<text x="557" y="92" font-size="13" fill="var(--ok)">the witness</text>
+<text x="557" y="116" font-size="12" fill="var(--ink)">x, computed</text>
+<text x="557" y="140" font-size="10" fill="var(--muted)">with its evidence</text>
+<text x="330" y="196" font-size="11" fill="var(--muted)">checking the proof and computing the object become the same activity</text>
+</g></svg>
+</div><figcaption><b>Curry–Howard in three boxes.</b> Because a constructive existence proof is literally a program for the witness, this is the exact machinery behind Chapter 7's slogan that existence has a payload.</figcaption></figure>
+<p class="reveal">This is why systems in the Coq, Agda, Nuprl, Minlog, Isabelle, and Lean families can <strong>extract a program from a proof</strong>: prove <code>∀x ∃y R(x,y)</code> constructively, and the assistant can emit executable code taking <code>x</code> to <code>y</code>, certified correct by the proof it came from. Markov's insistence that “exists” carry a construction is the ancestral form of the demand; the modern machinery is more powerful and vastly better engineered, but it is the same demand.</p>
+<div class="aside key reveal"><span class="lbl">Keep this</span><span class="hl">Formalized, machine-checked mathematics is where Markov's question stopped being philosophy and became infrastructure.</span> “What procedure is hidden in this proof?” is now answered mechanically, inside proof assistants, as a matter of routine.</div>
+
+<h3 class="reveal">2 · Programming: a real lineage, at a real cost</h3>
+<p class="reveal">The constructive habit — treat a specification as a contract for evidence — reappears wherever a type system carries real guarantees. A well-typed program is, in a precise sense, a proof that its type is inhabited, and a type-checker is then a proof-checker. Dependent types (Coq, Agda, Idris, Lean) push this until software can be proven, not merely tested, to meet its specification. That lineage is real.</p>
+<div class="aside warn reveal"><span class="lbl">The honest drawback, stated plainly</span>“Extract a certified program from a proof” is not a free lunch. Early large-scale experiments found that extracting an <em>efficient</em> program as a side effect of formalizing an ordinary textbook proof is unreasonable to expect; you get correct code, but often slow code, unless the definitions are written with extraction in mind. Constructive proofs can also be substantially more laborious than their classical cousins. The guarantees are strong; the effort is real; the performance is not automatic. Anyone selling this as effortless is selling something.</div>
+
+<h3 class="reveal">3 · The rewriting machine itself, in tools</h3>
+<p class="reveal">Does the specifically Markov flavour — strings, ordered rules — earn its keep? Modestly, and honestly, narrowly. Term and string rewriting underlies real technology: semantics of rule-based systems, decision procedures built on confluent rewriting, completion methods in equational reasoning. Where the subject matter is itself symbolic — grammars, presentations, formula manipulation — the rewriting view is the natural one, exactly as the undecidability proofs of Chapter 6 suggested. And because one step of a normal algorithm is so simply defined, the model is a natural target for <em>mechanized metatheory</em>: formalizing “execute a normal algorithm” inside a proof assistant and proving exactly which class of functions the programs denote.</p>
+<p class="reveal">There is also the quieter channel from Chapter 7, worth restating because it is so easy to miss: the Leningrad seminar's automated-deduction ambitions produced Maslov's inverse method and Tseitin's clause translation, and SAT solving — where Tseitin's translation is standard equipment — now underpins a large share of modern automated verification. The constructive school did not conquer mathematics, but pieces of its toolbox quietly conquered the verifiers.</p>
+
+<h3 class="reveal">4 · The ledger, without a thumb on the scale</h3>
+<table class="ledger reveal">
+<thead><tr><th>Claim</th><th>Status</th><th>In plain terms</th></tr></thead>
+<tbody>
+<tr><td>Constructive proofs yield algorithms for witnesses</td><td class="yes">Established</td><td>Curry–Howard; the backbone of program extraction in real proof assistants.</td></tr>
+<tr><td>Constructive mathematics is a living field</td><td class="yes">Established</td><td>Active work in analysis, algebra, type theory, computable analysis, constructive reverse mathematics.</td></tr>
+<tr><td>The school seeded automated deduction</td><td class="yes">Established</td><td>Maslov's inverse method; Tseitin's clause translation, still standard in SAT.</td></tr>
+<tr><td>Rewriting / normal algorithms aid verification &amp; metatheory</td><td class="maybe">Real but narrow</td><td>Genuine in symbolic domains and mechanized metatheory; not a general-purpose engineering win.</td></tr>
+<tr><td>Extracted programs are automatically fast</td><td class="no">Oversold</td><td>Correct, yes; efficient only with deliberate effort. A documented limitation.</td></tr>
+<tr><td>Markov's specific RUSS school won the field</td><td class="no">False</td><td>It did not. Bishop-style and type-theoretic constructivism are far more prominent today.</td></tr>
+<tr><td>“Everything modern descends from Markov”</td><td class="no">False</td><td>These ideas have many independent lineages. Resemblance is not descent.</td></tr>
+</tbody>
+</table>
+<p class="pull reveal">A theorem can be true. A constructive mathematician asks what it lets you do — and then checks whether the answer survives contact with a compiler.</p>
+</div>
+</section>
+
+<section class="chapter" id="c8">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CHAPTER 11</span> <span class="eyebrow">not mainstream domination · a long intellectual afterlife</span><h2>The map today</h2></div>
+<p class="reveal">Mathematics did not become Markov's constructive mathematics. Classical mathematics remains overwhelmingly standard, and even within constructivism, the recursive school is one historical variety among several — not the most widely taught. Judged as a campaign for conquest, the programme lost.</p>
+<p class="reveal">That is the wrong scale for judging it. Ask instead <strong>where the demand for computational meaning is intellectually alive now</strong>, and the map fills up.</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 368" role="img" aria-label="A constellation of modern fields sharing the demand for computational meaning">
+<g text-anchor="middle">
+<circle cx="330" cy="186" r="72" fill="var(--bg)" stroke="var(--warn)" stroke-width="1.8"/>
+<text x="330" y="176" font-size="13" fill="var(--warn)">proofs with</text>
+<text x="330" y="194" font-size="13" fill="var(--warn)">computational</text>
+<text x="330" y="212" font-size="13" fill="var(--warn)">content</text>
+<g fill="var(--bg)" stroke="var(--ink)" stroke-width="1.3">
+<rect x="28" y="52" width="200" height="54"/>
+<rect x="432" y="52" width="200" height="54"/>
+<rect x="28" y="266" width="200" height="54"/>
+<rect x="432" y="266" width="200" height="54"/>
+<rect x="235" y="22" width="190" height="48"/>
+<rect x="235" y="300" width="190" height="48"/>
+</g>
+<text x="128" y="75" font-size="12" fill="var(--ink)">Bishop-style analysis</text><text x="128" y="94" font-size="10" fill="var(--muted)">numerical meaning</text>
+<text x="532" y="75" font-size="12" fill="var(--ink)">type theory</text><text x="532" y="94" font-size="10" fill="var(--muted)">proof terms · dependent types</text>
+<text x="128" y="289" font-size="12" fill="var(--ink)">computable analysis</text><text x="128" y="308" font-size="10" fill="var(--muted)">representations · realizability</text>
+<text x="532" y="289" font-size="12" fill="var(--ink)">proof assistants</text><text x="532" y="308" font-size="10" fill="var(--muted)">checked proof objects</text>
+<text x="330" y="43" font-size="12" fill="var(--ink)">constructive logic</text><text x="330" y="61" font-size="10" fill="var(--muted)">and reverse mathematics</text>
+<text x="330" y="321" font-size="12" fill="var(--ink)">program extraction</text><text x="330" y="339" font-size="10" fill="var(--muted)">where frameworks support it</text>
+<g stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="7 5" fill="none">
+<path d="M228 106L273 142"/><path d="M432 106L387 142"/><path d="M228 266L273 230"/><path d="M432 266L387 230"/><path d="M330 70V114"/><path d="M330 258V300"/>
+</g>
+</g></svg>
+</div><figcaption><b>Not one family tree: a constellation.</b> These areas share computational concerns; the dashed lines are conceptual neighbourhoods, not claims that every modern proof assistant is “Markovian.”</figcaption></figure>
+
+<h3 class="reveal">Normal algorithms, today</h3>
+<p class="reveal">They remain a clean universal model and a particularly elegant formalism when the subject matter is symbolic transformation. They live in computability theory, in rewriting-oriented teaching, in historical and foundational work — and, as the previous chapter noted, their one-line operational semantics makes them attractive objects for mechanized metatheory.</p>
+<h3 class="reveal">The constructive programme, today</h3>
+<p class="reveal">RUSS is a historically specific school, but constructive mathematics is vigorously alive across several traditions. Current work spans constructive analysis and algebra, type theory, proof assistants, computable analysis, realizability, and constructive reverse mathematics — the last of which measures <em>exactly which</em> extra principles (Markov's principle among them) a given theorem really needs. The shared pressure is the one Markov named: make the information content of a theorem explicit.</p>
+<div class="aside think reveal"><span class="lbl">So what survived?</span>Not a universal conversion to RUSS. Something subtler and arguably bigger: the question <em>“what procedure is hidden in this proof?”</em> is now completely at home in logic, verification, type theory, and computable analysis. Markov's specific foundational answers are historically dated. His question is extraordinarily modern — and now runs on machines.</div>
+<p class="pull reveal">Make the method explicit. Then make the method itself an object you can check.</p>
+</div>
+</section>
+
+<section class="chapter" id="refal">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">CODA</span> <span class="eyebrow">the rewriting instinct, one generation on</span><h2>Refal, briefly and honestly</h2></div>
+<p class="reveal">The map could end the book. But the rewriting instinct did not stop with Markov, and one of its descendants — a Soviet one, fittingly — earns a coda. In 1968 the physicist and cybernetician <strong>Valentin Turchin</strong> proposed <strong>Refal</strong>, initially as a <em>metaalgorithmic language</em>: a notation for describing the semantics of other languages, which soon acquired efficient implementations and became a programming language in its own right. Its heart is <strong>pattern matching as the central act of computation</strong> — a program is a set of sentences, each pairing a pattern with a replacement.</p>
+<p class="reveal">Refal is <em>not</em> “Markov normal algorithms with nicer syntax” — its data model and semantics are its own, and claiming direct descent would be sloppy. But the family resemblance is immediate. Refal computes over <strong>object expressions</strong>: bidirectional sequences, with brackets, that can be split and concatenated anywhere — so the shape of the data drives the control flow, exactly the instinct behind Markov's substitutions. Patterns speak about that shape through three kinds of variables:</p>
+<figure class="reveal"><div class="card">
+<svg viewBox="0 0 660 200" role="img" aria-label="Refal variable kinds: s matches one symbol, t one term, e an expression segment">
+<g text-anchor="middle">
+<text x="330" y="26" font-size="12" fill="var(--muted)" letter-spacing="2">A REFAL PATTERN DECOMPOSES DATA BY SHAPE</text>
+<rect x="70" y="52" width="160" height="86" fill="var(--bg)" stroke="var(--warn)" stroke-width="1.5"/>
+<text x="150" y="92" font-size="20" fill="var(--ink)">s.x</text>
+<text x="150" y="118" font-size="11" fill="var(--muted)">one symbol</text>
+<rect x="250" y="52" width="160" height="86" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.5"/>
+<text x="330" y="92" font-size="20" fill="var(--ink)">t.x</text>
+<text x="330" y="118" font-size="11" fill="var(--muted)">one term</text>
+<rect x="430" y="52" width="160" height="86" fill="var(--bg)" stroke="var(--ok)" stroke-width="1.5"/>
+<text x="510" y="92" font-size="20" fill="var(--ink)">e.x</text>
+<text x="510" y="118" font-size="11" fill="var(--muted)">expression segment</text>
+<text x="330" y="176" font-size="11" fill="var(--muted)">write the shape you mean; the language decomposes the data to fit it</text>
+</g></svg>
+</div><figcaption><b>Three variable kinds.</b> An s-variable matches one symbol, a t-variable one term (a symbol or a bracketed subexpression), an e-variable a whole segment — including the empty one.</figcaption></figure>
+<p class="reveal">Here is the classic first program, a palindrome test, in genuine Refal-5 syntax — four sentences, tried top to bottom, the same priority discipline Markov's rule lists taught us to read:</p>
+<div class="codefig reveal"><pre>Pal {
+  = True;
+  s.1 = True;
+  s.1 e.2 s.1 = &lt;Pal e.2&gt;;
+  e.1 = False;
+}</pre></div>
+<p class="small reveal" style="margin-top:-1em">Line by line: the empty word is a palindrome; a single symbol is a palindrome; a word whose first and last symbols coincide (the repeated variable s.1) is a palindrome iff its interior e.2 is — recurse; anything else is not. The whole control flow lives in the patterns.</p>
+<div class="demo reveal" id="patternDemo">
+<h4>Machine 07 · a Refal-style pattern microscope</h4>
+<p class="small">A didactic matcher, not a real Refal evaluator: it shows the intuition behind s- and e-variables on a flat token sequence.</p>
+<div class="ctrlrow"><label>expression</label><input id="exprInput" type="text" value="A B C D E" style="flex:1"><label>pattern</label><select id="patternSelect"><option value="s-e">s.first e.rest</option><option value="e-s">e.front s.last</option><option value="s-s-e">s.a s.b e.tail</option><option value="e-s-e">e.left s.pivot e.right</option></select><button class="btn" id="matchBtn">Match</button></div>
+<div class="pattern-stage"><div class="exprline" id="patternExpr"></div><div class="exprline" id="patternBindings"></div><div class="readout" id="patternNote"></div></div>
+</div>
+<div class="aside think reveal"><span class="lbl">Turchin's genuinely deeper idea</span>Refal was meant not only for writing algorithms but for writing <strong>algorithms about algorithms</strong> — programs simple enough that their transformers could be reasoned about almost with pen and paper. From that came <em>supercompilation</em>: run a program on generalized, partly unknown input, watch the tree of computations it can enter, and emit a simplified residual program. The idea kept developing inside the Refal world — Andrei Nemytykh's SCP4 is an experimental supercompiler for Refal-5, and with Alexei Lisitsa supercompilation has been applied to program and protocol verification — while its echoes (partial evaluation, deforestation, program transformation) have their own independent lineages. As everywhere in this book: resemblance is not descent.</div>
+<div class="aside warn reveal"><span class="lbl">Adoption, plainly</span>Refal's ecosystem is <strong>niche</strong>. It is not competing with mainstream languages for users. Refal-5λ, the actively documented dialect, is an exact superset of Refal-5 with an optimizing compiler targeting an intermediate interpretive code or C++ source; its most recent tagged release is 3.3.1 (dated 8 April on the release page), and the repository remains active in discussion. Smaller independent implementations exist, including a Python one. The fair summary is <span class="hl">niche but not erased</span>: a language of real historical and conceptual interest with a small living community — studied here for its lineage, not urged on anyone as a career move. A curated map of the whole ecosystem — implementations, dialects, papers, teaching materials, archives — is maintained at <a href="https://github.com/alexeyev/awesome-refal" target="_blank" rel="noopener">awesome-refal</a>, which describes itself as a “research archive + practical survival map.”</div>
+<p class="pull reveal">First formalize the calculation. Then formalize the act of looking at the calculation.</p>
+</div>
+</section>
+
+<section class="chapter" id="sources">
+<div class="wrap">
+<div class="chapter-head reveal"><span class="chapnum">READING ROOM</span> <span class="eyebrow">primary works first · modern maps second</span><h2>Where this little book gets its claims</h2></div>
+<p class="reveal">This page is written as a narrative, not a literature review — but the history in it is not folklore. These are the works to open when a sentence makes you suspicious; every named theorem, date, and quotation above was checked against one of them.</p>
+
+<h3 class="reveal">Markov, normal algorithms, undecidability</h3>
+<div class="sourcebox reveal"><span class="tag">Primary · 1954</span><strong>A. A. Markov, <em>Теория алгорифмов</em> (Theory of Algorithms).</strong> Trudy Mat. Inst. Steklov, vol. 42, 1954, pp. 3–375. Second edition with N. M. Nagorny, 1984; English translation 1988.<br><a href="https://www.mathnet.ru/eng/tm1178" target="_blank" rel="noopener">Math-Net record of the 1954 volume</a></div>
+<div class="sourcebox reveal"><span class="tag">Primary · the modern edition</span><strong>A. A. Markov, N. M. Nagorny, <em>The Theory of Algorithms</em>.</strong> The second, reworked edition of the monograph (1984); English translation by M. Greendlinger, Kluwer, 1988 — the standard form in which the theory is read today.</div>
+<div class="sourcebox reveal"><span class="tag">The equivalence theorem</span><strong>V. K. Detlovs, “Equivalence of normal algorithms and recursive functions.”</strong> Announced in Dokl. Akad. Nauk SSSR 90 (1953), 723–725; in full in Trudy Mat. Inst. Steklov 52 (1958), 75–139; English translation in AMS Translations (2) 23 (1963), 15–81.<br><a href="https://www.mathnet.ru/php/archive.phtml?wshow=paper&amp;jrnid=tm&amp;paperid=1293&amp;option_lang=eng" target="_blank" rel="noopener">Math-Net record of the 1958 memoir</a></div>
+<div class="sourcebox reveal"><span class="tag">Reference article</span><strong>Encyclopedia of Mathematics, “Normal algorithm.”</strong> Source for the normalization principle, its equivalence to Church's thesis, and the dating of the concept to Markov's 1947 word-problem research.<br><a href="https://encyclopediaofmath.org/wiki/Normal_algorithm" target="_blank" rel="noopener">encyclopediaofmath.org/wiki/Normal_algorithm</a></div>
+<div class="sourcebox reveal"><span class="tag">Biography</span><strong>Andrey Markov Jr (1903–1979).</strong> Son of Andrey Markov Sr; a founder of the Russian school of constructive mathematics; his name is on Markov's principle, Markov's rule, and Markov's theorem in knot theory.<br><a href="https://en.wikipedia.org/wiki/Andrey_Markov_Jr." target="_blank" rel="noopener">Wikipedia biography</a></div>
+<div class="sourcebox reveal"><span class="tag">Primary · 1958</span><strong>A. Markov, “The insolubility of the problem of homeomorphy,” Dokl. Akad. Nauk SSSR 121 (1958), 218–220.</strong> Undecidability of the homeomorphy problem in dimensions ≥ 4; for a modern detailed exposition see Gordon's note below.<br><a href="https://arxiv.org/pdf/2106.06006" target="_blank" rel="noopener">C. Gordon, “On the homeomorphism problem for 4-manifolds”</a></div>
+<div class="sourcebox reveal"><span class="tag">Word problem · 1947</span><strong>Markov and Post, independently:</strong> a finitely presented semigroup with undecidable word problem — an early undecidability result about an ordinary algebraic object.<br><a href="https://en.wikipedia.org/wiki/Word_problem_(mathematics)" target="_blank" rel="noopener">Overview: the word problem</a></div>
+<div class="sourcebox reveal"><span class="tag">The algebraic aftermath · Chapter 6's chain</span><strong>A. A. Markov</strong>, “Impossibility of algorithms for recognising some properties of associative systems,” Dokl. Akad. Nauk SSSR 77:6 (1951), 953–956 · <strong>P. S. Novikov</strong>, “On the algorithmic unsolvability of the word problem in group theory,” Trudy Mat. Inst. Steklov 44 (1955), 3–143 · <strong>S. I. Adian</strong>, Dokl. Akad. Nauk SSSR 103:4 (1955), 533–535, with the full memoir in Proceedings of the Moscow Mathematical Society 6 (1957), 231–298; <strong>M. O. Rabin</strong> proved the same independently in 1958 — together, the Adian–Rabin theorem · <strong>G. S. Tseitin</strong>, “An associative calculus with an insoluble problem of equivalence,” Trudy Mat. Inst. Steklov 52 (1958), 172–189.<br><a href="http://www.mathnet.ru/eng/tm1180" target="_blank" rel="noopener">Math-Net record of Novikov's memoir</a> · <a href="https://arxiv.org/pdf/2208.08560" target="_blank" rel="noopener">Nyberg-Brodda's English translation of the Adian and Markov papers</a></div>
+<div class="sourcebox reveal"><span class="tag">A participant's history</span><strong>Boris A. Kushner, “Kurt Gödel and the constructive mathematics of A. A. Markov.”</strong> Source of the remark that the monograph's scrupulous correctness proofs read as early program verification.<br><a href="https://projecteuclid.org/ebooks/lecture-notes-in-logic/G%C3%B6del-96--Logical-foundations-of-mathematics-computer-science-and/chapter/Kurt-G%C3%B6del-and-the-constructive-mathematics-of-A-A-Markov/lnl/1235417014.pdf" target="_blank" rel="noopener">Open the PDF</a></div>
+
+<h3 class="reveal">The school, in both cities</h3>
+<div class="sourcebox reveal"><span class="tag">The dedicated history · Leningrad</span><strong>G. E. Mints, S. I. Nikolenko. “History of the Leningrad (St. Petersburg) School of Constructive Mathematics and Proof Theory.”</strong> In A. Schumann (ed.), <em>Logic in Central and Eastern Europe: History, Science and Discourse</em>, University Press of America, 2012, pp. 380–387. Written from inside the tradition — Mints was one of the founding three of the 1961 LOMI logic group. A companion chapter in the same volume, S. I. Nikolenko, “The Markov School in the 21st Century,” pp. 388–427, carries the story forward.<br><a href="https://rowman.com/ISBN/9780761858911" target="_blank" rel="noopener">Publisher's page for the volume</a></div>
+<div class="sourcebox reveal"><span class="tag">Primary Leningrad papers</span>The landmark texts behind Chapters 7 and 9, in one place: <strong>A. A. Markov</strong>, “On constructive mathematics,” Trudy Mat. Inst. Steklov 67 (1962), 8–14 · <strong>N. A. Shanin</strong>, “Constructive real numbers and constructive functional spaces,” Trudy Mat. Inst. Steklov 67 (1962), 15–294 · <strong>G. S. Tseitin</strong>, “Algorithmic operators in constructive complete separable metric spaces,” Dokl. Akad. Nauk SSSR 128 (1959), 49–52, and “Mean-value theorems in constructive analysis,” Trudy Mat. Inst. Steklov 67 (1962), 362–384 · <strong>V. P. Orevkov</strong>, “A constructive map of the square into itself which moves every constructive point,” Dokl. Akad. Nauk SSSR 152 (1963), 55–58 · <strong>Yu. V. Matiyasevich</strong>, “Enumerable sets are Diophantine,” Dokl. Akad. Nauk SSSR 191 (1970). Volume 67 of the Trudy — one volume containing Markov's manifesto, Shanin's 280-page construction of the constructive continuum, and Tseitin's analysis — is the Leningrad programme between two covers.</div>
+<div class="sourcebox reveal"><span class="tag">Moscow logical roots</span><strong>A. N. Kolmogorov</strong> — the 1925 paper on the principle of excluded middle, containing the first double-negation embedding of classical into intuitionistic reasoning, and “Zur Deutung der intuitionistischen Logik,” Mathematische Zeitschrift 35 (1932): the calculus-of-problems interpretation behind BHK · <strong>V. I. Glivenko</strong> — “Sur la logique de M. Brouwer,” Bulletin de l'Académie royale de Belgique, Classe des sciences (V) 14 (1928), 225–228, and “Sur quelques points de la logique de M. Brouwer,” same Bulletin (V) 15 (1929), 183–188.</div>
+<div class="sourcebox reveal"><span class="tag">From the 1961 three</span><strong>G. Mints, <em>A Short Introduction to Intuitionistic Logic</em>.</strong> The University Series in Mathematics, Kluwer Academic / Plenum, New York, 2000, ix + 131 pp. A compact modern route into the logic of Chapters 7 and 8 — negative translation and Glivenko's theorem included — by one of the founding three of the 1961 Leningrad group.<br><a href="https://philpapers.org/rec/MINASI" target="_blank" rel="noopener">PhilPapers record</a></div>
+<div class="sourcebox reveal"><span class="tag">Another dedicated history</span><strong>M. Margenstern, “L'école constructive de Markov.”</strong> Revue d'histoire des mathématiques (in French; open access on Numdam) — among much else, a source of exact references to the school's founding papers.<br><a href="https://www.numdam.org/articles/10.24033/rhm.9/" target="_blank" rel="noopener">Read on Numdam</a></div>
+
+<h3 class="reveal">Constructive mathematics, mapped</h3>
+<div class="sourcebox reveal"><span class="tag">Modern survey</span><strong>Stanford Encyclopedia of Philosophy, “Constructive Mathematics.”</strong> Source for the RUSS characterization (“recursive function theory with intuitionistic logic”), the verbatim statement of Markov's principle, and the RUSS results of Chapter 9 (Specker's theorem and its companions).<br><a href="https://plato.stanford.edu/entries/mathematics-constructive/" target="_blank" rel="noopener">Open the SEP entry</a> · <a href="https://plato.stanford.edu/entries/mathematics-constructive/supplement1.html" target="_blank" rel="noopener">supplement on Specker sequences</a></div>
+<div class="sourcebox reveal"><span class="tag">Foundational analysis · 1967</span><strong>Errett Bishop, <em>Foundations of Constructive Analysis</em></strong> — the demonstration that substantial analysis can be developed constructively in ordinary mathematical language.</div>
+<div class="sourcebox reveal"><span class="tag">The field today · 2023</span><strong><em>Handbook of Constructive Mathematics</em>, Cambridge University Press.</strong> A multi-author overview across constructive logic, algebra, analysis, topology, and computation.<br><a href="https://www.cambridge.org/core/books/handbook-of-constructive-mathematics/2C43C11C2C7474F7599BF1FD6128EDCF" target="_blank" rel="noopener">Cambridge record</a></div>
+<div class="sourcebox reveal"><span class="tag">The nonstandard mirror</span><strong>A. Robinson, <em>Non-standard Analysis</em>, North-Holland, Amsterdam, 1966</strong> · <strong>E. Palmgren</strong>, “Developments in constructive nonstandard analysis,” Bulletin of Symbolic Logic 4:3 (1998), 233–272 · <strong>B. van den Berg, E. Briseid, P. Safarik</strong>, “A functional interpretation for nonstandard arithmetic,” Annals of Pure and Applied Logic 163:12 (2012), 1962–1994.<br><a href="https://arxiv.org/pdf/1109.3103" target="_blank" rel="noopener">The 2012 paper on arXiv</a></div>
+
+<h3 class="reveal">The bridge to proofs and programs</h3>
+<div class="sourcebox reveal"><span class="tag">Curry–Howard &amp; extraction</span><strong>Program extraction from constructive proofs.</strong> A constructive existence proof embodies an algorithm for a witness; proof assistants build on this. Also the source for the honest caveat that efficient extraction from textbook proofs is “unreasonable to expect.”<br><a href="https://arxiv.org/pdf/1502.08008" target="_blank" rel="noopener">On extraction from a large Coq formalization</a></div>
+<div class="sourcebox reveal"><span class="tag">Computable analysis, live</span><strong>Computability and Complexity in Analysis (CCA) network</strong> — current research on computation over real-valued data.<br><a href="https://cca-net.de/" target="_blank" rel="noopener">cca-net.de</a></div>
+
+<h3 class="reveal">The Refal coda</h3>
+<div class="sourcebox reveal"><span class="tag">Primary · Turchin</span><strong>V. F. Turchin, “The Concept of a Supercompiler.”</strong> The key exposition of supercompilation, by Refal's creator.<br><a href="https://mazdaywik.github.io/direct-link/The%20Concept%20of%20a%20Supercompiler.pdf" target="_blank" rel="noopener">Open the PDF</a></div>
+<div class="sourcebox reveal"><span class="tag">Language documentation</span><strong>Refal-5λ, “Introduction to the language.”</strong> Source for the 1968 “metaalgorythmic language” origin, the object-expression data model, and Refal-5λ being an exact superset of Refal-5.<br><a href="https://bmstu-iu9.github.io/refal-5-lambda/2-intro.en.html" target="_blank" rel="noopener">Open the documentation</a> · <a href="https://github.com/bmstu-iu9/refal-5-lambda/releases" target="_blank" rel="noopener">release history</a></div>
+<div class="sourcebox reveal"><span class="tag">The ecosystem map</span><strong>awesome-refal</strong> — a curated collection of Refal implementations, dialects, papers, seminars, and archives; in its own words, a “research archive + practical survival map.”<br><a href="https://github.com/alexeyev/awesome-refal" target="_blank" rel="noopener">github.com/alexeyev/awesome-refal</a></div>
+
+<div class="aside warn reveal"><span class="lbl">A note on genealogy and honesty</span>This book deliberately separates <strong>direct historical claims</strong> from <strong>conceptual resemblance</strong>. Pattern matching, partial evaluation, proof assistants, type theory, and program transformation have multiple independent lineages. Where a line is direct — Markov's theorems, the documented Moscow and Leningrad schools, Turchin's supercompilation — the text says so. Everywhere else it says “neighbour,” “resemblance,” or “shared ambition,” and the ledger of Chapter 10 marks which claims are established, plausible, or oversold. If a sentence here sounds like a bigger claim than its evidence, that is a bug; the sources above are how you catch it.</div>
+</div>
+</section>
+
+<footer class="endcard">
+<div class="wrap reveal"><div class="big">The word changed.</div><p class="lead" style="max-width:38ch;margin:1em auto">Then the rule changed the word. Then Markov asked what rule justifies a proof. Then whole machines learned to check the answer.</p><p class="small"><a href="#top">↑ back to the first word</a></p></div>
+</footer>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const CAP = 28;
+  const tiles = (el, word, hitStart=-1, hitLen=0, newStart=-1, newLen=0) => {
+    el.innerHTML = '';
+    if (word === '') { el.innerHTML = '<span class="small">ε · empty word</span>'; return; }
+    const shown = word.length > CAP ? word.slice(0, CAP - 1) : word;
+    [...shown].forEach((ch, i) => {
+      const d = document.createElement('div');
+      d.className = 'tile' + (i >= hitStart && i < hitStart + hitLen ? ' hit' : '') + (i >= newStart && i < newStart + newLen ? ' new' : '');
+      d.textContent = ch; el.appendChild(d);
+    });
+    if (word.length > CAP) { const d = document.createElement('div'); d.className = 'tile'; d.textContent = '+' + (word.length - (CAP - 1)); el.appendChild(d); }
+  };
+  const ruleHTML = (rules, active=-1) => rules.map((r, i) =>
+    `<div class="ruleitem ${i===active?'active':''}"><span>${i+1}</span><span>${r.l===''?'ε':esc(r.l)} →${r.t?'<span class="terminal">●</span> ':' '}${r.r===''?'ε':esc(r.r)}</span><span>${r.t?'HALT':''}</span></div>`).join('');
+
+  // ---- theme (no storage: initialized from system preference, toggled in memory) ----
+  const root = document.documentElement;
+  const setTheme = t => { root.setAttribute('data-theme', t); $('themeBtn').textContent = t === 'dark' ? '[ light ]' : '[ dark ]'; };
+  setTheme(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  $('themeBtn').onclick = () => setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+
+  // ---- progress bar, section label, reveals ----
+  const sections = [...document.querySelectorAll('section.chapter')];
+  const labels = {read:'§0 · pencil',c1:'§1 · rewrite',c2:'§2 · decisions',c3:'§3 · exact',c4:'§4 · markov',c5:'§5 · universal',cU:'§6 · limits',c6:'§7 · construct',c6h:'§8 · MP',c7:'§9 · analysis',cB:'§10 · ledger',c8:'§11 · map',refal:'coda · refal',sources:'sources'};
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), {threshold:.06});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  const nav = $('mininav'), bar = $('progress');
+  addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (max ? scrollY / max * 100 : 0) + '%';
+    nav.classList.toggle('show', scrollY > innerHeight * .55);
+    let cur = 'read';
+    sections.forEach(s => { if (s.getBoundingClientRect().top < innerHeight * .38) cur = s.id; });
+    nav.textContent = labels[cur] || '§';
+  }, {passive:true});
+
+  // ---- shared stepping engine ----
+  function makeEngine(cfg) {
+    // cfg: rulesEl, wordEl, logEl, budget (per Run), stepDelay
+    const st = { rules: [], word: '', halted: false, steps: 0 };
+    function paint(active=-1, hit=-1, hitLen=0, msg='') {
+      cfg.rulesEl.innerHTML = ruleHTML(st.rules, active);
+      tiles(cfg.wordEl, st.word, hit, hitLen);
+      if (msg) cfg.logEl.innerHTML = msg;
+    }
+    function load(rules, word, msg) { st.rules = rules; st.word = word; st.halted = false; st.steps = 0; paint(-1, -1, 0, msg); }
+    function step() {
+      if (st.halted) { paint(-1, -1, 0, `halted after ${st.steps} step${st.steps===1?'':'s'} · output <b>${esc(st.word)||'ε'}</b>`); return false; }
+      for (let i = 0; i < st.rules.length; i++) {
+        const r = st.rules[i], pos = st.word.indexOf(r.l);
+        if (pos >= 0) {
+          paint(i, pos, r.l.length, `rule ${i+1} is the first applicable · leftmost match at position ${pos}`);
+          const old = st.word;
+          st.word = old.slice(0, pos) + r.r + old.slice(pos + r.l.length);
+          st.steps++;
+          if (r.t) st.halted = true;
+          setTimeout(() => {
+            tiles(cfg.wordEl, st.word, -1, 0, pos, r.r.length);
+            cfg.logEl.innerHTML = `${esc(old)||'ε'} &nbsp;→&nbsp; <b>${esc(st.word)||'ε'}</b>${r.t?' · terminal substitution: <span class="terminal">halt</span>':''}`;
+          }, 170);
+          return !st.halted;
+        }
+      }
+      st.halted = true;
+      paint(-1, -1, 0, `no left side occurs · halt (blocked) with <b>${esc(st.word)||'ε'}</b> after ${st.steps} steps`);
+      return false;
+    }
+    function run() {
+      let g = 0;
+      const budget = cfg.budget || 200;
+      const tick = () => {
+        if (g++ >= budget) { cfg.logEl.innerHTML = `step budget of ${budget} spent · the algorithm has <span class="terminal">not halted</span> — word length ${st.word.length} and growing`; return; }
+        if (step()) setTimeout(tick, cfg.stepDelay || 200);
+      };
+      tick();
+    }
+    return { load, step, run, st };
+  }
+
+  // ---- Machine 01 · unary addition ----
+  const M1 = makeEngine({ rulesEl: $('runnerRules'), wordEl: $('runnerWord'), logEl: $('runnerLog') });
+  const M1RULES = [ {l:'1+', r:'+1'}, {l:'+', r:'', t:1} ];
+  function m1reset() {
+    let v = $('runnerInput').value;
+    if (!/^1*\+1*$/.test(v) || v.length > 24) { v = '111+11'; $('runnerInput').value = v; M1.load(M1RULES, v, 'input must have the shape 1…1+1…1 — reset to the sample'); return; }
+    M1.load(M1RULES, v, 'ready · no rule inspected yet');
+  }
+  $('stepBtn').onclick = () => M1.step();
+  $('runBtn').onclick = () => M1.run();
+  $('resetBtn').onclick = m1reset;
+  $('runnerInput').onchange = m1reset;
+  m1reset();
+
+  // ---- Machine 02 · priority ----
+  let swapped = false;
+  function paintPriority() {
+    const rules = swapped ? [{l:'a',r:'y'},{l:'ab',r:'x'}] : [{l:'ab',r:'x'},{l:'a',r:'y'}];
+    let w = 'ab', chosen = -1;
+    for (let i = 0; i < rules.length; i++) { const p = w.indexOf(rules[i].l); if (p >= 0) { chosen = i; w = w.slice(0,p) + rules[i].r + w.slice(p + rules[i].l.length); break; } }
+    $('priorityRules').innerHTML = rules.map((r,i)=>`<div class="ruleitem ${i===chosen?'active':''}"><span>${i+1}</span><span>${r.l} → ${r.r}</span><span>${i===chosen?'FIRST MATCH':''}</span></div>`).join('');
+    tiles($('priorityWord'), w);
+    $('priorityLog').innerHTML = `input <b>ab</b> · ${swapped ? 'the one-letter rule is now first, so it fires' : 'the two-letter rule is first, so it fires'} · output <b>${w}</b>`;
+  }
+  $('priorityToggle').onclick = () => { swapped = !swapped; paintPriority(); };
+  $('priorityReset').onclick = () => { swapped = false; paintPriority(); };
+  paintPriority();
+
+  // ---- Machine 03 · divergence ----
+  function paintDiverge() {
+    const n = +$('fuel').value; $('fuelVal').textContent = n;
+    tiles($('divergeWord'), 'a'.repeat(n + 1));
+    $('divergeLog').innerHTML = `after ${n} watched step${n===1?'':'s'}: length ${n+1} · rule <b>a → aa</b> still applies · <span class="terminal">budget spent, the algorithm has not halted</span>`;
+  }
+  $('fuel').oninput = () => { $('fuelVal').textContent = $('fuel').value; };
+  $('burnFuel').onclick = paintDiverge;
+  paintDiverge();
+
+  // ---- Machine 04 · program gallery (all rule sets machine-verified; see page text) ----
+  const GAL = {
+    add:   { name:'unary addition',       rules: M1RULES, re:/^1*\+1*$/,  sample:'111+11', note:'Adds unary numbers. Contract: exactly one plus, i.e. 1…1+1…1.' },
+    double:{ name:'unary doubling',       rules:[{l:'m1',r:'11m'},{l:'m',r:'',t:1},{l:'',r:'m'}], re:/^1*$/, sample:'111', note:'A marker sweeps the word once, writing two strokes for every one it eats: output length 2n.' },
+    swap:  { name:'swap a↔b (marker)',    rules:[{l:'ma',r:'bm'},{l:'mb',r:'am'},{l:'m',r:'',t:1},{l:'',r:'m'}], re:/^[ab]*$/, sample:'abbab', note:'The marker idiom: rule 4 injects a cursor m at the left; rules 1–2 sweep it rightward, flipping letters; rule 3 deletes it and halts.' },
+    inc:   { name:'binary increment',     rules:[{l:'R0',r:'0R'},{l:'R1',r:'1R'},{l:'R',r:'C'},{l:'1C',r:'C0'},{l:'0C',r:'1',t:1},{l:'C',r:'1',t:1},{l:'',r:'R'}], re:/^[01]*$/, sample:'10011', note:'Adds one to a binary numeral: R rides to the right end, turns into a carry C, and the carry walks back left. Empty input reads as 0.' },
+    parity:{ name:'parity of the 1s',     rules:[{l:'11',r:''},{l:'1',r:'O',t:1},{l:'',r:'E',t:1}], re:/^1*$/, sample:'11111', note:'Cancels 1s in pairs; answers O (odd) or E (even).' },
+    cmp:   { name:'more a or more b?',    rules:[{l:'ab',r:''},{l:'ba',r:''},{l:'aa',r:'a'},{l:'bb',r:'b'},{l:'a',r:'A',t:1},{l:'b',r:'B',t:1},{l:'',r:'=',t:1}], re:/^[ab]*$/, sample:'aabab', note:'Cancels mixed adjacent pairs, compresses runs, then announces A, B, or =.' },
+    del:   { name:'erase every a',        rules:[{l:'a',r:''}], re:/^[abc]*$/, sample:'abcab', note:'No terminal rule at all: the machine halts blocked once nothing applies.' },
+    brackets:{ name:'cancel matched ab', rules:[{l:'ab',r:''}], re:/^[ab]*$/, sample:'aababb', note:'Read a as ( and b as ): matched pairs are erased. Empty output means balanced; otherwise the unmatched core b…ba…a remains.' },
+    boom:  { name:'divergence: a → aa',   rules:[{l:'a',r:'aa'}], re:/^[ab]*$/, sample:'a', note:'Never halts on any word containing a. Run is capped at 24 watched steps here.', budget:24 }
+  };
+  const M4 = makeEngine({ rulesEl: $('galleryRules'), wordEl: $('galleryWord'), logEl: $('galleryLog'), stepDelay: 190 });
+  $('gallerySelect').innerHTML = Object.entries(GAL).map(([k,p]) => `<option value="${k}">${p.name}</option>`).join('');
+  function m4reset(fromSelect) {
+    const p = GAL[$('gallerySelect').value];
+    let v = $('galleryInput').value;
+    if (fromSelect || !p.re.test(v) || v.length > 20) { v = p.sample; $('galleryInput').value = v; }
+    $('galleryNote').textContent = p.note;
+    M4.load(p.rules, v, 'ready · pick Step or Run');
+    M4.budget = p.budget; // hint for run()
+  }
+  // patch M4.run budget dynamically
+  const m4run = () => { const p = GAL[$('gallerySelect').value]; let g = 0; const budget = p.budget || 200;
+    const tick = () => { if (g++ >= budget) { $('galleryLog').innerHTML = `step budget of ${budget} spent · the algorithm has <span class="terminal">not halted</span> — word length ${M4.st.word.length} and growing`; return; } if (M4.step()) setTimeout(tick, 190); };
+    tick(); };
+  $('gallerySelect').onchange = () => m4reset(true);
+  $('galleryInput').onchange = () => m4reset(false);
+  $('galleryReset').onclick = () => m4reset(false);
+  $('galleryStep').onclick = () => M4.step();
+  $('galleryRun').onclick = m4run;
+  m4reset(true);
+
+  // ---- proof passport ----
+  const logic = {
+    exists:['∃x P(x)','Produce a witness x, together with evidence that P(x) holds.'],
+    or:['P ∨ Q','Choose a side: give evidence for P, or give evidence for Q — and say which.'],
+    and:['P ∧ Q','Carry both: evidence for P and evidence for Q.'],
+    implies:['P → Q','Give a method that turns any evidence for P into evidence for Q.'],
+    forall:['∀x P(x)','Give a uniform method that, for arbitrary admissible x, produces evidence for P(x).'],
+    not:['¬P','Give a method showing that evidence for P would lead to a contradiction.']
+  };
+  const setLogic = k => {
+    document.querySelectorAll('.logic-card').forEach(c => c.classList.toggle('active', c.dataset.logic === k));
+    $('logicReadout').innerHTML = `<b>${logic[k][0]}</b><br>${logic[k][1]}`;
+  };
+  document.querySelectorAll('.logic-card').forEach(c => c.onclick = () => setLogic(c.dataset.logic));
+  setLogic('exists');
+
+  // ---- Machine 05 · unbounded search ----
+  let sN = 0, sFound = false;
+  function paintSearch() {
+    const w = +$('witness').value; $('witnessVal').textContent = w;
+    $('searchStrip').innerHTML = Array.from({length:25},(_,i)=>`<div class="searchcell ${i<sN?'checked':''} ${i===sN&&!sFound?'current':''} ${sFound&&i===w?'found':''}">${i}</div>`).join('');
+    $('searchLog').innerHTML = sFound
+      ? `P(${w}) = true · witness found · the search halts`
+      : `${sN===0?'no tests performed yet':`P(0)…P(${sN-1}) all came back false`} · next decidable test: P(${sN})`;
+  }
+  function sStep() { if (sFound) return false; const w = +$('witness').value; if (sN === w) { sFound = true; paintSearch(); return false; } sN++; paintSearch(); return sN <= 24; }
+  const sReset = () => { sN = 0; sFound = false; paintSearch(); };
+  $('searchStep').onclick = sStep; $('searchReset').onclick = sReset; $('witness').oninput = sReset;
+  $('searchRun').onclick = () => { let g = 0; const t = () => { if (g++ > 30) return; if (sStep()) setTimeout(t, 95); }; t(); };
+  sReset();
+
+  // ---- Machine 06 · is this real zero? ----
+  const EPS = 1/40000;
+  let zPrec = 0, zKind = 'zero';
+  function paintZero() {
+    const val = zKind === 'tiny' ? EPS : 0;
+    const half = 0.5 / Math.pow(2, zPrec);
+    const bandPct = Math.min(half * 100, 49);
+    $('zeroBand').style.left = (50 - bandPct) + '%';
+    $('zeroBand').style.width = (2 * bandPct) + '%';
+    $('zeroVal').style.left = (50 + Math.max(-49, Math.min(49, val * 100))) + '%';
+    const seen = zKind === 'tiny' && EPS >= half;
+    let msg;
+    if (zPrec === 0) msg = 'no precision revealed yet · the error band is the whole interval · nothing can be concluded';
+    else if (zKind === 'zero') msg = `precision 1/2^${zPrec} · best approximation 0, guaranteed error ±${half.toPrecision(2)} · <span class="terminal">still consistent with a nonzero value smaller than the band</span> — “= 0” is not yet proved, and no finite stage ever proves it`;
+    else if (!seen) msg = `precision 1/2^${zPrec} · approximation looks like 0, guaranteed error ±${half.toPrecision(2)} · the true tiny value hides <b>inside the band</b> · cannot decide yet`;
+    else msg = `precision 1/2^${zPrec} · the band finally shrank below the hidden value · now it is visibly <b>≠ 0</b>. You needed enough digits — and for a true 0 this moment never comes.`;
+    $('zeroLog').innerHTML = msg;
+  }
+  $('zeroReveal').onclick = () => { if (zPrec < 18) zPrec++; paintZero(); };
+  $('zeroReset').onclick = () => { zPrec = 0; paintZero(); };
+  $('zeroKind').onchange = () => { zKind = $('zeroKind').value; zPrec = 0; paintZero(); };
+  paintZero();
+
+  // ---- Machine 07 · Refal-style matcher ----
+  function matchPattern() {
+    const toks = $('exprInput').value.trim().split(/\s+/).filter(Boolean);
+    const kind = $('patternSelect').value;
+    let bs = [];
+    if (!toks.length) { $('patternExpr').textContent = 'ε'; $('patternBindings').textContent = 'the didactic matcher expects at least one token'; $('patternNote').textContent = ''; return; }
+    if (kind === 's-e') bs = [['s.first', toks[0]], ['e.rest', toks.slice(1).join(' ') || 'ε']];
+    if (kind === 'e-s') bs = [['e.front', toks.slice(0, -1).join(' ') || 'ε'], ['s.last', toks.at(-1)]];
+    if (kind === 's-s-e') bs = toks.length < 2 ? null : [['s.a', toks[0]], ['s.b', toks[1]], ['e.tail', toks.slice(2).join(' ') || 'ε']];
+    if (kind === 'e-s-e') bs = [['e.left', 'ε'], ['s.pivot', toks[0]], ['e.right', toks.slice(1).join(' ') || 'ε']];
+    $('patternExpr').innerHTML = 'expression · ' + toks.map(esc).join(' · ');
+    $('patternBindings').innerHTML = bs ? bs.map(([k,v]) => `<span class="binding"><b>${k}</b> = ${esc(v)}</span>`).join(' ') : 'no match · this pattern needs at least two symbols';
+    $('patternNote').textContent = kind === 'e-s-e'
+      ? 'Matching lengthens the leftmost open e-variable only as needed: the first successful match gives e.left = ε, so the pivot is the first symbol.'
+      : 'The variables expose pieces of the expression by shape, ready for a sentence body to rebuild a new expression.';
+  }
+  $('matchBtn').onclick = matchPattern; $('exprInput').onchange = matchPattern; $('patternSelect').onchange = matchPattern;
+  matchPattern();
+})();
+</script>
