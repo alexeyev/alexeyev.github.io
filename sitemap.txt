@@ -3,6 +3,7 @@ https://alexeyev.github.io/404.html
 https://alexeyev.github.io/about.html
 https://alexeyev.github.io/ALEKSEEV_LKE2019 (1).pdf
 https://alexeyev.github.io/blahblahblah.html
+https://alexeyev.github.io/blank-canvas
 https://alexeyev.github.io/blog.html
 https://alexeyev.github.io/events-deadlines.html
 https://alexeyev.github.io/handmade.html
@@ -48,8 +49,6 @@ https://alexeyev.github.io/pdf/Alekseev_OIE2021.pdf
 https://alexeyev.github.io/pdf/AntonAlekseev.poster-slides.AINL.2017.pdf
 https://alexeyev.github.io/pdf/Apertium-List_of_Symbols.pdf
 https://alexeyev.github.io/pdf/apertium-tags-comments-russian.pdf
-https://alexeyev.github.io/pdf/cv.alekseev.20240929.pdf
-https://alexeyev.github.io/pdf/cv.alekseev.20240929-industry-work-and-education.pdf
 https://alexeyev.github.io/pdf/how_to_build_a_search_engine.alekseev.pdf
 https://alexeyev.github.io/pdf/kyrgyz-nlp-slides_2023.pdf
 https://alexeyev.github.io/pdf/LMAC2019Alekseev.pdf
@@ -61,3 +60,10 @@ https://alexeyev.github.io/robots.txt
 https://alexeyev.github.io/sitemap.txt
 https://alexeyev.github.io/students.html
 https://alexeyev.github.io/yandex_97b66c1d8451a207.html
+https://alexeyev.github.io/pdf/cv.alekseev.20260706.pdf
+https://alexeyev.github.io/pdf/cv.alekseev.20260706-industry-work-and-education.pdf
+https://alexeyev.github.io/shenanigans
+https://alexeyev.github.io/books/The-Rewriting-Machine
+https://alexeyev.github.io/books/The-Atom-Machine
+https://alexeyev.github.io/kyrgyz-language-contributions
+https://alexeyev.github.io/kyrgyz-language-faq
